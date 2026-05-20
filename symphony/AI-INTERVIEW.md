@@ -1,587 +1,579 @@
-# 🎤 AI 인터뷰 - 통합 패키지 시작점
+# 🎤 AI Entry — SDD Setup & Context Assessment
 
-> **Claude Code가 이 파일을 읽으면 인터뷰부터 시작합니다.**
-> 인터뷰 완료 후 AI-EXECUTION.md의 해당 모드를 자율 진행합니다.
-
----
-
-## 🎯 미션
-
-이 인터뷰의 목적은 **프로젝트 상태를 정확히 파악**하여, 다음 4가지 중 적합한 행동을 결정하는 것입니다:
-
-```
-[ ] MODE_GREENFIELD : 신규 프로젝트 (코드 0%, 이제 시작)
-[ ] MODE_EARLY      : 초기 진행 (10-30%, 며칠~몇 주)
-[ ] MODE_REBUILD    : 리팩토링 TF (싹 갈아엎기)
-[ ] BLOCK           : 운영 프로젝트 (적용 불가)
-```
+> **When Claude Code reads this file, it assesses context, installs the enforcement gates, then runs SDD (AI-EXECUTION.md).**
+> There are no modes. The flow is always the same; the assessment only sets the enforcement level and whether a Step 0 survey is needed.
 
 ---
 
-## 1. 인터뷰 진행 절차
+## 🎯 Mission
 
-### Phase A: 자동 스캔 (사용자 개입 없음)
+The purpose is to **assess the project's context** and configure SDD accordingly — not to pick a mode. Two things are decided:
 
-다음을 수행하세요:
+```
+1. Enforcement level:
+   [ ] standard : default (R1–R5; R3/R4 bypassable once with logged override)
+   [ ] strict   : auto when production signals detected (R1–R6; no bypass)
+
+2. Does the flow need a Step 0 survey?
+   [ ] yes : existing code present → understand before changing (adds 00-survey, 05b-regression)
+   [ ] no  : greenfield → nothing to preserve
+```
+
+The same SDD flow runs in every case. Context changes only *how strict the gates are*, never *what SDD does*.
+
+---
+
+## 1. Assessment Procedure
+
+### Phase A: Auto-Scan (no user involvement)
+
+Run the following:
 
 ```bash
-# 1. 디렉터리 구조 파악
+# 1. Understand directory structure
 ls -la
 tree -L 3 -a -I 'node_modules|.git|venv|__pycache__|dist|build' 2>/dev/null || find . -maxdepth 3 -type d
 
-# 2. 코드 파일 수
+# 2. Count code files
 find . -type f \( -name "*.py" -o -name "*.js" -o -name "*.ts" -o -name "*.tsx" -o -name "*.go" -o -name "*.rs" -o -name "*.java" \) | grep -v node_modules | grep -v .git | wc -l
 
-# 3. 문서 파일 수
+# 3. Count documentation files
 find . -type f -name "*.md" | grep -v node_modules | wc -l
 
-# 4. Git 상태
+# 4. Git status
 git log --oneline 2>/dev/null | wc -l
 git status --short 2>/dev/null | head -20
 
-# 5. 운영 프로젝트 시그널 검사
+# 5. Check for production signals (→ sets enforcement level)
 ls deploy* deployment* docker-compose.prod.* k8s/ kubernetes/ .env.production .env.prod 2>/dev/null
 find . -name "Dockerfile.prod*" -o -name "docker-compose.prod*" -o -name "*production*" 2>/dev/null | head -5
 grep -r "production" package.json 2>/dev/null | head -3
 
-# 6. AI 설정 확인
+# 6. Check AI config
 ls CLAUDE.md .claude/ 2>/dev/null
 
-# 7. 기존 handoff/harness 검색
+# 7. Search for existing handoff/harness
 find . -type d \( -name "*handoff*" -o -name "*hand-off*" -o -name "*harness*" \) 2>/dev/null
 
-# 8. 패키지 정보
+# 8. Package info
 cat package.json 2>/dev/null | head -20
 cat pyproject.toml 2>/dev/null | head -20
 cat Cargo.toml 2>/dev/null | head -20
 ```
 
-### Phase B: 인터뷰 시작 (사용자에게 보고 + 질문)
+### Phase B: Start the Assessment (report to user + ask)
 
-자동 스캔 결과를 다음 형식으로 사용자에게 보고:
+Report the auto-scan results to the user in this format:
 
 ```markdown
-## 🔍 자동 스캔 결과
+## 🔍 Auto-Scan Results
 
-### 프로젝트 개요
-- **위치**: [현재 디렉터리]
-- **타입 추정**: [언어/프레임워크]
-- **코드 파일**: __ 개
-- **문서 파일**: __ 개
+### Project Overview
+- **Location**: [current directory]
+- **Type estimate**: [language/framework]
+- **Code files**: __
+- **Doc files**: __
 
-### Git 상태
-- **커밋 수**: __
-- **현재 브랜치**: __
-- **미커밋 변경**: __
+### Git Status
+- **Commits**: __
+- **Current branch**: __
+- **Uncommitted changes**: __
 
-### 기존 자산
-- **CLAUDE.md**: [있음/없음]
-- **.claude/ 디렉터리**: [있음/없음]
-- **handoff 디렉터리**: [있음/없음 + 경로]
-- **harness 디렉터리**: [있음/없음 + 경로]
+### Existing Assets
+- **CLAUDE.md**: [present/absent]
+- **.claude/ directory**: [present/absent]
+- **handoff directory**: [present/absent + path]
+- **harness directory**: [present/absent + path]
 
-### 운영 시그널
-- **production 설정**: [발견/없음]
-- **deploy 스크립트**: [발견/없음]
-- **운영 시그널 강도**: [높음/중간/낮음/없음]
+### Production Signals
+- **production config**: [found/none]
+- **deploy scripts**: [found/none]
+- **production signal strength**: [high/medium/low/none]
 
 ---
 
-## 🤖 AI의 추측
+## 🤖 AI's Assessment
 
-위 정보를 바탕으로 다음과 같이 추측합니다:
+Based on the above, my read is:
 
-**추정 모드**: [MODE_XXX]
-**근거**: [구체적 이유]
+**Enforcement level**: [standard / strict (if production signals)]
+**Step 0 survey**: [on (existing code) / off (greenfield)]
+**Reasoning**: [specific reason]
 
-이 추측이 맞는지 확인하기 위해 몇 가지 질문드리겠습니다.
-각 질문에 추천 답변이 있으니 동의하시면 "yes"로 답변하셔도 됩니다.
+I'll ask a few questions to confirm. Each question has a recommended answer —
+if you agree, you can simply reply "yes".
 ```
 
-### Phase C: 핵심 질문 (필수 5개)
+### Phase C: Core Questions (5 required)
 
-다음 질문을 **순서대로** 진행합니다. 한 번에 하나씩 묻고, 답변 받은 후 다음 질문으로.
+Ask these **in order**. One at a time; wait for an answer before the next.
 
-#### 🚨 Q1: 운영 프로젝트 차단 검증 (가장 중요)
+#### 🚨 Q1: Production Signal Check (sets enforcement level)
 
 ```markdown
-## Q1. 이 프로젝트가 다음 중 하나에 해당하나요?
+## Q1. Does this project match any of the following?
 
-- [ ] 실제 사용자가 사용 중인 서비스
-- [ ] 프로덕션 환경에 배포되어 있음
-- [ ] 매출이나 비즈니스에 직접 영향
-- [ ] 외부 고객의 데이터를 보유
-- [ ] 다운타임이 곤란한 시스템
+- [ ] A service currently used by real users
+- [ ] Deployed to a production environment
+- [ ] Directly affects revenue or business
+- [ ] Holds external customer data
+- [ ] A system where downtime is unacceptable
 
-**AI 추천**: [자동 스캔 결과 기반 - "예" 또는 "아니오"]
+**AI recommendation**: [based on auto-scan — "yes" or "no"]
 
-⚠️ 위 중 하나라도 해당하면 본 패키지는 적합하지 않습니다.
+ℹ️ If any apply, SDD still applies — but at strict enforcement (non-bypassable gates).
 ```
 
-**처리**:
-- 사용자가 "예" 또는 위 항목 중 하나라도 해당한다고 답변 → **즉시 BLOCK 모드 진입** (아래 BLOCK 처리 참조)
-- "아니오" 또는 "모두 해당 없음" → Q2로 진행
+**Handling**:
+- If the user says "yes" or any item applies → set `ENFORCEMENT_LEVEL=strict` (not blocked), then proceed to Q2
+- "no" / "none apply" → `standard`, proceed to Q2
 
-#### 📊 Q2: 프로젝트 단계
+#### 📊 Q2: Existing Code
 
 ```markdown
-## Q2. 프로젝트의 현재 단계는?
+## Q2. What's the current state of the codebase?
 
-A. 🌱 **이제 시작** - 아직 코드 거의 없음, 이번 통합부터 본격 시작
-B. 🌿 **초기 진행** - 1-2주 정도 작업, 구조 잡아가는 중
-C. 🌳 **상당 진행** - 몇 달 작업, 어느 정도 구조 잡힘
-D. 🔨 **리팩토링 TF** - 기존 코드를 싹 갈아엎으려고 함
+A. 🌱 **Almost none** — kicking off with this integration
+B. 🌿 **Some** — 1-2 weeks of work, structure forming
+C. 🌳 **Substantial** — months of work, structure largely set
+D. 🧱 **Legacy** — existing code you'll be changing carefully
 
-**AI 추천**: [코드 파일 수 + Git 커밋 수 기반 추천]
+**AI recommendation**: [based on code file count + Git commit count]
 
-근거:
-- 코드 파일 N개, 커밋 M개 → [A/B/C/D] 추정
+Reasoning:
+- N code files, M commits → estimated [A/B/C/D]
 ```
 
-**처리**:
-- A 선택 → MODE_GREENFIELD 후보
-- B 선택 → MODE_EARLY 후보  
-- C 선택 → 운영 프로젝트 가능성 재확인 (Q3 강화)
-- D 선택 → MODE_REBUILD 후보
+**Handling** (sets whether Step 0 survey runs — not a mode):
+- A → greenfield, survey **off**
+- B/C/D → existing code present, survey **on** (adds 00-survey, 05b-regression)
 
-#### 🎯 Q3: 적용 목적
+#### 🎯 Q3: Purpose of Adoption
 
 ```markdown
-## Q3. 이 패키지를 적용하려는 주된 이유는?
+## Q3. What's the main reason for applying this package?
 
-A. 처음부터 AI 코딩 워크플로우 잘 잡고 시작하고 싶음
-B. 어느 정도 진행했는데 방향성이 헷갈려서 재정비
-C. 기존 코드/구조가 너무 엉망이라 처음부터 다시
-D. 팀 합류 / TF 구성으로 새 방식 도입 시도
-E. 기타
+A. Want to set up a solid AI coding workflow from the very start
+B. Made some progress but the direction is muddled — want to reorganize
+C. Existing code/structure is too messy — starting over
+D. Joining a team / forming a TF to adopt a new approach
+E. Other
 
-**AI 추천**: [Q2 답변 기반]
+**AI recommendation**: [based on Q2 answer]
 
-근거:
-- Q2에서 [선택] 답변 → [이유] 가능성 높음
+Reasoning:
+- Q2 answer was [X] → [reason] is likely
 ```
 
-**처리**:
-- 모드 결정에 추가 신호 제공
-- A → GREENFIELD 강화
-- B → EARLY 강화
-- C, D → REBUILD 강화
+**Handling**:
+- Provides additional context on the goal
+- Informs how thorough the survey/spec should be (no mode involved)
 
-#### 📁 Q4: 기존 자산 처리
+#### 📁 Q4: Existing Asset Handling
 
 ```markdown
-## Q4. 기존 자산 처리 방향은?
+## Q4. How should existing assets be handled?
 
-자동 스캔 결과:
-- 기존 코드: [N개 파일]
-- 기존 문서: [M개 파일]
-- 기존 handoff: [발견/없음]
-- 기존 harness: [발견/없음]
+Auto-scan results:
+- Existing code: [N files]
+- Existing docs: [M files]
+- Existing handoff: [found/none]
+- Existing harness: [found/none]
 
-A. 모두 그대로 두고 새 구조만 추가
-B. 모두 archive/로 백업 후 새 구조로 재구성
-C. 기존 코드는 두되, 문서/구조만 새로
-D. 싹 다 archive 후 처음부터 다시 (리팩토링 모드)
-E. 기존 자산 거의 없음 (해당 없음)
+A. Leave everything as is, only add new structure
+B. Back up everything to archive/ then rebuild with new structure
+C. Keep existing code, but redo docs/structure
+D. Archive everything and start fresh
+E. Almost no existing assets (N/A)
 
-**AI 추천**: [Q2, Q3 답변 기반]
+**AI recommendation**: [based on Q2 answer]
 ```
 
-**처리**:
-- 모드별 archive 전략 결정
-- B, D → archive 디렉터리 생성
-- A, C, E → archive 생략 또는 부분 적용
+**Handling**:
+- Determines archive strategy (independent of enforcement level)
+- B, D → create archive directory
+- A, C, E → skip or partially apply archive
 
-#### 👥 Q5: 작업 형태
+#### 👥 Q5: Work Style
 
 ```markdown
-## Q5. 이 프로젝트의 작업 형태는?
+## Q5. What's the work style of this project?
 
-A. 혼자 작업 (개인 사이드 프로젝트)
-B. 소수 (2-5명) 협업
-C. TF 팀 (단기 집중)
-D. 팀 (지속적 협업)
+A. Solo (personal side project)
+B. Small group (2-5 people)
+C. TF team (short-term focus)
+D. Team (ongoing collaboration)
 
-**AI 추천**: [Git 커밋 작성자 다양성 기반]
+**AI recommendation**: [based on Git commit author diversity]
 
-근거:
-- Git 커밋 작성자 수: [N명]
+Reasoning:
+- Number of Git commit authors: [N]
 ```
 
-**처리**:
-- CLAUDE.md, CONSTITUTION.md 톤 조정
-- 팀 작업이면 컨벤션 강화
-- 혼자면 학습 친화적 톤
+**Handling**:
+- Adjust the tone of CLAUDE.md, CONSTITUTION.md
+- Team work → reinforce conventions
+- Solo → learning-friendly tone
 
-### Phase D: (선택) 보충 질문
+### Phase D: (Optional) Supplementary Questions
 
-다음 질문은 **필요한 경우에만** 진행 (위 5개로 모드 결정이 명확하면 생략):
+Ask these **only if needed** (skip if the 5 above already make the setup clear):
 
-#### Q6: 기술 스택 확인 (자동 스캔으로 불명확할 때)
+#### Q6: Tech Stack Check (when auto-scan is unclear)
 
 ```markdown
-## Q6. 사용하시는 주요 기술 스택은?
+## Q6. What's your primary tech stack?
 
-- 프론트엔드: ___
-- 백엔드: ___
+- Frontend: ___
+- Backend: ___
 - DB: ___
-- 기타: ___
+- Other: ___
 
-(이미 자동 스캔으로 파악되면 생략)
+(skip if already identified by auto-scan)
 ```
 
-#### Q7: 우선순위 (정성적 결정 필요 시)
+#### Q7: Priority (when a qualitative call is needed)
 
 ```markdown
-## Q7. 통합 시 우선순위는?
+## Q7. What's the priority for integration?
 
-A. 빠른 적용 (가능한 한 자동화)
-B. 정확한 적용 (시간 들어도 정밀하게)
-C. 안전한 적용 (롤백 가능성 최우선)
+A. Fast application (automate as much as possible)
+B. Accurate application (precise even if it takes time)
+C. Safe application (rollback-ability above all)
 
-**AI 추천**: [모드별 다름]
-- GREENFIELD → A (빠르게)
-- EARLY → B (정확하게)
-- REBUILD → C (안전하게)
+**AI recommendation**: [based on context]
+- greenfield → A (fast)
+- existing code → B (accurate)
+- strict/production → C (safe)
 ```
 
-### Phase E: 모드 결정 + 사용자 승인
+### Phase E: Assessment Result + User Approval
 
-답변 종합 후 다음 형식으로 보고:
+After synthesizing answers, report in this format:
 
 ```markdown
-## 🎯 모드 결정
+## 🎯 Assessment Result
 
-### 결정된 모드: MODE_XXX
+### Enforcement level: [standard / strict]
+- **standard** by default
+- **strict** auto-selected if production signals were detected in Phase A (Q1) → R3/R4 non-bypassable (R6)
 
-### 결정 근거
-- Q1: 운영 프로젝트 아님 ✅
-- Q2: [답변] → [모드 신호]
-- Q3: [답변] → [모드 신호]
-- Q4: [답변] → archive 전략 [O/X]
-- Q5: [답변] → 톤 조정
+### Step 0 survey: [needed / not needed]
+- **needed** if existing code is present → adds `00-survey.md` + `05b-regression.md` (R4)
+- **not needed** for greenfield
 
-### 적용 계획
+### Recommended tier: TIER_[1/2/3]
+- **Tier 1 (Core)**: SDD + Karpathy + grill-me — solo / small / early work
+- **Tier 2 (Flow)**: + Handoff — needs repeatable structure & handoffs
+- **Tier 3 (Full)**: + Verification Design + Harness — large features, team work
+- Reasoning: [based on project size, work style (Q5), and complexity]
+- 🎸 Harness (Tier 3) is suggested only if a task looks too large for a single agent; it's optional & experimental.
 
-**1. 생성될 파일**
-[모드별로 다른 파일 목록]
+### Rationale
+- Q1: production signals [yes → strict / no → standard]
+- Q2: [answer] → existing code? [survey needed/not]
+- Q3: [answer] → goal
+- Q4: [answer] → archive strategy [yes/no]
+- Q5: [answer] → tier signal
 
-**2. 처리될 기존 자산**
-[archive 대상 또는 없음]
+### Setup Plan
 
-**3. 첫 SDD 사이클**
-F000-[모드별 다름]
+**1. Enforcement gates to install**
+- `.claude/hooks/pre-implement.sh` (R1, R2)
+- `.git/hooks/pre-commit` (R3, R4, R6)
+- `.claude/hooks/post-task.sh` (R5)
+- `.github/workflows/sdd-gate.yml` (R1, R3, R6, R7)
+- `sdd/CONSTITUTION.md` (the rules the gates read)
 
-**4. 예상 소요 시간**
-[10-30분 추정]
+**2. SDD templates to create**
+- `01~07` always; `00-survey.md` + `05b-regression.md` if survey needed
 
-### 사용자 승인 요청
+**3. Existing assets to be handled**
+[archive targets or none]
 
-위 계획대로 진행해도 될까요?
+**4. First SDD cycle**
+F001-[feature]
 
-- "yes" / "진행해줘" → 자율 실행
-- "수정 [구체적 부분]" → 계획 조정 후 재승인
-- "no" / "취소" → 중단
+**5. Starting tier**
+TIER_[1/2/3] — you can climb later as needed
 
-승인 시 AI-EXECUTION.md의 [MODE_XXX] 섹션을 자율 진행합니다.
+**6. Estimated time**
+[10-30 min estimate]
+
+### Approval Request
+
+Shall I proceed with the setup above?
+
+- "yes" / "go ahead" → install gates, then autonomous execution
+- "modify [specific part]" → adjust plan and re-confirm
+- "no" / "cancel" → stop
+
+On approval, I'll install the enforcement gates and proceed with AI-EXECUTION.md.
 ```
 
-### Phase F: 실행 시작
+### Phase F: Execution Start
 
-사용자 승인 후:
+After user approval:
 
 ```markdown
-승인 확인. AI-EXECUTION.md의 [MODE_XXX] 섹션 진행을 시작합니다.
+Approval confirmed. Installing enforcement gates, then starting AI-EXECUTION.md.
 
-⏱️ 완료 후 INTEGRATION-CHECKLIST.md의 [MODE_XXX] Day 0 검증을 수행하겠습니다.
+⏱️ When done, I'll run the Day 0 verification in INTEGRATION-CHECKLIST.md.
 
-[실행 시작...]
+[Starting execution...]
 ```
 
-→ 이후는 AI-EXECUTION.md를 따름
+→ From here, follow AI-EXECUTION.md
 
 ---
 
-## 2. BLOCK 모드 처리 (운영 프로젝트 감지 시)
+## 2. Production Context Handling (strict enforcement, not blocked)
 
-Q1에서 운영 프로젝트로 판명되면 다음 메시지를 표시하고 **즉시 중단**:
+If Q1 reveals production signals, **do not block**. Instead set `strict` and report:
 
 ```markdown
-## 🚫 적용 차단: 운영 프로젝트 감지
+## 🔒 Production Context Detected → Strict Enforcement
 
-이 패키지는 **운영 중인 프로젝트에 적합하지 않습니다**.
+This is a production project, so SDD applies with **strict** enforcement (not blocked).
 
-### 차단 이유
+### What "strict" means here
+- R3 (tests pass) and R4 (regression preserves behavior) are **mandatory**
+- No bypass: the `SDD_OVERRIDE` escape hatch is disabled
+- A Step 0 survey runs before any change to existing code
+- The pre-commit and CI gates will refuse anything that skips tests/regression
 
-다음 중 하나 이상에 해당:
-- [구체적 항목]
-- [구체적 항목]
+### Why not block?
+Production is where safe AI-assisted change matters most. Rather than refuse, SDD
+raises the bar so the gates become non-negotiable. The flow is the same as anywhere
+else — only the strictness rises.
 
-### 위험
+### Recommended approach (still your choice)
+1. Start on a feature branch with no production impact
+2. Apply SDD to one new feature first; let the gates prove themselves
+3. Expand after team consensus
 
-운영 프로젝트에 본 패키지를 적용하면:
-- 사용자/고객 데이터 영향 위험
-- 다운타임 가능성
-- 팀 합의 없는 구조 변경
-- 기존 워크플로우와 충돌
-
-### 권장 대안
-
-1. **운영 영향 없는 별도 환경에서 시도**
-   - feature branch 만들고 거기서만
-   - 또는 fork 떠서 실험용으로
-
-2. **점진적 도입**
-   - 새 기능 1개부터 SDD 적용
-   - 기존 코드는 건드리지 않음
-   - 팀 합의 후 확대
-
-3. **운영 프로젝트용 별도 패키지 대기**
-   - 본 패키지는 신규/초기/리팩토링용
-   - 운영용 패키지는 향후 별도 제작 예정
-
-### 정말 적용하고 싶다면
-
-⚠️ **강력히 비권장**하지만, 다음 조건 모두 만족 시 진행 가능:
-- [ ] 전체 코드 백업 완료
-- [ ] 팀 전원 합의
-- [ ] 운영 영향 없는 환경에서 사전 검증
-- [ ] 롤백 계획 수립
-
-위 조건 충족했다면 "강제 진행"이라고 명시적으로 답변해주세요.
-그래도 한 번 더 경고 후 진행합니다.
+Proceeding with: enforcement level = **strict**, Step 0 survey = **on**.
 ```
 
-**처리**:
-- 사용자가 정말 "강제 진행" 입력 시 → MODE_EARLY로 진행하되 최대한 보수적으로
-- 일반적으로는 → 여기서 중단, 다른 접근 안내
+**Handling**:
+- Production signals → `ENFORCEMENT_LEVEL=strict`, proceed with the normal flow
+- The gates (not a refusal) are what protect the production codebase
 
 ---
 
-## 3. 모드별 결정 가이드
+## 3. Context-Based Setup Guide
 
-### 🌱 MODE_GREENFIELD 조건
+There are no modes to choose. Read the context signals and configure two things: the enforcement level and whether a Step 0 survey runs. The SDD flow itself is identical in every case.
 
-다음 중 다수 충족 시:
-- 코드 파일 < 10개
-- Git 커밋 < 5개
-- Q2 답변 = A
-- Q3 답변 = A
-- Q4 답변 = E
+### Signal → Enforcement level
 
-**특징**:
-- archive 단계 건너뜀
-- 초기 설정에 집중
-- CONSTITUTION.md를 "신규 프로젝트" 톤으로
-- 첫 SDD = F000-bootstrap (프로젝트 부트스트랩)
+| Signal | Level | Effect |
+|---|---|---|
+| Production signals (deploy configs, `.env.production`, `Dockerfile.prod`, etc.) | **strict** | R3/R4 mandatory, no bypass (R6) |
+| None of the above | **standard** | R1–R5; R3/R4 bypassable once with logged override |
 
-### 🌿 MODE_EARLY 조건
+### Signal → Step 0 survey
 
-다음 중 다수 충족 시:
-- 코드 파일 10-100개
-- Git 커밋 5-50개
-- Q2 답변 = B
-- Q3 답변 = A 또는 B
-- Q4 답변 = A, B, 또는 C
+| Signal | Survey | Adds |
+|---|---|---|
+| Existing code present (code files > ~10, or meaningful git history) | **on** | `00-survey.md`, `05b-regression.md` (R4) |
+| Greenfield (almost no code, no history) | **off** | nothing — flow starts at Specify |
 
-**특징**:
-- 기존 자산 archive (있다면)
-- 표준 통합 진행
-- 첫 SDD = F000-integration
+### Always the same
 
-### 🔨 MODE_REBUILD 조건
+Regardless of context:
+- The 7-step SDD flow is the entry point (scaled full/mini/none by task size)
+- The enforcement gates are installed (`pre-implement`, `pre-commit`, `post-task`, CI)
+- `SPEC.yml` and `sdd/CONSTITUTION.md` are the single sources of truth
+- The first feature is `F001-[feature]` (no special `F000-*` bootstrap by mode)
 
-다음 중 다수 충족 시:
-- Q2 답변 = D
-- Q3 답변 = C 또는 D
-- Q4 답변 = D
-- 의도가 "갈아엎기"로 명확
+### Tier (independent of context)
 
-**특징**:
-- 기존 전체 archive
-- Code Archaeology 단계 추가 (00-archaeology.md)
-- Regression Harness 추가 (05b-regression.md)
-- 첫 SDD = F000-rebuild-plan (리팩토링 마스터 플랜)
+Recommend a starting tier from project size and work style, not from any mode:
+- **Tier 1**: SDD + Karpathy + grill-me
+- **Tier 2**: + Handoff
+- **Tier 3**: + Verification Design + Harness (large/team work; Harness optional & experimental)
 
 ---
 
-## 4. 인터뷰 시 주의사항
+## 4. Assessment Cautions
 
-### 🎯 AI가 지켜야 할 것
+### 🎯 What the AI MUST do
 
-#### 1. 한 번에 한 질문
-- 5개를 한 번에 던지지 말 것
-- 답변 받고 다음 질문
-- 자연스러운 대화 흐름
+#### 1. One question at a time
+- Don't dump all 5 at once
+- Get an answer, then the next question
+- Keep a natural conversational flow
 
-#### 2. 추천 답변은 근거 명시
-- "추천: A" 만 적지 말고
-- "추천: A (이유: 코드 파일 8개로 신규로 보임)"
+#### 2. State reasoning for recommendations
+- Don't just write "Recommendation: A"
+- Write "Recommendation: A (reason: 8 code files suggests new)"
 
-#### 3. 사용자 답변 존중
-- AI 추측과 달라도 사용자 답변 우선
-- 단, 명백히 모순되면 한 번 더 확인:
-  "코드가 50개 있는데 신규라고 하시는 게 맞나요?"
+#### 3. Respect the user's answer
+- The user's answer overrides the AI's guess
+- But if clearly contradictory, confirm once more:
+  "There are 50 code files — are you sure it's new?"
 
-#### 4. 운영 프로젝트 감지 강화
-- Q1 답변이 애매하면 (예: "글쎄요") 추가 질문
-- 운영 시그널이 있는데 사용자가 "아니오"라면 명시적 재확인:
-  "Dockerfile.prod가 있는데 운영 아닌가요?"
+#### 4. Reinforce production detection (→ sets strict)
+- If Q1 is ambiguous (e.g. "well..."), ask follow-ups
+- If production signals exist but the user says "no", explicitly re-confirm:
+  "There's a Dockerfile.prod — isn't this production? It would set strict enforcement."
 
-### 🚫 AI가 하지 말 것
+### 🚫 What the AI must NOT do
 
-- 인터뷰 건너뛰고 바로 실행 X
-- 사용자 답변 무시 X
-- 모드 결정 후 멋대로 바꾸기 X
-- 운영 프로젝트 의심에도 진행 X
+- Skip the assessment and execute directly ✗
+- Ignore the user's answer ✗
+- Change the enforcement level silently after deciding ✗
+- Treat production as a blocker instead of a strict-level signal ✗
 
 ---
 
-## 5. 인터뷰 결과 저장
+## 5. Saving the Assessment Result
 
-인터뷰 종료 후 다음 파일 생성:
+After the assessment, create this file:
 
 ### `INTERVIEW-RESULT.md`
 
 ```markdown
-# 인터뷰 결과
+# Assessment Result
 
-## 일시
+## Timestamp
 YYYY-MM-DD HH:MM
 
-## 자동 스캔 결과
-[Phase A 결과 그대로]
+## Auto-Scan Results
+[Phase A results verbatim]
 
-## Q&A 기록
+## Q&A Record
 
-### Q1. 운영 프로젝트 확인
-- 답변: [사용자 답변]
-- 결과: [통과/차단]
+### Q1. Production Check
+- Answer: [user answer]
+- Result: enforcement level = [standard/strict]
 
-### Q2. 프로젝트 단계
-- AI 추천: [추천]
-- 사용자 답변: [답변]
-- 모드 신호: [신호]
+### Q2. Existing Code
+- AI recommendation: [rec]
+- User answer: [answer]
+- Step 0 survey: [on/off]
 
-### Q3. 적용 목적
-- AI 추천: [추천]
-- 사용자 답변: [답변]
-- 모드 신호: [신호]
+### Q3. Purpose
+- AI recommendation: [rec]
+- User answer: [answer]
 
-### Q4. 기존 자산 처리
-- 사용자 답변: [답변]
-- archive 전략: [전략]
+### Q4. Existing Asset Handling
+- User answer: [answer]
+- Archive strategy: [strategy]
 
-### Q5. 작업 형태
-- 사용자 답변: [답변]
-- 톤 조정: [조정]
+### Q5. Work Style
+- User answer: [answer]
+- Tier signal: [tier]
 
-### (선택) Q6, Q7
-[있다면 기록]
+### (Optional) Q6, Q7
+[if any]
 
-## 결정된 모드
-**MODE_XXX**
+## Configuration
+- Enforcement level: [standard / strict]
+- Step 0 survey: [on / off]
+- Starting tier: TIER_[1/2/3]
 
-## 결정 근거
-- [근거 1]
-- [근거 2]
-- [근거 3]
+## Rationale
+- [reason 1]
+- [reason 2]
+- [reason 3]
 
-## 적용 계획
-[계획 상세]
+## Setup Plan
+[gates installed + templates created]
 
-## 사용자 승인
-- 시각: YYYY-MM-DD HH:MM
-- 응답: 승인됨
+## User Approval
+- Timestamp: YYYY-MM-DD HH:MM
+- Response: Approved
 
-## 다음 단계
-AI-EXECUTION.md의 [MODE_XXX] 섹션 진행
+## Next Step
+Install enforcement gates, then proceed with AI-EXECUTION.md
 ```
 
-이 파일은 모든 모드에서 생성하며, DECISION-LOG.md에도 요약 기록.
+This file is always created, with a summary also logged in DECISION-LOG.md.
 
 ---
 
-## 6. 인터뷰 완료 후
+## 6. After the Assessment
 
 ```markdown
-## ✅ 인터뷰 완료
+## ✅ Assessment Complete
 
-### 결정
-- 모드: MODE_XXX
-- 진행: AI-EXECUTION.md 의 [MODE_XXX] 섹션
+### Configuration
+- Enforcement level: [standard/strict]
+- Proceeding with AI-EXECUTION.md
 
-### 인터뷰 결과 저장됨
-- 파일: INTERVIEW-RESULT.md
+### Assessment result saved
+- File: INTERVIEW-RESULT.md
 
-### 자율 진행 시작
+### Starting autonomous execution
 
-이제 AI-EXECUTION.md의 [MODE_XXX] 섹션을 참조하여 자율 진행합니다.
+Now proceeding autonomously with AI-EXECUTION.md under the configured enforcement level.
 
-[Phase 1부터 시작...]
+[Starting from Phase 1...]
 ```
 
 ---
 
-## 7. 인터뷰 시 자주 발생하는 상황 가이드
+## 7. Common Situations During the Interview
 
-### 상황 1: 사용자가 "잘 모르겠어요"
-
-```
-대응:
-1. AI 추천 답변을 기본값으로 채택
-2. INTERVIEW-RESULT.md에 "사용자 미결정, AI 추천 채택" 기록
-3. 다음 질문 진행
-```
-
-### 상황 2: 답변이 서로 모순
+### Situation 1: User says "I'm not sure"
 
 ```
-예: Q2=신규, Q4=archive 필요
-대응:
-1. 한 번 더 확인
-2. 사용자가 의도적이라면 그대로 진행
-3. 실수면 수정
+Response:
+1. Adopt the AI's recommended answer as default
+2. Log "user undecided, AI recommendation adopted" in INTERVIEW-RESULT.md
+3. Move to the next question
 ```
 
-### 상황 3: 운영 시그널 강한데 사용자 부정
+### Situation 2: Contradictory answers
 
 ```
-예: Dockerfile.prod 존재, .env.production 있음
-대응:
-1. 명시적 재확인:
-   "production 관련 파일들이 있는데, 정말 운영 환경이 아닌가요?
-    혹시 운영 예정인 프로젝트인가요?"
-2. 그래도 "운영 아님" 답변이면 진행
-3. INTERVIEW-RESULT.md에 "운영 시그널 발견, 사용자 부정함" 기록
+e.g. Q2=new, Q4=archive needed
+Response:
+1. Confirm once more
+2. If intentional, proceed as is
+3. If a mistake, correct it
 ```
 
-### 상황 4: 사용자가 인터뷰 중간에 마음 바꿈
+### Situation 3: Strong production signals but user denies
 
 ```
-예: Q5 답변 후 Q2 답변 수정 요청
-대응:
-1. 흔쾌히 수정
-2. INTERVIEW-RESULT.md에 변경 이력 기록
-3. 영향 받는 질문 다시 검토
+e.g. Dockerfile.prod exists, .env.production present
+Response:
+1. Explicitly re-confirm:
+   "There are production-related files — is this really not a production
+    environment? Is it perhaps a project headed for production?"
+2. If still "not production", proceed
+3. Log "production signals found, user denied" in INTERVIEW-RESULT.md
 ```
 
-### 상황 5: 패키지 부적합한 프로젝트
+### Situation 4: User changes their mind mid-assessment
 
 ```
-예: 운영 프로젝트로 판명
-또는: 통합 자체가 이득이 없어 보임 (코드 5줄짜리)
-대응:
-1. 솔직히 말함
-2. 적합하지 않은 이유 설명
-3. 대안 제시
-4. 진행 거부
+e.g. Requests to revise Q2 answer after answering Q5
+Response:
+1. Revise willingly
+2. Log the change history in INTERVIEW-RESULT.md
+3. Re-review affected questions
+```
+
+### Situation 5: Project unsuitable for the package
+
+```
+e.g. Determined to be production
+or: Integration offers no benefit (a 5-line codebase)
+Response:
+1. Say so honestly
+2. Explain why it's unsuitable
+3. Offer alternatives
+4. Decline to proceed
 ```
 
 ---
 
-## 🎯 한 줄 요약
+## 🎯 One-Line Summary
 
-> **이 인터뷰는 5-10분으로 프로젝트 상태를 정확히 파악하여, 적합한 모드(GREENFIELD/EARLY/REBUILD)를 결정하거나 운영 프로젝트를 차단합니다. 결정된 모드는 AI-EXECUTION.md에서 자율 진행됩니다.**
+> **This assessment takes 5-10 minutes to read the project context, set the enforcement level (standard/strict), and install the gates. Then AI-EXECUTION.md runs one SDD flow autonomously — no modes, universal application.**
 
 🎤
