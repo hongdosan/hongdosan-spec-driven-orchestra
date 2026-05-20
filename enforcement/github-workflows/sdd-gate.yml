@@ -1,0 +1,80 @@
+name: SDD Gate
+
+# Enforces the SDD constitution at the merge boundary.
+# Local hooks can be skipped (--no-verify); this CI gate cannot — it is the
+# backstop that makes "advisory → enforced" actually true for shared branches.
+#
+# Install: copy to .github/workflows/sdd-gate.yml and set SDD_TEST_CMD below.
+
+on:
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  sdd-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect implementation changes
+        id: impl
+        run: |
+          BASE="${{ github.event.pull_request.base.sha }}"
+          HEAD="${{ github.event.pull_request.head.sha }}"
+          CHANGED="$(git diff --name-only "$BASE" "$HEAD")"
+          if echo "$CHANGED" | grep -qE '\.(py|js|ts|tsx|jsx|go|rs|java|rb|php|c|cc|cpp|h|hpp)$'; then
+            echo "impl=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "impl=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: R1 — implementation PR must reference a spec
+        if: steps.impl.outputs.impl == 'true'
+        run: |
+          # PR body or any changed file must reference an sdd/features/<id>/01-spec.md
+          if ! find sdd/features -name '01-spec.md' 2>/dev/null | grep -q .; then
+            echo "⛔ SDD GATE (R1): implementation changes but no sdd/features/*/01-spec.md found."
+            echo "   See sdd/CONSTITUTION.md."
+            exit 1
+          fi
+
+      - name: Detect production strictness (R6)
+        id: level
+        run: |
+          if ls .env.production .env.prod docker-compose.prod.* 2>/dev/null | grep -q .; then
+            echo "level=strict" >> "$GITHUB_OUTPUT"
+          else
+            echo "level=standard" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: R3 — verification must pass
+        if: steps.impl.outputs.impl == 'true'
+        env:
+          # Set this to your project's test command.
+          SDD_TEST_CMD: ${{ vars.SDD_TEST_CMD }}
+        run: |
+          if [ -z "$SDD_TEST_CMD" ]; then
+            echo "⛔ SDD GATE (R3): repository variable SDD_TEST_CMD is not set."
+            echo "   Define it in Settings → Secrets and variables → Actions → Variables."
+            exit 1
+          fi
+          echo "Running: $SDD_TEST_CMD"
+          eval "$SDD_TEST_CMD"
+
+      - name: R7 — document synchronization
+        run: |
+          if [ -f enforcement/sync-check.sh ]; then
+            bash enforcement/sync-check.sh .
+          else
+            echo "⛔ SDD GATE (R7): enforcement/sync-check.sh missing."
+            exit 1
+          fi
+
+      - name: Gate summary
+        if: always()
+        run: |
+          echo "Enforcement level: ${{ steps.level.outputs.level }}"
+          echo "Implementation changes: ${{ steps.impl.outputs.impl }}"
+          echo "This gate is the non-bypassable backstop for the SDD constitution."
