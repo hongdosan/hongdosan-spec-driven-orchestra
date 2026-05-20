@@ -1,16 +1,20 @@
 # 🎼 Spec-Driven Orchestra
 
-> **An integrated AI coding methodology that conducts 5 powerful workflows into a single harmonious symphony.**
+> **An experimental package that aims to integrate 6 open-source AI coding methodologies into one Claude Code workflow.**
 > 
-> Apply to new, early-stage, or refactoring projects with Claude Code's AI-driven autonomous integration.
+> For new, early-stage, or refactoring projects. Claude Code interviews your project, then integrates the methodologies semi-autonomously.
+
+> [!NOTE]
+> **Status: Experimental.** This is a *proposal* for combining 6 independent tools, not a proven best practice. The individual methodologies are well-established, but their *combined* effect has not yet been measured with real-world data. Start small (see [Tiered Adoption](#-tiered-adoption)), and treat the orchestra as a hypothesis to test, not a guarantee.
 
 <p align="center">
-  🌐 <b>Language</b>: <b>English</b> | <a href="https://github.com/hongdosan/hongdosan-spec-driven-orchestra/blob/main/README-ko.md">한국어</a>
+  🌐 <b>Language</b>: <b>English</b> | <a href="./README.ko.md">한국어</a>
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Method-SDD%20Orchestra-orange?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/Instruments-5-blue?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Instruments-6-blue?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Status-Experimental-red?style=for-the-badge" />
   <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" />
   <img src="https://img.shields.io/badge/Made%20for-Claude%20Code-purple?style=for-the-badge" />
 </p>
@@ -36,17 +40,39 @@
 
 ## 🌟 What Is This?
 
-A unified AI coding methodology that orchestrates **5 powerful philosophies** into one workflow:
+**One framework — SDD — with skills it commands.** This is not six equal tools; it's a conductor (SDD) that calls skills when the work needs them, backed by enforcement gates that make the process non-optional.
 
-| Instrument | Methodology | Role |
-|---|---|---|
-| 🎼 **Conductor** | **SDD** (Spec-Driven Development) | Orchestrate the 7-step flow |
-| 🎻 **1st Violin** | **Karpathy's 4 Principles** | Enforce code quality |
-| 🎹 **Piano** | **grill-me Skill** | Remove ambiguity through dialogue |
-| 🥁 **Percussion** | **Harness Engineering** | Design verification scenarios |
-| 🎺 **Brass** | **Handoff Pattern** | Smooth transitions between work |
+**🎼 The framework (conductor):**
 
-**The Promise**: Drop the package into your project, let Claude Code interview your context, and watch as your AI coding workflow gets autonomously orchestrated.
+| | Framework | Role | Source |
+|---|---|---|---|
+| 🎼 | **SDD** (Spec-Driven Development) | The single framework. Owns the 7-step flow and the enforcement gates. | [github/spec-kit](https://github.com/github/spec-kit) |
+
+**The skills SDD calls:**
+
+| Instrument | Skill | Called during | Source |
+|---|---|---|---|
+| 🎻 **1st Violin** | **Karpathy's 4 Principles** | Implement — enforce code quality | [multica-ai](https://github.com/multica-ai/andrej-karpathy-skills) |
+| 🎹 **Piano** | **grill-me** | Any step — remove ambiguity on demand | [mattpocock/skills](https://github.com/mattpocock/skills) |
+| 🥁 **Percussion** | **Verification Design** | Verify — verification scenarios (5 categories) | Community methodology |
+| 🎺 **Brass** | **Handoff** | Handoff — smooth transitions | [mattpocock/skills](https://github.com/mattpocock/skills) |
+| 🎸 **Guitar** | **Harness** | Tasks — agent teams for large tasks (optional, external) | [revfactory/harness](https://github.com/revfactory/harness) |
+
+**The Idea**: Drop the package into your project. SDD assesses your context, runs its flow, and calls skills as needed — while enforcement gates block anything that skips a step. It applies universally (new, legacy, or production) with no modes; context only changes how strict the gates are. How much it helps still depends on your project — see [Honest Limitations](#-honest-limitations).
+
+---
+
+## 🪜 Tiered Adoption
+
+**Do not adopt everything at once.** SDD always runs, but layering on all the skills plus a 7-step flow is a lot of overhead, and piling it on a small project contradicts the very "Simplicity First" principle this package promotes. Start at the lowest tier that fits, and climb only when you feel the need.
+
+| Tier | Instruments | Best for | Overhead |
+|---|---|---|---|
+| **Tier 1 — Core** | 🎻 Karpathy's 4 + 🎹 grill-me | Any project, solo work, first day | ~5 min |
+| **Tier 2 — Flow** | + 🎼 SDD + 🎺 Handoff | When you need repeatable structure & handoffs | Moderate |
+| **Tier 3 — Full** | + 🥁 Verification Design + 🎸 Harness | Large features, team/TF work, refactoring | High |
+
+The AI interview recommends a tier based on context. You can always override it. The two most battle-tested, widely-adopted pieces (Karpathy + grill-me/Handoff) sit in Tier 1 on purpose — you get most of the value with the least cost.
 
 ---
 
@@ -83,30 +109,25 @@ Then tell it:
 
 ```
 Read AI-INTERVIEW.md and start the integration process.
-After the interview, autonomously proceed with the determined mode.
+Assess the context, install the enforcement gates, then proceed with SDD.
 ```
 
-That's it. Claude Code will interview your project for 5-10 minutes, then autonomously integrate the methodology over 10-30 minutes.
+That's it. Claude Code assesses your project for 5-10 minutes, installs the gates, then integrates SDD over 10-30 minutes.
 
 ---
 
 ## 🎯 Who Is This For?
 
-### ✅ Perfect For
+**Any project, at any stage.** There are no modes — SDD assesses context and adapts. The same flow applies whether you're starting fresh or fixing a deployed service; only the strictness of the enforcement gates changes.
 
-| Project Type | Description | Mode |
+| Project Type | What SDD does | Gate level |
 |---|---|---|
-| 🌱 **Brand New** | Just starting, 0% code | `MODE_GREENFIELD` |
-| 🌿 **Early Stage** | 1-2 weeks in, 10-30% done | `MODE_EARLY` |
-| 🔨 **Refactor TF** | Rewriting existing code from scratch | `MODE_REBUILD` |
+| 🌱 **Brand New** | Runs the flow; nothing to preserve, so gates pass easily | standard |
+| 🌿 **Early / In-Progress** | Adds a Step 0 survey before changing existing code | standard |
+| 🧱 **Legacy / Maintenance** | Survey + regression checks to preserve behavior | standard |
+| 💼 **Production Services** | Same flow, but gates become **strict** — tests & regression mandatory, non-bypassable | **strict** |
 
-### 🚫 Not For
-
-| Project Type | Why |
-|---|---|
-| 💼 **Production Services** | Real user/data risk → Auto-rejected during interview |
-
-> 💡 **Production Auto-Block**: The interview detects production signals (Dockerfile.prod, deployment configs, etc.) and refuses to apply, protecting your users.
+> 💡 **No production block.** Earlier versions refused production projects. This one doesn't — instead, detecting production signals raises the enforcement level so the existing gates become non-bypassable. Universal application, with safety scaled to risk. Legacy is supported but **not** prioritized over other contexts.
 
 ---
 
@@ -123,20 +144,20 @@ That's it. Claude Code will interview your project for 5-10 minutes, then autono
    ↓
 4. Tasks      🎼  Break down (30min-2h units)
    ↓
-5. Harness    🥁  Design verification
+5. Verify     🥁  Design verification
    ↓
 6. Implement  🎻  Karpathy's 4 Principles
    ↓
 7. Handoff    🎺  Context preservation
 ```
 
-### The 9-Step Flow (Refactor Mode)
+### When Existing Code Is Present (added steps, not a mode)
 
 ```
-0. Archaeology 🪕  Analyze existing code     ← Added
+0. Survey      🎼  Analyze existing code      ← only if existing code
 1-5. [Standard]
-5b. Regression 🥁🪕 Preserve existing behavior ← Added
-6. Implement   🎻🎷 Karpathy + Migration
+5b. Regression 🥁  Preserve existing behavior ← only if existing code
+6. Implement   🎻  Karpathy (+ migration if replacing behavior)
 7. Handoff
 ```
 
@@ -144,7 +165,7 @@ That's it. Claude Code will interview your project for 5-10 minutes, then autono
 
 | Type | When | Steps |
 |---|---|---|
-| **Full SDD** | New feature, large refactor | All 7 (or 9 for rebuild) |
+| **Full SDD** | New feature, large refactor | All 7 (+00/05b if existing code) |
 | **Mini SDD** | Small feature, bug fix | 1, 6, 7 only |
 | **No SDD** | One-liner, typo | Just Karpathy principles |
 
@@ -169,13 +190,13 @@ That's it. Claude Code will interview your project for 5-10 minutes, then autono
 │                                                    │
 │           ↓                                        │
 │                                                    │
-│  AI: Mode Decision + Single Approval               │
-│      GREENFIELD / EARLY / REBUILD / BLOCK         │
+│  AI: Assessment + Single Approval                  │
+│      enforcement level (standard/strict) + survey  │
 │                                                    │
 │           ↓                                        │
 │                                                    │
 │  AI: Autonomous Execution (10-30 min)              │
-│      Mode-specific integration, fully automatic    │
+│      one SDD flow, gates installed, fully automatic│
 │                                                    │
 │           ↓                                        │
 │                                                    │
@@ -194,12 +215,13 @@ hongdosan-spec-driven-orchestra/
 ├── README.ko.md                 # Korean version
 ├── LICENSE                      # MIT
 │
-└── symphony/                    # The methodology package
+└── symphony/                    # The methodology package (English default + Korean .ko.md)
     ├── README.md                # Package overview
     ├── AI-INTERVIEW.md          # 🎤 Interview entry point
-    ├── AI-EXECUTION.md          # 🛠️ Mode-specific execution
+    ├── AI-EXECUTION.md          # 🛠️ Single SDD execution flow
     ├── ORCHESTRA-GUIDE.md       # 🎼 5-instrument guide
-    └── INTEGRATION-CHECKLIST.md # ✅ Verification checklists
+    ├── INTEGRATION-CHECKLIST.md # ✅ Verification checklists
+    └── *.ko.md                  # Korean counterpart of each file above
 ```
 
 ### File Purposes
@@ -211,6 +233,8 @@ hongdosan-spec-driven-orchestra/
 | `symphony/AI-EXECUTION.md` | AI | After interview |
 | `symphony/ORCHESTRA-GUIDE.md` | Humans + AI | During usage |
 | `symphony/INTEGRATION-CHECKLIST.md` | Humans | Day 0/7/30 verification |
+
+> **Bilingual**: every `symphony/*.md` is English by default and has a Korean counterpart `*.ko.md`. To work in Korean, copy the `.ko.md` files renaming them to `.md` (so Claude Code recognizes the entry filename). Korean users can also start from [README.ko.md](./README.ko.md).
 
 ---
 
@@ -225,46 +249,48 @@ your-project/
 ├── INTEGRATION-REPORT.md        # Integration result
 ├── INTERVIEW-RESULT.md          # Interview record
 │
-├── .claude/skills/              # 5 AI Skills
+├── .claude/skills/              # 5 AI Skills generated by this package
 │   ├── grill-me/                # 🎹 Clarification
 │   ├── sdd-conductor/           # 🎼 Conductor
 │   ├── karpathy-enforcer/       # 🎻 Quality enforcer
 │   ├── harness-builder/         # 🥁 Verification designer
 │   └── handoff-writer/          # 🎺 Handoff writer
+│                                # 🎸 Harness (agent teams) = external plugin
 │
 └── sdd/                         # 🎼 SDD-centric directory
-    ├── CONSTITUTION.md          # Project constitution
-    ├── ORCHESTRA.md             # Symphony guide
+    ├── CONSTITUTION.md          # Enforcement rules R1–R7 (gates read this)
+    ├── ORCHESTRA.md             # Skills guide
     ├── README.md                # SDD overview
-    ├── templates/               # Step templates
+    ├── templates/               # Step templates (01~07, +00/05b when needed)
     └── features/                # Feature work (F001, F002, ...)
+
+.claude/hooks/                   # ⛔ Enforcement (installed from enforcement/)
+├── pre-implement.sh             # blocks code without spec+plan (R1,R2)
+└── post-task.sh                 # warns on missing handoff (R5)
+.git/hooks/pre-commit            # blocks commit without passing tests (R3,R4,R6)
+.github/workflows/sdd-gate.yml   # non-bypassable merge gate (R1,R3,R6,R7)
 ```
 
-### Mode-Specific Additions
+### Context Additions (not modes)
 
-#### 🌱 MODE_GREENFIELD
-- `sdd/templates/` 7 files (01~07)
-- First SDD: `F000-bootstrap`
+The same flow adapts to what it finds — no `MODE_*` branching:
 
-#### 🌿 MODE_EARLY
-- `sdd/templates/` 7 files
-- `archive/` (legacy assets backup if any)
-- First SDD: `F000-integration`
+- **Existing code present** → a `00-survey.md` precedes Specify; `05b-regression.md` is required before commit (R4).
+- **Production signals detected** → `ENFORCEMENT_LEVEL=strict`; tests & regression become non-bypassable (R6).
+- **Greenfield** → same flow and gates, but nothing to preserve, so they pass easily.
 
-#### 🔨 MODE_REBUILD
-- `sdd/templates/` 9 files (00, 01~07, 05b added)
-- `archive/legacy/` (full backup of existing code)
-- 2 additional skills (`code-archaeologist`, `migration-strategist`)
-- First SDD: `F000-rebuild-plan`
+Nothing here is a mode you pick — SDD reads the context and adjusts strictness automatically.
 
 ---
 
 ## 🌟 Key Features
 
-### 🤖 Autonomous AI Execution
-- Single user approval after interview
-- Unlimited time/tokens
-- All decisions automatically logged
+### ⛔ Enforced, Not Advised
+- Spec/plan missing → implement blocked (R1, R2)
+- Tests not passing → commit blocked (R3)
+- Existing behavior at risk → regression required (R4)
+- Production context → gates non-bypassable (R6)
+- Docs out of sync → merge blocked (R7)
 
 ### 🔍 Interview-Based Adaptation
 - 5-7 questions for context understanding
@@ -272,7 +298,7 @@ your-project/
 - Mode determined automatically
 
 ### 🛡️ Safety First
-- **Production projects auto-blocked**
+- **Production → strict gates, not blocked** (non-bypassable tests)
 - Existing assets backed up to `archive/`
 - Global settings (`~/.claude/`) untouched
 - Easy Git rollback
@@ -291,15 +317,43 @@ your-project/
 
 ## 📚 Built On
 
-This methodology synthesizes 5 brilliant works:
+This package integrates 6 independent works. Their maturity varies — shown qualitatively below so you can judge each for yourself (check the live star counts on each repo, as they change over time):
 
-| Methodology | Source | License |
-|---|---|---|
-| **Spec Kit** (SDD) | [github/spec-kit](https://github.com/github/spec-kit) | MIT |
-| **Karpathy Guidelines** | [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) | MIT |
-| **grill-me Skill** | [mattpocock/skills](https://github.com/mattpocock/skills) | MIT |
-| **Harness Engineering** | Community methodology | - |
-| **Handoff Pattern** | Community methodology | - |
+| Methodology | Source | License | Maturity |
+|---|---|---|---|
+| **Spec Kit** (SDD) | [github/spec-kit](https://github.com/github/spec-kit) | MIT | Established (GitHub-official) |
+| **Karpathy Guidelines** | [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) | MIT | Established |
+| **grill-me Skill** | [mattpocock/skills](https://github.com/mattpocock/skills) | MIT | Established |
+| **Handoff Skill** | [mattpocock/skills](https://github.com/mattpocock/skills) | MIT | Established |
+| **Verification Design** | Community methodology | - | Generic practice, no single repo |
+| **Harness** | [revfactory/harness](https://github.com/revfactory/harness) | Apache-2.0 | Widely adopted, actively maintained |
+
+> [!NOTE]
+> All five repo-backed pieces are actively adopted open-source projects. **Harness** is the newest of them and depends on Claude Code's *experimental* Agent Teams feature (`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`). Its reported "+60% quality" figure comes from **the author's own paper (Hwang, 2026)** and has not been independently reproduced — credible, but worth verifying for your own use case. Star counts change over time; check each repository for current numbers.
+
+---
+
+## 🎸 Why a 6th Instrument?
+
+Five of the instruments help **a single agent work better** (spec, clarify, quality, verify, handoff). Harness is different in kind: it helps **split one big task across a team of agents**. That difference is exactly why it is the *optional* 6th, gated behind Tier 3 and a single condition:
+
+> Bring in Harness only when a task is genuinely too large for one agent — e.g. work that splits into clear specialties (frontend / backend / QA), or a large research-and-build effort.
+
+Honesty about it: Harness is **not generated by this package** (it's an external plugin, `revfactory/harness`), it is the **newest** of the six and relies on an **experimental** Claude Code feature (`AGENT_TEAMS=1`). For most projects you will never need it, and the orchestra works fine as a "quintet + optional guest". It's included because agent-team design is a real, actively-adopted approach that maps cleanly onto SDD's task-breakdown step — but it earns its place only when the work demands it.
+
+---
+
+## ⚖️ Honest Limitations
+
+A fair README states where it might *not* help:
+
+- **Unproven in combination.** Each tool is individually credible, but the claim that combining all 6 produces compounding benefit is a hypothesis, not a measured result. No usage data is published yet.
+- **Overhead is real.** The full flow can slow down small or trivial work. This is why [Tiered Adoption](#-tiered-adoption) exists — using everything everywhere would violate the Karpathy "Simplicity First" principle the package itself preaches.
+- **Agent compliance isn't guaranteed.** Claude Code may skip steps, fill templates without substance, or drift from `CONSTITUTION.md` over long sessions. The skills nudge it, but an LLM's probabilistic nature means 100% adherence is impossible.
+- **Tool frictions exist.** The pieces can pull against each other — e.g. grill-me's relentless questioning vs a "move fast" priority. When they conflict, prefer the lower tier and the user's explicit intent.
+- **Narrow scope by design.** Production projects are intentionally blocked (see FAQ). That's safer, but it also means the package can't help with the day-to-day improvement of live services — often where help is most wanted.
+
+If any of these outweigh the benefit for you, use only Tier 1, or skip the package entirely. That's a valid outcome.
 
 ---
 
@@ -315,7 +369,7 @@ Adaptations for Cursor, Cline, Aider are planned. Contributions welcome!
 <details>
 <summary><b>Q: How is this different from just using Spec Kit?</b></summary>
 
-Spec Kit is one of the 5 instruments here. Spec-Driven Orchestra integrates Spec Kit (as conductor) with 4 other methodologies for a complete workflow.
+Spec Kit *is* SDD — the framework itself. Spec-Driven Orchestra makes SDD the conductor and adds 5 skills it can call (Karpathy, grill-me, Verification, Handoff, Harness) plus enforcement gates that make the flow non-optional.
 </details>
 
 <details>
@@ -391,10 +445,10 @@ Since `CLAUDE.md` auto-loads, team members applying Claude Code automatically ge
 ## 🛣️ Roadmap
 
 ### Recently Shipped (v2)
-- ✅ AI-interview-based mode determination
-- ✅ 3 modes (GREENFIELD/EARLY/REBUILD)
-- ✅ Production project auto-blocking
-- ✅ 5 + 2 specialized skills
+- ✅ Context-based dynamic assessment (no modes)
+- ✅ Enforcement gates (R1–R7)
+- ✅ Universal application (new/legacy/production)
+- ✅ 5 skills under SDD
 - ✅ Archive backup strategy
 - ✅ Bilingual documentation (English + Korean)
 
@@ -406,7 +460,7 @@ Since `CLAUDE.md` auto-loads, team members applying Claude Code automatically ge
 ### Planned
 - 📋 Additional language docs (Chinese, Japanese)
 - 📋 Video tutorial
-- 📋 More modes (e.g., `MODE_MICROSERVICE`)
+- 📋 More enforcement gate templates (per-language test runners)
 - 📋 Quantitative effectiveness metrics
 - 📋 Team adoption playbook
 
