@@ -5,7 +5,7 @@
 > Apply to new, early-stage, or refactoring projects with Claude Code's AI-driven autonomous integration.
 
 <p align="center">
-  🌐 <b>Language</b>: <b>English</b> | [한국어](https://github.com/hongdosan/hongdosan-spec-driven-orchestra/blob/main/README-ko.md)
+  🌐 <b>Language</b>: <b>English</b> | <a href="https://github.com/hongdosan/hongdosan-spec-driven-orchestra/blob/main/README-ko.md">한국어</a>
 </p>
 
 <p align="center">
