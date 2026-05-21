@@ -341,7 +341,7 @@ You survey existing code. Excavate the intent buried in it.
 3. Trap identification — invisible side effects, implicit assumptions, breakage risks
 
 ## Output
-Write `sdd/features/F[ID]/00-survey.md` (see template below).
+Write `specs/<branch>/survey.md` (see template below).
 ```
 
 ### Migration skill (Implement, when replacing behavior)
@@ -367,18 +367,18 @@ You plan gradual transition.
 3. Branch by Abstraction — introduce an abstraction layer, swap implementations
 
 ## Output
-Specify the chosen migration strategy in `06-implementation-notes.md`.
+Specify the chosen migration strategy in `implementation-notes.md`.
 ```
 
-### `sdd/templates/00-survey.md`
+### `specs/<branch>/survey.md`
 
 ```markdown
-# Survey - F[ID]
+# Survey
 
 > SDD Step 0 (existing code only): understand before changing.
 
 ## Metadata
-- **ID**: F[ID]
+- **Branch**: <NNN-slug>
 - **Method**: code-archaeologist skill + grill-me
 - **Date**: YYYY-MM-DD
 
@@ -401,7 +401,7 @@ Specify the chosen migration strategy in `06-implementation-notes.md`.
 - Internal: [inter-module calls]
 
 ## 5. Behavior to Preserve (Regression targets)
-Feeds 05b-regression.md:
+Feeds regression.md:
 - [ ] **B1**: [behavior to preserve]
 - [ ] **B2**: [behavior to preserve]
 
@@ -419,23 +419,23 @@ Feeds 05b-regression.md:
 |---|---|---|
 
 ## 10. Next Step
-- [ ] Write 01-spec.md
+- [ ] run /speckit.specify (spec.md)
 ```
 
-### `sdd/templates/05b-regression.md`
+### `specs/<branch>/regression.md`
 
 ```markdown
-# Regression Tests - F[ID]
+# Regression Tests
 
 > SDD Step 5b (existing code only): verify existing behavior survives the change.
-> Required by R4 whenever 00-survey.md exists.
+> Required by R4 whenever survey.md exists.
 
 ## Metadata
-- **ID**: F[ID]
-- **References 00-survey.md**: ✅
+- **Branch**: <NNN-slug>
+- **References survey.md**: ✅
 
 ## 1. Regression Targets
-Bring over "Behavior to Preserve (B1, B2, ...)" from 00-survey.md:
+Bring over "Behavior to Preserve (B1, B2, ...)" from survey.md:
 
 ### B1: [behavior name]
 - **Existing behavior**: [behavior in archive/legacy/]
@@ -460,239 +460,39 @@ Bring over "Behavior to Preserve (B1, B2, ...)" from 00-survey.md:
 \`\`\`
 
 ## 4. New Code Additional Verification
-Apply the standard 5 categories from 05-verify.md to new features.
+New-feature verification lives in spec.md (acceptance/success criteria) and tasks.md (tests).
 
 ## 5. Decision Log
 | Time | Decision | Rationale |
 |---|---|---|
 
 ## 6. Next Step
-- [ ] 06-implementation-notes.md (implement + migration-strategist)
+- [ ] implementation-notes.md (implement + migration-strategist)
 ```
 
-## 📋 Appendix A: The 7 Standard Templates
+## 📋 Appendix A: This package's added templates
 
-Always used (00 and 05b are added only when existing code is present)
+spec-kit provides `spec.md`, `plan.md`, `tasks.md`, `checklist`, and `constitution`
+via `specify init` — we do not reproduce them here (Rule R). Below are only the
+artifacts this package adds, written into `specs/<branch>/` when relevant. (Survey and
+regression templates are in the "Existing-Code Skills" section above.)
 
-### `sdd/templates/01-spec.md`
-
-```markdown
-# Spec - F[ID] [feature name]
-
-> SDD Phase 1: Specify
-
-## Metadata
-- **ID**: F[ID]
-- **Name**: [feature name]
-- **Date**: YYYY-MM-DD
-- **Status**: Draft | InProgress | Done
-
-## 1. What
-[what to build/change]
-
-### User Scenario
-[who, in what situation]
-
-### Scope
-**In**: [in scope]
-**Out**: [out of scope]
-
-## 2. Why
-### Problem
-[current problem]
-
-### Value
-[value gained]
-
-## 3. Constitution Compliance
-- [ ] [relevant clause]
-
-## 4. Related
-- Previous: [F00X]
-- Depends on: [F00X]
-
-## 5. Decision Log
-| Time | Decision | Rationale |
-|---|---|---|
-
-## 6. Next Step
-- [ ] 02-clarify.md
-```
-
-### `sdd/templates/02-clarify.md`
+### `specs/<branch>/implementation-notes.md`
 
 ```markdown
-# Clarify - F[ID]
+# Implementation Notes
 
-> SDD Phase 2: Clarify (grill-me)
-
-## 1. Trigger
-\`\`\`
-"grill me - F[ID] clarify"
-\`\`\`
-
-## 2. Q&A Record
-
-### Round 1
-- **Q**:
-- **AI rec**:
-- **A**:
-
-## 3. Decision Summary
-- [decision 1]
-- [decision 2]
-
-## 4. Undecided
-- [ ] [undecided 1] → [handling plan]
-
-## 5. Spec Updates
-- [ ] [update]
-
-## 6. Decision Log
-| Time | Decision | Rationale |
-|---|---|---|
-
-## 7. Next Step
-- [ ] 03-plan.md
-```
-
-### `sdd/templates/03-plan.md`
-
-```markdown
-# Plan - F[ID]
-
-> SDD Phase 3: Plan
-
-## 1. Tech Selection
-| Tech | Reason | Alternative |
-|---|---|---|
-
-## 2. Architecture
-[diagram]
-
-## 3. Affected Areas
-| File | Change type |
-|---|---|
-
-## 4. Karpathy Pre-Check
-- Simplicity: expected X lines
-- Surgical: [scope]
-
-## 5. Risks
-- [risk]: [mitigation]
-
-## 6. Decision Log
-| Time | Decision | Rationale |
-|---|---|---|
-
-## 7. Next Step
-- [ ] 04-tasks.md
-```
-
-### `sdd/templates/04-tasks.md`
-
-```markdown
-# Tasks - F[ID]
-
-> SDD Phase 4: Tasks
-
-## 1. Task List
-
-### T1: [task name]
-- **Estimate**: 30 min
-- **Files**: [list]
-- **Verification**: [criteria]
-- **Dependencies**: [if any]
-
-### T2: ...
-
-## 2. Dependency Diagram
-\`\`\`
-T1 → T2
-\`\`\`
-
-## 3. Parallel Groups
-- A: T1, T2
-- B (after A): T3
-
-## 4. Agent Team (optional — 🎸 Harness)
-> Only if a task is too large for a single agent.
-> [Harness](https://github.com/revfactory/harness) designs domain-specific
-> agent teams and generates their skills. Trigger: "Build a harness for this project".
-> Pattern: [ Pipeline | Fan-out/Fan-in | Expert Pool | Producer-Reviewer | Supervisor | Hierarchical Delegation ]
-- Needed? [ yes / no ]
-- If yes → team composition: [e.g. analyst + builder + qa]
-
-## 5. Decision Log
-| Time | Decision | Rationale |
-|---|---|---|
-
-## 6. Next Step
-- [ ] 05-verify.md
-```
-
-### `sdd/templates/05-verify.md`
-
-```markdown
-# Verification - F[ID]
-
-> SDD Phase 5: Verification
-
-## 1. Trigger
-\`\`\`
-"grill me - F[ID] verification design"
-\`\`\`
-
-## 2. Verification Scenarios
-
-### 2.1 Happy Path
-- [ ] **H1**: [normal] → [expected]
-
-### 2.2 Sad Path
-- [ ] **H2**: [failure] → [expected rejection]
-
-### 2.3 Edge Cases
-- [ ] **H3**: [boundary] → [behavior]
-
-### 2.4 Adversarial
-- [ ] **H4**: [attack] → [defense]
-
-### 2.5 Performance
-- [ ] **H5**: [load] → [performance]
-
-## 3. Verification Methods
-| H | Method | Auto/Manual |
-|---|---|---|
-
-## 4. Pass Criteria
-- Required: H1, H2, H3
-- Recommended: H4
-- Optional: H5
-
-## 5. Decision Log
-| Time | Decision | Rationale |
-|---|---|---|
-
-## 6. Next Step
-- [ ] Start implementation
-```
-
-### `sdd/templates/06-implementation-notes.md`
-
-```markdown
-# Implementation Notes - F[ID]
-
-> SDD Phase 6: Implement (Karpathy's 4)
+> Written during /speckit.implement. Karpathy guardrails + verification mapping.
 
 ## 1. Karpathy Self-Check
 
 ### Think Before Coding
 - [ ] Assumptions stated?
-- [ ] No unresolved items in 02-clarify.md?
-- [ ] Mappable to 05-verify.md?
+- [ ] No unresolved clarifications in spec.md?
+- [ ] Mappable to spec.md acceptance criteria / tasks.md tests?
 
 ### Simplicity First
-- 03-plan.md estimate: X lines
+- plan.md estimate: X lines
 - Actual: Y lines
 - Difference: [analysis]
 
@@ -701,7 +501,7 @@ T1 → T2
 - Actual changes: [list]
 
 ### Goal-Driven
-- 05-verify.md mapping: H[X] → implementation
+- spec.md/tasks.md mapping: [criterion] → implementation
 
 ## 2. Task Progress
 
@@ -716,28 +516,26 @@ T1 → T2
 | H1 | ✅ | |
 
 ## 4. Additional Work Found
-- [extra]: split into F[XXX]
+- [extra]: split into a new feature branch
 
 ## 5. Decision Log
 | Time | Decision | Rationale |
 |---|---|---|
 
 ## 6. Next Step
-- [ ] All required verifications pass
-- [ ] 07-handoff.md
+- [ ] All required tests pass
+- [ ] handoff.md
 ```
 
-### `sdd/templates/07-handoff.md`
+### `specs/<branch>/handoff.md`
 
 ```markdown
-# Handoff - F[ID]
+# Handoff
 
-> SDD Phase 7: Handoff (grill-me)
+> Written by the handoff skill so the next session has context.
 
-## 1. Trigger
-\`\`\`
-"grill me - F[ID] handoff"
-\`\`\`
+## 1. How to run
+(run the handoff skill on this feature branch)
 
 ## 2. One-Line Summary
 [one sentence]
@@ -753,7 +551,7 @@ T1 → T2
 - ❌ [item]: [reason]
 
 ## 4. Key Decisions
-- [decision]: → 02-clarify.md
+- [decision] (recorded in spec.md)
 
 ## 5. Known Issues
 - 🐛 [issue]: [status]
@@ -762,13 +560,11 @@ T1 → T2
 ### Immediate
 - [ ] [todo]
 
-### As a new SDD
-- [ ] F[XXX]: [content]
+### As a new feature
+- [ ] new branch: [content]
 
 ## 7. References
-- 01-spec.md: what/why
-- 02-clarify.md: decisions
-- 03-plan.md: tech
+- specs/<branch>/spec.md, plan.md, tasks.md
 - code: [PR/commit]
 
 ## 8. Decision Log
@@ -776,7 +572,7 @@ T1 → T2
 |---|---|---|
 
 ## 9. Cycle Closeout
-- [ ] All 7 steps reviewed
+- [ ] All steps reviewed
 - [ ] PR/merge complete
 - [ ] DECISION-LOG.md updated
 ```
@@ -827,7 +623,7 @@ At the end of each SDD cycle:
 - **Key decisions**:
 - **Known issues**:
 - **Next SDD**:
-- **Details**: sdd/features/F[ID]/
+- **Details**: specs/<branch>/
 \`\`\`
 ```
 
@@ -856,7 +652,7 @@ See: INTERVIEW-RESULT.md
 - 5 .claude/skills/
 
 ### Context Additions
-[00-survey.md, 05b-regression.md — only if existing code present]
+[survey.md, regression.md — only if existing code present]
 
 ## Existing Assets Handled
 | Old location | Handling | New location |
@@ -868,7 +664,7 @@ Day 0 verification: see INTEGRATION-CHECKLIST.md
 ## Next Actions
 1. Read CLAUDE.md
 2. Understand ORCHESTRA-GUIDE.md
-3. Look at sdd/features/F000-XXX/
+3. Look at specs/<branch>/
 4. Try the first real SDD cycle
 
 ## Rollback Method

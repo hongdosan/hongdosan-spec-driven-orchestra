@@ -338,7 +338,7 @@ description: |
 3. 함정 식별 — 보이지 않는 부작용, 암묵적 가정, 깨질 위험
 
 ## 산출물
-`sdd/features/F[ID]/00-survey.md` 작성 (아래 템플릿 참조).
+`specs/<branch>/survey.md` 작성 (아래 템플릿 참조).
 ```
 
 ### 마이그레이션 스킬 (Implement, 동작 교체 시)
@@ -364,18 +364,18 @@ description: |
 3. Branch by Abstraction — 추상화 계층 도입, 구현 교체
 
 ## 산출물
-선택한 마이그레이션 전략을 `06-implementation-notes.md`에 명시.
+선택한 마이그레이션 전략을 `implementation-notes.md`에 명시.
 ```
 
-### `sdd/templates/00-survey.md`
+### `specs/<branch>/survey.md`
 
 ```markdown
-# Survey - F[ID]
+# Survey
 
 > SDD Step 0 (기존 코드 전용): 바꾸기 전에 이해.
 
 ## 메타데이터
-- **ID**: F[ID]
+- **Branch**: <NNN-slug>
 - **방법**: code-archaeologist 스킬 + grill-me
 - **일자**: YYYY-MM-DD
 
@@ -398,7 +398,7 @@ description: |
 - 내부: [모듈 간 호출]
 
 ## 5. 보존해야 할 동작 (회귀 대상)
-05b-regression.md의 입력:
+regression.md의 입력:
 - [ ] **B1**: [보존할 동작]
 - [ ] **B2**: [보존할 동작]
 
@@ -416,23 +416,23 @@ description: |
 |---|---|---|
 
 ## 10. 다음 단계
-- [ ] 01-spec.md 작성
+- [ ] /speckit.specify 실행 (spec.md)
 ```
 
-### `sdd/templates/05b-regression.md`
+### `specs/<branch>/regression.md`
 
 ```markdown
-# Regression Tests - F[ID]
+# Regression Tests
 
 > SDD Step 5b (기존 코드 전용): 변경 후에도 기존 동작이 살아있는지 검증.
-> 00-survey.md가 있으면 R4가 강제.
+> survey.md가 있으면 R4가 강제.
 
 ## 메타데이터
-- **ID**: F[ID]
-- **00-survey.md 참조**: ✅
+- **Branch**: <NNN-slug>
+- **survey.md 참조**: ✅
 
 ## 1. 회귀 대상
-00-survey.md의 "보존할 동작 (B1, B2, ...)"을 가져와서:
+survey.md의 "보존할 동작 (B1, B2, ...)"을 가져와서:
 
 ### B1: [동작 이름]
 - **기존 동작**: [archive/legacy/의 동작]
@@ -457,238 +457,37 @@ description: |
 \`\`\`
 
 ## 4. 새 코드 추가 검증
-새 기능에는 05-verify.md의 표준 5대 카테고리 적용.
+새 기능 검증은 spec.md(수용/성공기준)와 tasks.md(테스트)에 있습니다.
 
 ## 5. 결정 로그
 | 시각 | 결정 | 근거 |
 |---|---|---|
 
 ## 6. 다음 단계
-- [ ] 06-implementation-notes.md (구현 + migration-strategist)
+- [ ] implementation-notes.md (구현 + migration-strategist)
 ```
-## 📋 부록 A: 표준 7개 템플릿
+## 📋 부록 A: 이 패키지가 더하는 템플릿
 
-항상 사용 (00, 05b는 기존 코드가 있을 때만 추가)
+spec-kit이 `spec.md`·`plan.md`·`tasks.md`·`checklist`·`constitution`을 `specify init`으로
+제공합니다 — 여기서 다시 만들지 않습니다(규칙 R). 아래는 이 패키지가 *추가하는* 산출물만이며,
+필요 시 `specs/<branch>/`에 작성됩니다. (survey·regression 템플릿은 위 "기존 코드 스킬" 섹션에 있습니다.)
 
-### `sdd/templates/01-spec.md`
+### `specs/<branch>/implementation-notes.md`
 
 ```markdown
-# Spec - F[ID] [기능명]
+# Implementation Notes
 
-> SDD Phase 1: Specify
-
-## 메타데이터
-- **ID**: F[ID]
-- **이름**: [기능명]
-- **작성일**: YYYY-MM-DD
-- **상태**: Draft | InProgress | Done
-
-## 1. What
-[무엇을 만들/바꾸는지]
-
-### 사용자 시나리오
-[누가, 어떤 상황에서]
-
-### 범위
-**포함**: [범위 내]
-**제외**: [범위 밖]
-
-## 2. Why
-### 문제
-[현재 문제]
-
-### 가치
-[얻는 가치]
-
-## 3. Constitution 준수
-- [ ] [관련 조항]
-
-## 4. 관련
-- 이전: [F00X]
-- 의존: [F00X]
-
-## 5. Decision Log
-| 시각 | 결정 | 근거 |
-|---|---|---|
-
-## 6. 다음 단계
-- [ ] 02-clarify.md
-```
-
-### `sdd/templates/02-clarify.md`
-
-```markdown
-# Clarify - F[ID]
-
-> SDD Phase 2: Clarify (grill-me)
-
-## 1. 발동
-\`\`\`
-"grill me - F[ID] 명확화"
-\`\`\`
-
-## 2. Q&A 기록
-
-### Round 1
-- **Q**: 
-- **AI 추천**: 
-- **A**: 
-
-## 3. 결정 요약
-- [결정 1]
-- [결정 2]
-
-## 4. 미결정
-- [ ] [미결정 1] → [처리 방안]
-
-## 5. Spec 갱신 사항
-- [ ] [갱신]
-
-## 6. Decision Log
-| 시각 | 결정 | 근거 |
-|---|---|---|
-
-## 7. 다음 단계
-- [ ] 03-plan.md
-```
-
-### `sdd/templates/03-plan.md`
-
-```markdown
-# Plan - F[ID]
-
-> SDD Phase 3: Plan
-
-## 1. 기술 선택
-| 기술 | 이유 | 대안 |
-|---|---|---|
-
-## 2. 아키텍처
-[다이어그램]
-
-## 3. 영향 받는 영역
-| 파일 | 변경 유형 |
-|---|---|
-
-## 4. Karpathy 사전 점검
-- Simplicity: 예상 X줄
-- Surgical: [범위]
-
-## 5. 위험 요소
-- [리스크]: [대응]
-
-## 6. Decision Log
-| 시각 | 결정 | 근거 |
-|---|---|---|
-
-## 7. 다음 단계
-- [ ] 04-tasks.md
-```
-
-### `sdd/templates/04-tasks.md`
-
-```markdown
-# Tasks - F[ID]
-
-> SDD Phase 4: Tasks
-
-## 1. Task List
-
-### T1: [작업명]
-- **예상**: 30분
-- **파일**: [목록]
-- **검증**: [기준]
-- **의존성**: [있다면]
-
-### T2: ...
-
-## 2. 의존성 다이어그램
-\`\`\`
-T1 → T2
-\`\`\`
-
-## 3. 병렬 그룹
-- A: T1, T2
-- B (A 후): T3
-
-## 4. 에이전트 팀 (선택 — 🎸 Harness)
-> 단일 에이전트로 벅찬 작업일 때만.
-> [Harness](https://github.com/revfactory/harness)는 도메인별 에이전트 팀을
-> 설계하고 그들의 스킬을 생성합니다. 트리거: "Build a harness for this project".
-> 패턴: [ Pipeline | Fan-out/Fan-in | Expert Pool | Producer-Reviewer | Supervisor | Hierarchical Delegation ]
-- 필요? [ 예 / 아니오 ]
-- 예이면 → 팀 구성: [예: analyst + builder + qa]
-
-## 5. Decision Log
-| 시각 | 결정 | 근거 |
-|---|---|---|
-
-## 6. 다음 단계
-- [ ] 05-verify.md
-```
-
-### `sdd/templates/05-verify.md`
-
-```markdown
-# Verification - F[ID]
-
-> SDD Phase 5: Verification
-
-## 1. 발동
-\`\`\`
-"grill me - F[ID] 검증 설계"
-\`\`\`
-
-## 2. 검증 시나리오
-
-### 2.1 Happy Path
-- [ ] **H1**: [정상] → [기대]
-
-### 2.2 Sad Path
-- [ ] **H2**: [실패] → [기대 거부]
-
-### 2.3 Edge Cases
-- [ ] **H3**: [경계] → [동작]
-
-### 2.4 Adversarial
-- [ ] **H4**: [공격] → [방어]
-
-### 2.5 Performance
-- [ ] **H5**: [부하] → [성능]
-
-## 3. 검증 방법
-| H | 방법 | 자동/수동 |
-|---|---|---|
-
-## 4. 통과 기준
-- 필수: H1, H2, H3
-- 권장: H4
-- 선택: H5
-
-## 5. Decision Log
-| 시각 | 결정 | 근거 |
-|---|---|---|
-
-## 6. 다음 단계
-- [ ] 구현 시작
-```
-
-### `sdd/templates/06-implementation-notes.md`
-
-```markdown
-# Implementation Notes - F[ID]
-
-> SDD Phase 6: Implement (Karpathy 4원칙)
+> /speckit.implement 중 작성. Karpathy 가드레일 + 검증 매핑.
 
 ## 1. Karpathy 자기 점검
 
 ### Think Before Coding
 - [ ] 가정 명시?
-- [ ] 02-clarify.md 미결정 없음?
-- [ ] 05-verify.md 매핑 가능?
+- [ ] spec.md 미해결 명확화 없음?
+- [ ] spec.md 수용기준 / tasks.md 테스트에 매핑 가능?
 
 ### Simplicity First
-- 03-plan.md 예상: X줄
+- plan.md 예상: X줄
 - 실제: Y줄
 - 차이: [분석]
 
@@ -697,43 +496,41 @@ T1 → T2
 - 변경 실제: [목록]
 
 ### Goal-Driven
-- 05-verify.md 매핑: H[X] → 구현
+- spec.md/tasks.md 매핑: [기준] → 구현
 
 ## 2. Task 진행
 
 ### T1
 - **상태**: Done
 - **소요**: X분 / 실제 Y분
-- **검증**: H[X] ✅
+- **검증**: ✅
 
 ## 3. 검증
-| H | 통과 | 비고 |
+| 기준 | 통과 | 비고 |
 |---|---|---|
 | H1 | ✅ | |
 
 ## 4. 발견된 추가 작업
-- [추가]: F[XXX]로 분리
+- [추가]: 새 feature 브랜치로 분리
 
 ## 5. Decision Log
 | 시각 | 결정 | 근거 |
 |---|---|---|
 
 ## 6. 다음 단계
-- [ ] 모든 필수 검증 통과
-- [ ] 07-handoff.md
+- [ ] 모든 필수 테스트 통과
+- [ ] handoff.md
 ```
 
-### `sdd/templates/07-handoff.md`
+### `specs/<branch>/handoff.md`
 
 ```markdown
-# Handoff - F[ID]
+# Handoff
 
-> SDD Phase 7: Handoff (grill-me)
+> handoff 스킬이 작성해 다음 세션에 컨텍스트를 남깁니다.
 
-## 1. 발동
-\`\`\`
-"grill me - F[ID] 핸드오프"
-\`\`\`
+## 1. 실행 방법
+(이 feature 브랜치에서 handoff 스킬 실행)
 
 ## 2. 한 줄 요약
 [1문장]
@@ -749,7 +546,7 @@ T1 → T2
 - ❌ [항목]: [이유]
 
 ## 4. 주요 결정
-- [결정]: → 02-clarify.md
+- [결정] (spec.md에 기록)
 
 ## 5. 알려진 이슈
 - 🐛 [이슈]: [상태]
@@ -758,13 +555,11 @@ T1 → T2
 ### 즉시
 - [ ] [할 일]
 
-### 새 SDD로
-- [ ] F[XXX]: [내용]
+### 새 feature로
+- [ ] 새 브랜치: [내용]
 
 ## 7. 참고
-- 01-spec.md: 무엇/왜
-- 02-clarify.md: 결정
-- 03-plan.md: 기술
+- specs/<branch>/spec.md, plan.md, tasks.md
 - 코드: [PR/커밋]
 
 ## 8. Decision Log
@@ -772,7 +567,7 @@ T1 → T2
 |---|---|---|
 
 ## 9. 사이클 종료
-- [ ] 7단계 검토 완료
+- [ ] 모든 단계 검토 완료
 - [ ] PR/머지 완료
 - [ ] DECISION-LOG.md 갱신
 ```
@@ -823,7 +618,7 @@ T1 → T2
 - **주요 결정**: 
 - **알려진 이슈**: 
 - **다음 SDD**: 
-- **상세**: sdd/features/F[ID]/
+- **상세**: specs/<branch>/
 \`\`\`
 ```
 
@@ -852,7 +647,7 @@ YYYY-MM-DD HH:MM
 - .claude/skills/ 5개
 
 ### 컨텍스트 추가
-[00-survey.md, 05b-regression.md — 기존 코드 있을 때만]
+[survey.md, regression.md — 기존 코드 있을 때만]
 
 ## 처리된 기존 자산
 | 구 위치 | 처리 | 새 위치 |
@@ -864,7 +659,7 @@ Day 0 검증 진행: INTEGRATION-CHECKLIST.ko.md 참조
 ## 다음 액션
 1. CLAUDE.md 정독
 2. ORCHESTRA-GUIDE.ko.md 이해
-3. sdd/features/F000-XXX/ 살펴보기
+3. specs/<branch>/ 살펴보기
 4. 첫 실전 SDD 사이클 시도
 
 ## 롤백 방법
