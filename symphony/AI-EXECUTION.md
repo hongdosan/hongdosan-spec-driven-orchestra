@@ -83,6 +83,12 @@ is also listed in the [Built On](../README.md#-built-on) table:
 `github.com/multica-ai/andrej-karpathy-skills`. (`sdd-conductor` is this package's own
 orchestration skill, so it is the one skill written here.)
 
+> **Two different "4"s — don't conflate them.** This *generated* set is `sdd-conductor`
+> + `grill-me` + `karpathy-guidelines` + `handoff`. It is **not** the same as SPEC.yml's
+> "4 skills the framework calls" (`karpathy-guidelines`, `grill-me`, `handoff`, **`harness`**):
+> that set counts the external **Harness** instead of `sdd-conductor`. Overlap = grill-me,
+> karpathy-guidelines, handoff.
+
 #### `.claude/skills/grill-me/SKILL.md`
 
 ```bash
@@ -226,7 +232,8 @@ export SDD_TEST_CMD="[npm test | pytest -q | go test ./... | cargo test]"
 directory. Here we add only the skills SDD calls:
 
 ```bash
-# The 4 skills SDD calls (installed from source — see "Create the 4 Common Skills")
+# The 4 skills generated locally (sdd-conductor is ours; the other 3 installed from
+# source — see "Create the 4 Common Skills"). Harness, the external called skill, is not here.
 mkdir -p .claude/skills/{grill-me,sdd-conductor,karpathy-guidelines,handoff}
 # (🎸 Harness is an external plugin — installed separately only when a task needs an agent team)
 ```

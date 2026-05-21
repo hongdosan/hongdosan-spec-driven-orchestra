@@ -81,6 +81,11 @@
 `github.com/multica-ai/andrej-karpathy-skills`. (`sdd-conductor`는 이 패키지 고유 오케스트레이션
 스킬이라, 여기서 직접 작성하는 유일한 스킬입니다.)
 
+> **서로 다른 두 "4" — 혼동 금지.** 이 *생성* 집합은 `sdd-conductor` + `grill-me` +
+> `karpathy-guidelines` + `handoff`입니다. SPEC.yml의 "프레임워크가 호출하는 4개 스킬"
+> (`karpathy-guidelines`, `grill-me`, `handoff`, **`harness`**)과 **다릅니다**: 그 집합은
+> `sdd-conductor` 대신 외부 **Harness**를 셉니다. 겹치는 것 = grill-me, karpathy-guidelines, handoff.
+
 #### `.claude/skills/grill-me/SKILL.md`
 
 ```bash
@@ -225,7 +230,8 @@ export SDD_TEST_CMD="[npm test | pytest -q | go test ./... | cargo test]"
 SDD가 호출하는 스킬만 더합니다:
 
 ```bash
-# SDD가 호출하는 4개 스킬 (출처에서 설치 — "공통 4개 Skill 생성" 참조)
+# 로컬에 생성하는 4개 스킬 (sdd-conductor는 우리 것; 나머지 3개는 출처에서 설치 —
+# "공통 4개 Skill 생성" 참조). 외부 호출 스킬 Harness는 여기 없음.
 mkdir -p .claude/skills/{grill-me,sdd-conductor,karpathy-guidelines,handoff}
 # (🎸 Harness는 외부 플러그인 — 작업에 에이전트 팀이 필요할 때만 별도 설치)
 ```
