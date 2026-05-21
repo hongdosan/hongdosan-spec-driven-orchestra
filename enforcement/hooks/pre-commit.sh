@@ -1,12 +1,30 @@
 #!/usr/bin/env bash
-# SDD pre-commit gate — enforces R3 (no commit without passing verification),
-# R4 (regression for existing code), and R6 (production strictness).
+# SDD pre-commit gate — enforces R1/R2 (no code without spec+plan), R3 (verification
+# passes), R4 (regression for existing code), R6 (production strictness).
 #
 # Install: copy to .git/hooks/pre-commit (or wire via your hook manager),
-# make executable (chmod +x). Blocks the commit if verification hasn't passed.
+# make executable (chmod +x). Blocks the commit if a rule fails.
 #
 # The test command is project-defined via $SDD_TEST_CMD (e.g. "npm test",
 # "pytest -q", "go test ./..."). If unset, the gate refuses to assume success.
+#
+# Flow (top → bottom) / 흐름 (위 → 아래):
+#   1. Detect production signals → raise level to strict (R6).
+#      운영 시그널 감지 → 레벨을 strict로 (R6).
+#   2. No implementation files staged → exit 0 (docs-only commits pass).
+#      스테이징된 구현 파일 없음 → exit 0 (문서 전용 커밋 통과).
+#   3. Resolve feature = current git branch; artifacts under specs/<branch>/.
+#      feature = 현재 git 브랜치; 산출물은 specs/<branch>/.
+#   4. R1/R2: require specs/<branch>/spec.md (non-trivial) + plan.md — NOT bypassable.
+#      R1/R2: specs/<branch>/spec.md(비자명) + plan.md 필수 — 우회 불가.
+#   5. R3: SDD_TEST_CMD must be set and not a no-op (true / : / echo …).
+#      R3: SDD_TEST_CMD 설정 + no-op(true / : / echo …) 아님.
+#   6. standard + SDD_OVERRIDE set → log to DECISION-LOG.md and pass (covers R3/R4 only).
+#      standard + SDD_OVERRIDE → DECISION-LOG.md 기록 후 통과 (R3/R4만 우회).
+#   7. Run SDD_TEST_CMD; fail the commit if it fails (no bypass at strict).
+#      SDD_TEST_CMD 실행; 실패 시 커밋 차단 (strict는 우회 없음).
+#   8. R4: if specs/<branch>/survey.md exists, require regression.md.
+#      R4: specs/<branch>/survey.md 있으면 regression.md 필수.
 
 set -euo pipefail
 

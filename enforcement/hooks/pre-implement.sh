@@ -10,6 +10,18 @@
 #
 # Exit non-zero = block the action. The point of R1/R2 is that implementation
 # cannot start before Specify and Plan exist — enforced, not requested.
+#
+# Flow (top → bottom) / 흐름 (위 → 아래):
+#   1. Resolve feature = current git branch (HEAD/unborn → none).
+#      feature = 현재 git 브랜치 (HEAD/unborn → 없음).
+#   2. No branch or no specs/<branch>/ dir → exit 0 (nothing to gate yet).
+#      브랜치 없음 또는 specs/<branch>/ 없음 → exit 0 (아직 검사 대상 없음).
+#   3. R1: specs/<branch>/spec.md must exist and be non-trivial (≥20 words).
+#      R1: specs/<branch>/spec.md 존재 + 비자명(20단어↑).
+#   4. R2: specs/<branch>/plan.md must exist.
+#      R2: specs/<branch>/plan.md 존재.
+#   (This is the in-session hook; pre-commit re-checks R1/R2 fail-closed at commit.)
+#   (세션 중 훅이며, 커밋 시 pre-commit이 R1/R2를 fail-closed로 재확인함.)
 
 set -euo pipefail
 

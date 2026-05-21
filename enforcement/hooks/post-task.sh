@@ -4,6 +4,15 @@
 #
 # Install: copy to .claude/hooks/post-task.sh, make executable,
 # wire to your Claude Code Stop / task-completion hook.
+#
+# Flow (top → bottom) / 흐름 (위 → 아래):
+#   1. Resolve feature = current git branch (HEAD/unborn → none).
+#      feature = 현재 git 브랜치 (HEAD/unborn → 없음).
+#   2. No branch or no specs/<branch>/ dir → exit 0.
+#      브랜치 없음 또는 specs/<branch>/ 없음 → exit 0.
+#   3. R5: if specs/<branch>/handoff.md is missing or trivial (<20 words) → WARN only
+#      (never blocks; exit 0 regardless).
+#      R5: specs/<branch>/handoff.md 없음/빈약(20단어 미만) → 경고만 (절대 차단 안 함).
 
 set -euo pipefail
 
