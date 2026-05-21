@@ -102,26 +102,26 @@ curl -L https://raw.githubusercontent.com/mattpocock/skills/main/skills/producti
 
 ### Phase 2: Clarify (primary)
 \`\`\`
-"grill me - F[ID] clarify"
+"grill me - <branch> clarify"
 \`\`\`
 
 ### Phase 5: Verification design
 \`\`\`
-"grill me - F[ID] verification design"
+"grill me - <branch> verification design"
 \`\`\`
 
 ### Phase 7: Handoff writing
 \`\`\`
-"grill me - F[ID] handoff"
+"grill me - <branch> handoff"
 \`\`\`
 
 ### Extra Uses (when existing code is present)
 
 #### Existing-code work only
 \`\`\`
-"grill me - F[ID] survey" (Step 0)
-"grill me - F[ID] regression" (Step 5b)
-"grill me - F[ID] migration" (Implement)
+"grill me - <branch> survey" (Step 0)
+"grill me - <branch> regression" (Step 5b)
+"grill me - <branch> migration" (Implement)
 \`\`\`
 
 ## Using Results
@@ -138,13 +138,13 @@ name: sdd-conductor
 description: |
   Conducts the SDD 7-step workflow.
   Triggered when starting a new feature or advancing SDD steps.
-  Keywords: "new feature", "start SDD", "F[ID]", "next step"
+  Keywords: "new feature", "start SDD", "<branch>", "next step"
 ---
 
 # SDD Conductor
 
 ## Responsibilities
-1. Start a new SDD cycle (create F[ID] directory, copy templates)
+1. Start a new SDD cycle (create <branch> directory, copy templates)
 2. Advance each step (Phase 2→grill-me, Phase 5→SDD verification, Phase 6→karpathy-guidelines, Phase 7→handoff)
 3. Enforce order (block step-skipping)
 4. Track decisions (Decision Log + DECISION-LOG.md)
@@ -294,7 +294,7 @@ enforcement gates that make the flow non-optional.
 ## First action when starting work
 | Task type | First action |
 |---|---|
-| New feature | sdd-conductor → new F[ID] |
+| New feature | sdd-conductor → new <branch> |
 | Touching existing code | run Step 0 survey first |
 | Small decision | log in DECISION-LOG.md |
 
@@ -616,7 +616,7 @@ Identical in every project:
 
 At the end of each SDD cycle:
 \`\`\`
-## YYYY-MM-DD - F[ID] [feature name] cycle closeout
+## YYYY-MM-DD - <branch> [feature name] cycle closeout
 - **Start**:
 - **End**:
 - **Type**: Full/Mini SDD
@@ -674,7 +674,7 @@ git reset --hard [pre-integration commit]
 
 # Or use archive (if any)
 cp -r archive/legacy/* [original location]/
-rm -rf sdd/ .claude/skills/ CLAUDE.md
+rm -rf .claude/skills/ CLAUDE.md
 \`\`\`
 ```
 

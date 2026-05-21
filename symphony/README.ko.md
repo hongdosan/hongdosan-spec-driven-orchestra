@@ -145,12 +145,14 @@ AI-INTERVIEW.md를 읽고 인터뷰부터 시작해주세요.
 │                                # 🎸 Harness(에이전트 팀)는 외부 플러그인,
 │                                #    필요 시 별도 설치
 │
-└── sdd/                         # SDD 중심
-    ├── CONSTITUTION.md          # 강제 규칙 R1~R7 (게이트가 읽음)
-    ├── ORCHESTRA.md             # SDD와 스킬 가이드
-    ├── README.md                # SDD 안내
-    ├── templates/               # 단계별 템플릿 (01~07, 필요 시 00/05b)
-    └── features/                # 기능별 작업물
+├── .specify/                    # spec-kit (`specify init`)
+│   ├── memory/constitution.md   # R1~R7 규칙 (게이트가 읽음) + 원칙
+│   └── templates/               # spec-kit의 spec/plan/tasks/checklist 템플릿
+│
+└── specs/<NNN-slug>/            # 기능별 작업물, git 브랜치 단위 (/speckit.*)
+    ├── spec.md  plan.md  tasks.md          # spec-kit 산출
+    └── survey.md  regression.md            # 이 패키지의 추가분
+        handoff.md  implementation-notes.md
 ```
 
 ### 컨텍스트 추가 (모드 아님)
@@ -159,8 +161,8 @@ AI-INTERVIEW.md를 읽고 인터뷰부터 시작해주세요.
 
 ```
 기존 코드 있음
-  └─ 00-survey.md      추가: 바꾸기 전에 이해
-  └─ 05b-regression.md 추가: 기존 동작 보존 (R4)
+  └─ survey.md      추가: 바꾸기 전에 이해
+  └─ regression.md 추가: 기존 동작 보존 (R4)
 
 운영 시그널 감지
   └─ ENFORCEMENT_LEVEL=strict — 테스트/회귀 우회 불가 (R6)

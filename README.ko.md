@@ -254,19 +254,21 @@ hongdosan-spec-driven-orchestra/
 ├── INTEGRATION-REPORT.md        # 통합 결과 리포트
 ├── INTERVIEW-RESULT.md          # 인터뷰 기록
 │
-├── .claude/skills/              # 이 패키지가 생성하는 5개 AI Skill
+├── .claude/skills/              # 이 패키지가 생성하는 4개 AI Skill
 │   ├── grill-me/                # 🎹 명확화
 │   ├── sdd-conductor/           # 🎼 지휘자
 │   ├── karpathy-guidelines/       # 🎻 4원칙 강제
 │   └── handoff/          # 🎺 인계 작성
 │                                # 🎸 Harness(에이전트 팀) = 외부 플러그인
 │
-└── sdd/                         # 🎼 SDD 중심 디렉터리
-    ├── CONSTITUTION.md          # 강제 규칙 R1~R7 (게이트가 읽음)
-    ├── ORCHESTRA.md             # 스킬 가이드 사본
-    ├── README.md                # SDD 안내
-    ├── templates/               # 단계별 템플릿 (01~07, 필요 시 00/05b)
-    └── features/                # 기능별 작업물 (F001, F002, ...)
+├── .specify/                    # 🎼 spec-kit (`specify init`이 생성)
+│   ├── memory/constitution.md   # R1~R7 규칙 (게이트가 읽음) + 프로젝트 원칙
+│   └── templates/               # spec-kit의 spec/plan/tasks/checklist 템플릿
+│
+└── specs/<NNN-slug>/            # 기능별 작업물, git 브랜치 단위 (/speckit.* 산출)
+    ├── spec.md  plan.md  tasks.md          # spec-kit 산출
+    └── survey.md  regression.md            # 이 패키지의 추가분
+        handoff.md  implementation-notes.md
 
 .claude/hooks/                   # ⛔ 강제 (enforcement/ 에서 설치)
 ├── pre-implement.sh             # spec+plan 없이 코드 차단 (R1,R2)
@@ -279,7 +281,7 @@ hongdosan-spec-driven-orchestra/
 
 같은 흐름이 발견한 것에 적응합니다 — `MODE_*` 분기 없음:
 
-- **기존 코드 있음** → Specify 앞에 `00-survey.md`; 커밋 전 `05b-regression.md` 필수 (R4)
+- **기존 코드 있음** → Specify 앞에 `survey.md`; 커밋 전 `regression.md` 필수 (R4)
 - **운영 시그널 감지** → `ENFORCEMENT_LEVEL=strict`; 테스트·회귀 우회 불가 (R6)
 - **신규** → 같은 흐름·게이트, 단 보존할 게 없어 쉽게 통과
 

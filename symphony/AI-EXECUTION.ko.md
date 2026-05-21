@@ -100,26 +100,26 @@ curl -L https://raw.githubusercontent.com/mattpocock/skills/main/skills/producti
 
 ### Phase 2: Clarify (주역)
 \`\`\`
-"grill me - F[ID] 명확화"
+"grill me - <branch> 명확화"
 \`\`\`
 
 ### Phase 5: 검증 설계
 \`\`\`
-"grill me - F[ID] 검증 설계"
+"grill me - <branch> 검증 설계"
 \`\`\`
 
 ### Phase 7: Handoff 작성
 \`\`\`
-"grill me - F[ID] 핸드오프"
+"grill me - <branch> 핸드오프"
 \`\`\`
 
 ### 추가 활용 (기존 코드가 있을 때)
 
 #### 기존 코드 작업 전용
 \`\`\`
-"grill me - F[ID] survey" (Step 0)
-"grill me - F[ID] regression" (Step 5b)
-"grill me - F[ID] migration" (Implement)
+"grill me - <branch> survey" (Step 0)
+"grill me - <branch> regression" (Step 5b)
+"grill me - <branch> migration" (Implement)
 \`\`\`
 
 ## 결과 활용
@@ -136,13 +136,13 @@ name: sdd-conductor
 description: |
   SDD 7단계 워크플로우 지휘.
   새 기능 시작, SDD 단계 진행 시 발동.
-  키워드: "새 기능", "SDD 시작", "F[ID]", "다음 단계"
+  키워드: "새 기능", "SDD 시작", "<branch>", "다음 단계"
 ---
 
 # SDD Conductor
 
 ## 책임
-1. 새 SDD 사이클 시작 (F[ID] 디렉터리 생성, 템플릿 복사)
+1. 새 SDD 사이클 시작 (<branch> 디렉터리 생성, 템플릿 복사)
 2. 각 단계 진행 (Phase 2→grill-me, Phase 5→SDD 검증, Phase 6→karpathy-guidelines, Phase 7→handoff)
 3. 순서 강제 (단계 건너뛰기 차단)
 4. 결정 추적 (Decision Log + DECISION-LOG.md)
@@ -292,7 +292,7 @@ SDD(Spec-Driven Development)가 지휘하는 AI 코딩. SDD가 스킬을 호출�
 ## 작업 시작 시 첫 행동
 | 작업 유형 | 첫 행동 |
 |---|---|
-| 새 기능 | sdd-conductor → 새 F[ID] |
+| 새 기능 | sdd-conductor → 새 <branch> |
 | 기존 코드 변경 | 먼저 0단계 조사 실행 |
 | 작은 결정 | DECISION-LOG.md 기록 |
 
@@ -611,7 +611,7 @@ spec-kit이 `spec.md`·`plan.md`·`tasks.md`·`checklist`·`constitution`을 `sp
 
 각 SDD 사이클 종료 시:
 \`\`\`
-## YYYY-MM-DD - F[ID] [기능명] 사이클 종료
+## YYYY-MM-DD - <branch> [기능명] 사이클 종료
 - **시작**: 
 - **종료**: 
 - **유형**: Full/Mini SDD
@@ -669,7 +669,7 @@ git reset --hard [통합 전 커밋]
 
 # 또는 archive 활용 (있다면)
 cp -r archive/legacy/* [원래 위치]/
-rm -rf sdd/ .claude/skills/ CLAUDE.md
+rm -rf .claude/skills/ CLAUDE.md
 \`\`\`
 ```
 

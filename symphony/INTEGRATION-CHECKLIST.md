@@ -31,12 +31,11 @@ After a month of use — decide keep/adjust/rollback.
 - [ ] INTEGRATION-REPORT.md exists
 - [ ] INTERVIEW-RESULT.md exists
 
-#### sdd/ directory
-- [ ] sdd/CONSTITUTION.md exists (rules R1–R7)
-- [ ] sdd/ORCHESTRA.md exists
-- [ ] sdd/README.md exists
-- [ ] sdd/templates/ exists
-- [ ] sdd/features/ exists
+#### spec-kit + feature dirs
+- [ ] `specify init` ran (`.specify/` exists)
+- [ ] `.specify/memory/constitution.md` exists with R1–R7 merged in
+- [ ] `.specify/templates/` exists (spec-kit's spec/plan/tasks/checklist)
+- [ ] `specs/` exists (per-feature dirs from `/speckit.*`)
 
 #### Enforcement layer (the core of "enforced, not advised")
 - [ ] `.claude/hooks/pre-implement.sh` installed & executable (R1, R2)
@@ -76,18 +75,13 @@ After a month of use — decide keep/adjust/rollback.
 - [ ] No change to existing code directories
 - [ ] Git-trackable
 
-#### Standard Templates (always)
-- [ ] sdd/templates/01-spec.md
-- [ ] sdd/templates/02-clarify.md
-- [ ] sdd/templates/03-plan.md
-- [ ] sdd/templates/04-tasks.md
-- [ ] sdd/templates/05-verify.md
-- [ ] sdd/templates/06-implementation-notes.md
-- [ ] sdd/templates/07-handoff.md
+#### Templates
+- [ ] spec-kit core templates present (`.specify/templates/`: spec, plan, tasks, checklist, constitution) — provided by `specify init`, not authored here
+- [ ] This package's additions available when needed: `survey.md`, `regression.md`, `handoff.md`, `implementation-notes.md` (in `specs/<branch>/`)
 
-#### CONSTITUTION.md Verification
+#### Constitution Verification (`.specify/memory/constitution.md`)
 - [ ] Reflects project identity and current stage
-- [ ] Includes Karpathy's 4 principles and SDD 7 steps
+- [ ] Includes the R1–R7 rules (merged from `sdd/CONSTITUTION.md`)
 - [ ] States the enforcement level (standard/strict)
 
 ### Context Additions — verify only if existing code is present
@@ -95,8 +89,8 @@ After a month of use — decide keep/adjust/rollback.
 > Skip this whole block on greenfield projects (Step 0 survey was off).
 
 #### Existing-code templates & skills
-- [ ] sdd/templates/00-survey.md added
-- [ ] sdd/templates/05b-regression.md added
+- [ ] specs/<branch>/survey.md available when existing code present
+- [ ] specs/<branch>/regression.md available when existing code present
 - [ ] .claude/skills/code-archaeologist/SKILL.md added
 - [ ] .claude/skills/migration-strategist/SKILL.md added
 
@@ -106,8 +100,8 @@ After a month of use — decide keep/adjust/rollback.
 - [ ] Originals referenced, never modified in place
 
 #### First SDD cycle with survey
-- [ ] sdd/features/F001-*/00-survey.md has meaningful analysis
-- [ ] 05b-regression.md specifies behavior to preserve (B1, B2, ...)
+- [ ] specs/<branch>/survey.md has meaningful analysis
+- [ ] regression.md specifies behavior to preserve (B1, B2, ...)
 
 #### Strict level (if production signals detected)
 - [ ] ENFORCEMENT_LEVEL=strict confirmed
@@ -146,7 +140,7 @@ After a month of use — decide keep/adjust/rollback.
 ### Flow Progress (every project)
 
 #### SDD cycle
-- [ ] F001 complete or in progress?
+- [ ] feature branch complete or in progress?
 - [ ] Anything to update in CONSTITUTION.md?
 - [ ] Are gates firing as expected (not bypassed)?
 
@@ -327,13 +321,13 @@ To apply in the next project:
 ```bash
 # Start with the most burdensome
 # e.g. Harness writing every time is a burden
-echo "Harness only for large features" >> sdd/CONSTITUTION.md
+echo "Harness only for large features" >> .specify/memory/constitution.md
 ```
 
 #### Level 2: Half Rollback
 ```bash
 # Keep only Karpathy + grill-me (Tier 1)
-rm -rf sdd/templates/
+rm -f .git/hooks/pre-commit .claude/hooks/pre-implement.sh   (drop the flow gates; keep Tier 1 skills)
 ```
 
 #### Level 3: Full Rollback
@@ -345,7 +339,7 @@ rm -rf sdd/templates/
 #    (greenfield has no archive, so skip this step)
 
 # 2. Remove integration artifacts
-rm -rf sdd/ .claude/skills/ .claude/hooks/
+rm -rf .claude/skills/ .claude/hooks/ .github/workflows/sdd-gate.yml   (spec-kit .specify/specs is yours)
 rm -f .git/hooks/pre-commit .github/workflows/sdd-gate.yml SPEC.yml
 rm CLAUDE.md DECISION-LOG.md INTEGRATION-REPORT.md INTERVIEW-RESULT.md
 ```

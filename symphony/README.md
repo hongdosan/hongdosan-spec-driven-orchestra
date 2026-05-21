@@ -142,12 +142,14 @@ project root/
 │                                # 🎸 Harness (agent teams) is an external
 │                                #    plugin, installed separately when needed
 │
-└── sdd/                         # SDD-centric
-    ├── CONSTITUTION.md          # Enforcement rules R1–R7 (gates read this)
-    ├── ORCHESTRA.md             # SDD + skills guide
-    ├── README.md                # SDD overview
-    ├── templates/               # Step templates
-    └── features/                # Feature work
+├── .specify/                    # spec-kit (`specify init`)
+│   ├── memory/constitution.md   # R1–R7 rules (gates read this) + principles
+│   └── templates/               # spec-kit's spec/plan/tasks/checklist templates
+│
+└── specs/<NNN-slug>/            # feature work, per git branch (/speckit.*)
+    ├── spec.md  plan.md  tasks.md          # spec-kit outputs
+    └── survey.md  regression.md            # this package's additions
+        handoff.md  implementation-notes.md
 ```
 
 ### Context Additions (not modes)
@@ -156,8 +158,8 @@ The same flow; SDD adds steps based on what it finds — no `MODE_*` to pick:
 
 ```
 Existing code present
-  └─ 00-survey.md      added: understand before changing
-  └─ 05b-regression.md added: preserve existing behavior (R4)
+  └─ survey.md      added: understand before changing
+  └─ regression.md added: preserve existing behavior (R4)
 
 Production signals detected
   └─ ENFORCEMENT_LEVEL=strict — tests/regression non-bypassable (R6)
