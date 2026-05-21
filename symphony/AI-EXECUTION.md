@@ -136,22 +136,22 @@ Paste it directly into the relevant step's document.
 ---
 name: sdd-conductor
 description: |
-  Conducts the SDD 7-step workflow.
+  Conducts the SDD orchestration over spec-kit's flow.
   Triggered when starting a new feature or advancing SDD steps.
-  Keywords: "new feature", "start SDD", "<branch>", "next step"
+  Keywords: "new feature", "start SDD", "next step"
 ---
 
 # SDD Conductor
 
 ## Responsibilities
-1. Start a new SDD cycle (create <branch> directory, copy templates)
-2. Advance each step (Phase 2→grill-me, Phase 5→SDD verification, Phase 6→karpathy-guidelines, Phase 7→handoff)
+1. Start a new feature: create the branch, then run /speckit.specify (spec.md)
+2. Advance each step (Clarify→grill-me, Verify→SDD, Implement→karpathy-guidelines, Handoff→handoff)
 3. Enforce order (block step-skipping)
 4. Track decisions (Decision Log + DECISION-LOG.md)
 
 ## Work Classification
 - **Full SDD**: new feature, large refactor → all 7 steps
-- **Mini SDD**: small feature, bug → 01, 06, 07 only
+- **Mini SDD**: small feature, bug → spec → implement → handoff only
 - **No SDD**: one-line fix, typo → Karpathy only
 ```
 

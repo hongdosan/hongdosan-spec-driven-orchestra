@@ -134,22 +134,22 @@ grill-me 세션 종료 시 AI가 요약 제공.
 ---
 name: sdd-conductor
 description: |
-  SDD 7단계 워크플로우 지휘.
+  spec-kit 흐름 위의 SDD 오케스트레이션 지휘.
   새 기능 시작, SDD 단계 진행 시 발동.
-  키워드: "새 기능", "SDD 시작", "<branch>", "다음 단계"
+  키워드: "새 기능", "SDD 시작", "다음 단계"
 ---
 
 # SDD Conductor
 
 ## 책임
-1. 새 SDD 사이클 시작 (<branch> 디렉터리 생성, 템플릿 복사)
-2. 각 단계 진행 (Phase 2→grill-me, Phase 5→SDD 검증, Phase 6→karpathy-guidelines, Phase 7→handoff)
+1. 새 기능 시작: 브랜치 생성 후 /speckit.specify 실행 (spec.md)
+2. 각 단계 진행 (Clarify→grill-me, Verify→SDD, Implement→karpathy-guidelines, Handoff→handoff)
 3. 순서 강제 (단계 건너뛰기 차단)
 4. 결정 추적 (Decision Log + DECISION-LOG.md)
 
 ## 작업 분류
 - **Full SDD**: 새 기능, 큰 리팩토링 → 7단계 모두
-- **Mini SDD**: 작은 기능, 버그 → 01, 06, 07만
+- **Mini SDD**: 작은 기능, 버그 → spec → implement → handoff만
 - **No SDD**: 1줄 수정, 오타 → Karpathy만
 ```
 
