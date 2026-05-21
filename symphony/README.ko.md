@@ -137,13 +137,12 @@ AI-INTERVIEW.md를 읽고 인터뷰부터 시작해주세요.
 ├── INTEGRATION-REPORT.md        # 통합 리포트
 ├── INTERVIEW-RESULT.md          # 인터뷰 결과
 │
-├── .claude/skills/              # 이 패키지가 생성하는 4개 skill
+├── .claude/skills/              # 이 패키지가 생성하는 3개 skill
 │   ├── grill-me/                # 🎹 명확화
 │   ├── sdd-conductor/           # 🎼 지휘자
-│   ├── karpathy-guidelines/       # 🎻 4원칙 강제
 │   └── handoff/          # 🎺 인계 작성
-│                                # 🎸 Harness(에이전트 팀)는 외부 플러그인,
-│                                #    필요 시 별도 설치
+│                                # 외부 플러그인(/plugin, 별도 설치):
+│                                #   🎻 karpathy-guidelines, 🎸 Harness
 │
 ├── .specify/                    # spec-kit (`specify init`)
 │   ├── memory/constitution.md   # R1~R7 규칙 (게이트가 읽음) + 원칙

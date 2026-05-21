@@ -254,12 +254,11 @@ hongdosan-spec-driven-orchestra/
 ├── INTEGRATION-REPORT.md        # 통합 결과 리포트
 ├── INTERVIEW-RESULT.md          # 인터뷰 기록
 │
-├── .claude/skills/              # 이 패키지가 생성하는 4개 AI Skill
+├── .claude/skills/              # 이 패키지가 생성하는 3개 skill
 │   ├── grill-me/                # 🎹 명확화
 │   ├── sdd-conductor/           # 🎼 지휘자
-│   ├── karpathy-guidelines/       # 🎻 4원칙 강제
 │   └── handoff/          # 🎺 인계 작성
-│                                # 🎸 Harness(에이전트 팀) = 외부 플러그인
+│                                # 외부 플러그인(/plugin): 🎻 karpathy-guidelines, 🎸 Harness
 │
 ├── .specify/                    # 🎼 spec-kit (`specify init`이 생성)
 │   ├── memory/constitution.md   # R1~R7 규칙 (게이트가 읽음) + 프로젝트 원칙

@@ -51,18 +51,16 @@
 - [ ] spec/plan 없이 "구현" 시도 → **차단됨** (R1/R2)
 - [ ] `bash enforcement/sync-check.sh .` → 통과 (R7)
 
-#### .claude/skills/ 디렉터리 (이 패키지가 생성하는 4개)
+#### .claude/skills/ 디렉터리 (이 패키지가 생성하는 3개)
 - [ ] grill-me/SKILL.md
 - [ ] grill-me/VARIANT.md
 - [ ] sdd-conductor/SKILL.md
-- [ ] karpathy-guidelines/SKILL.md
 - [ ] handoff/SKILL.md
 
-#### 🎸 Harness (선택 — 작업에 에이전트 팀이 필요했을 때만)
-> Harness는 외부 플러그인(revfactory/harness)이며, 이 패키지가 생성하지 않습니다.
-- [ ] 필요할 때만 설치: `/plugin install harness@harness`
-- [ ] 사용했다면, 무거운 작업을 위해 `.claude/agents/` 생성됨
-- [ ] 에이전트 팀이 필요한 작업이 없었다면 해당 없음
+#### 외부 플러그인 (`/plugin`으로 설치, 여기서 생성 안 함)
+- [ ] `karpathy-guidelines`: `/plugin install andrej-karpathy-skills@karpathy-skills`
+- [ ] 🎸 Harness (선택): `/plugin install harness@harness` — 작업에 에이전트 팀이 필요했을 때만
+- [ ] Harness 사용 시, 무거운 작업을 위해 `.claude/agents/` 생성됨
 
 #### 동작 검증
 - [ ] 새 Claude Code 세션에서 CLAUDE.md 자동 로드

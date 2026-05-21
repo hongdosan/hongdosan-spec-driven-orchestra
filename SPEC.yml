@@ -18,7 +18,7 @@ framework:
 
 # The framework calls these skills. They are NOT equal peers to SDD.
 skills:
-  - id: karpathy-guidelines        # installed from origin (skills/karpathy-guidelines/SKILL.md)
+  - id: karpathy-guidelines        # installed via /plugin (andrej-karpathy-skills@karpathy-skills)
     instrument: 1st Violin
     emoji: "🎻"
     role: Code quality — enforce the 4 principles
@@ -28,7 +28,7 @@ skills:
     # observations — Karpathy himself did not enumerate these four.
     license: MIT  # declared in the SKILL.md frontmatter; repo has no top-level LICENSE file
     maturity: established
-    external_plugin: false
+    external_plugin: true   # upstream ships a Claude Code plugin; installed via /plugin, not generated here
 
   - id: grill-me
     instrument: Piano

@@ -54,14 +54,13 @@
 ├── INTEGRATION-REPORT.md        # 통합 리포트
 ├── INTERVIEW-RESULT.md          # 인터뷰 결과 (이미 생성됨)
 │
-├── .claude/skills/              # 이 패키지가 생성하는 4개 skill
-│   ├── grill-me/
+├── .claude/skills/              # 이 패키지가 로컬 생성하는 3개 skill
+│   ├── grill-me/                #    (grill-me·handoff는 출처에서; sdd-conductor는 우리 것)
 │   ├── sdd-conductor/
-│   ├── karpathy-guidelines/
 │   └── handoff/
-│                                # 🎸 Harness(에이전트 팀)는 여기서 생성되지 않음
-│                                #    — 외부 Claude Code 플러그인(revfactory/harness)
-│                                #    으로, 작업에 에이전트 팀이 필요할 때만 별도 설치.
+│                                # 외부 플러그인(여기서 생성 안 함, /plugin으로 설치):
+│                                #   karpathy-guidelines(multica-ai), harness(revfactory,
+│                                #   선택 — 작업에 에이전트 팀이 필요할 때만).
 │
 ├── .specify/                    # spec-kit, `specify init`이 생성 (여기서 작성하지 않음)
 │   ├── memory/constitution.md   #   프로젝트 원칙 + 우리 R1~R7 규칙
@@ -73,18 +72,20 @@
         handoff.md  implementation-notes.md
 ```
 
-### 공통 4개 Skill 생성
+### 스킬 설치
 
-이 스킬들은 **원본 upstream 저장소에서 그대로 받아옵니다** — 이 패키지가 작성하지
-않습니다(규칙 R). 각 출처는 아래 `curl` URL이며 [통합되는 원본 자료](../README.ko.md) 표에도
-있습니다: `grill-me`·`handoff` ← `github.com/mattpocock/skills`, `karpathy-guidelines` ←
-`github.com/multica-ai/andrej-karpathy-skills`. (`sdd-conductor`는 이 패키지 고유 오케스트레이션
-스킬이라, 여기서 직접 작성하는 유일한 스킬입니다.)
+각 스킬은 **upstream이 문서화한 설치 방식**을 씁니다(규칙 R — 우리가 다시 작성하지 않음):
+- **플러그인 설치**(`/plugin`, upstream 문서화): `karpathy-guidelines`(multica-ai),
+  그리고 선택적 `harness`(revfactory).
+- **출처에서 설치**(`curl`, upstream 플러그인 없음): `grill-me`·`handoff`(mattpocock/skills).
+- **여기서 작성**(이 패키지 고유 지휘자): `sdd-conductor`.
 
-> **서로 다른 두 "4" — 혼동 금지.** 이 *생성* 집합은 `sdd-conductor` + `grill-me` +
-> `karpathy-guidelines` + `handoff`입니다. SPEC.yml의 "프레임워크가 호출하는 4개 스킬"
-> (`karpathy-guidelines`, `grill-me`, `handoff`, **`harness`**)과 **다릅니다**: 그 집합은
-> `sdd-conductor` 대신 외부 **Harness**를 셉니다. 겹치는 것 = grill-me, karpathy-guidelines, handoff.
+출처는 [통합되는 원본 자료](../README.ko.md) 표에도 있습니다.
+
+> **카운트 — 혼동 금지.** `.claude/skills/`에 로컬 생성 = `grill-me` + `sdd-conductor`
+> + `handoff` (3). 외부 플러그인 = `karpathy-guidelines` + `harness` (2). SPEC.yml의
+> "프레임워크가 호출하는 4개 스킬" = `karpathy-guidelines`, `grill-me`, `handoff`,
+> `harness` (플러그인 2개를 세고 `sdd-conductor`는 안 셈).
 
 #### `.claude/skills/grill-me/SKILL.md`
 
@@ -158,14 +159,13 @@ description: |
 - **No SDD**: 1줄 수정, 오타 → Karpathy만
 ```
 
-#### `.claude/skills/karpathy-guidelines/SKILL.md`
+#### `karpathy-guidelines` (플러그인)
 
-원본 스킬을 출처에서 설치합니다 (여기서 다시 작성하지 않음):
+Claude Code 플러그인으로 설치합니다 (upstream 문서화 — 고정 raw 경로보다 견고):
 
-```bash
-mkdir -p .claude/skills/karpathy-guidelines
-curl -L https://raw.githubusercontent.com/multica-ai/andrej-karpathy-skills/main/skills/karpathy-guidelines/SKILL.md \
-  -o .claude/skills/karpathy-guidelines/SKILL.md
+```
+/plugin marketplace add forrestchang/andrej-karpathy-skills
+/plugin install andrej-karpathy-skills@karpathy-skills
 ```
 
 #### `.claude/skills/handoff/SKILL.md`
@@ -230,9 +230,9 @@ export SDD_TEST_CMD="[npm test | pytest -q | go test ./... | cargo test]"
 SDD가 호출하는 스킬만 더합니다:
 
 ```bash
-# 로컬에 생성하는 4개 스킬 (sdd-conductor는 우리 것; 나머지 3개는 출처에서 설치 —
-# "공통 4개 Skill 생성" 참조). 외부 호출 스킬 Harness는 여기 없음.
-mkdir -p .claude/skills/{grill-me,sdd-conductor,karpathy-guidelines,handoff}
+# 로컬에 생성하는 3개 스킬 (grill-me·handoff는 출처에서; sdd-conductor는 우리 것 —
+# "스킬 설치" 참조). karpathy-guidelines와 harness는 외부 플러그인(/plugin).
+mkdir -p .claude/skills/{grill-me,sdd-conductor,handoff}
 # (🎸 Harness는 외부 플러그인 — 작업에 에이전트 팀이 필요할 때만 별도 설치)
 ```
 
