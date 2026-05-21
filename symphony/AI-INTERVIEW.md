@@ -283,7 +283,7 @@ After synthesizing answers, report in this format:
 - `.git/hooks/pre-commit` (R3, R4, R6)
 - `.claude/hooks/post-task.sh` (R5)
 - `.github/workflows/sdd-gate.yml` (R1, R3, R6, R7)
-- `sdd/CONSTITUTION.md` (the rules the gates read)
+- `.specify/memory/constitution.md` (the rules the gates read; R1–R7 text from `sdd/CONSTITUTION.md`)
 
 **2. SDD templates to create**
 - `01~07` always; `00-survey.md` + `05b-regression.md` if survey needed
@@ -384,7 +384,7 @@ There are no modes to choose. Read the context signals and configure two things:
 Regardless of context:
 - The 7-step SDD flow is the entry point (scaled full/mini/none by task size)
 - The enforcement gates are installed (`pre-implement`, `pre-commit`, `post-task`, CI)
-- `SPEC.yml` and `sdd/CONSTITUTION.md` are the single sources of truth
+- `SPEC.yml` (package facts) and `.specify/memory/constitution.md` (R1–R7 rules) are the single sources of truth
 - The first feature is `F001-[feature]` (no special `F000-*` bootstrap by mode)
 
 ### Tier (independent of context)

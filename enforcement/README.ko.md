@@ -12,7 +12,7 @@
 
 | 파일 | 강제하는 것 | 유형 |
 |---|---|---|
-| `sdd/CONSTITUTION.md` | 규칙 집합 (R1–R7) — 규칙의 단일 출처 | 참조 |
+| `sdd/CONSTITUTION.md` | R1–R7 규칙 **본문** — spec-kit의 `.specify/memory/constitution.md`에 병합되며, 게이트가 이를 읽고 `/speckit.analyze`가 비협상(CRITICAL)으로 취급 | 참조 |
 | `hooks/pre-implement.sh` | R1, R2 — 스펙·계획 없이 코드 없음 | 로컬 훅 (차단) |
 | `hooks/pre-commit.sh` | R3, R4, R6 — 검증 통과 없이 커밋 없음 | 로컬 훅 (차단) |
 | `hooks/post-task.sh` | R5 — 인계 누락 경고 | 로컬 훅 (경고) |
@@ -32,8 +32,10 @@ CI 게이트는 보호된 브랜치에서 건너뛸 수 없습니다 — 공유 
 ## 설치
 
 ```bash
-# 1. Constitution (게이트가 읽는 규칙)
-mkdir -p sdd && cp enforcement/sdd/CONSTITUTION.md sdd/CONSTITUTION.md
+# 1. Constitution: spec-kit이 소유. /speckit.constitution으로
+#    .specify/memory/constitution.md를 만든 뒤, enforcement/sdd/CONSTITUTION.md의
+#    R1~R7 규칙을 거기에 병합. 게이트가 그 파일을 읽고,
+#    /speckit.analyze가 constitution 규칙을 비협상(CRITICAL)으로 취급.
 
 # 2. 로컬 훅
 mkdir -p .claude/hooks

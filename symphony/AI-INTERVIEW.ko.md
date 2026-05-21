@@ -283,7 +283,7 @@ C. 안전한 적용 (롤백 가능성 최우선)
 - `.git/hooks/pre-commit` (R3, R4, R6)
 - `.claude/hooks/post-task.sh` (R5)
 - `.github/workflows/sdd-gate.yml` (R1, R3, R6, R7)
-- `sdd/CONSTITUTION.md` (게이트가 읽는 규칙)
+- `.specify/memory/constitution.md` (게이트가 읽는 규칙; R1~R7 본문은 `sdd/CONSTITUTION.md`에서)
 
 **2. 생성할 SDD 템플릿**
 - `01~07` 항상; 조사 필요 시 `00-survey.md` + `05b-regression.md`
@@ -384,7 +384,7 @@ Q1에서 운영 시그널이 드러나면 **차단하지 않습니다**. 대신 
 컨텍스트와 무관하게:
 - 7단계 SDD 흐름이 진입점 (작업 규모로 full/mini/none 조절)
 - 강제 게이트 설치 (`pre-implement`, `pre-commit`, `post-task`, CI)
-- `SPEC.yml`과 `sdd/CONSTITUTION.md`가 단일 출처
+- `SPEC.yml`(패키지 사실)과 `.specify/memory/constitution.md`(R1~R7 규칙)가 단일 출처
 - 첫 기능은 `F001-[기능]` (모드별 특수 `F000-*` 부트스트랩 없음)
 
 ### 단계(Tier) (컨텍스트와 독립)

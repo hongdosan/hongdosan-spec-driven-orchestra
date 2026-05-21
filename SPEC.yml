@@ -71,7 +71,7 @@ counts:
 #   - Maps to spec-kit commands: Specify, Clarify, Plan, Tasks, Implement
 #   - OUR additions (not spec-kit commands): Survey (0), Verify (5), Handoff (7)
 #   - spec-kit's /speckit.constitution and /speckit.analyze are NOT flow steps here
-#     (constitution is reused as sdd/CONSTITUTION.md, not a numbered step).
+#     (constitution is reused via spec-kit's .specify/memory/constitution.md, not a numbered step).
 # "SDD owns the flow" = SDD conducts this sequence; spec-kit does not define these 7 steps.
 # Verify (5) is owned by SDD itself (no dedicated skill). Its verification criteria
 # correspond to spec-kit's spec-template sections — Acceptance Scenarios, Edge Cases,

@@ -112,7 +112,7 @@ A markdown file telling an AI "write a spec first" is a *request*. Over a long s
 | `sdd-gate.yml` (CI) | merging a PR with no spec / failing tests — **non-bypassable** | R1, R3, R6 |
 | `post-task` hook | (warns) finishing without a handoff | R5 |
 
-The rules live in one place — `sdd/CONSTITUTION.md` — which the gates read. Context only changes **how strict** the gates are (production → `strict`, no bypass), never *what* they check. See the `enforcement/` folder for the actual scripts and install steps.
+The rules live in one place — spec-kit's `.specify/memory/constitution.md` (the R1–R7 text comes from this package's `sdd/CONSTITUTION.md`) — which the gates read. Context only changes **how strict** the gates are (production → `strict`, no bypass), never *what* they check. See the `enforcement/` folder for the actual scripts and install steps.
 
 > This is the core of the approach: compliance does not depend on the AI choosing to comply. If the spec is missing, the implement step fails. If tests don't pass, the commit fails. The orchestra plays in time because the metronome is wired to the doors, not because the players promise to keep tempo.
 

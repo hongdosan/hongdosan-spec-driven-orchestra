@@ -5,6 +5,10 @@
 > 게이트(훅·CI)와 sync-check가 실제로 읽는 **정본은 영문 [`CONSTITUTION.md`](./CONSTITUTION.md)** 입니다.
 > 두 문서가 어긋날 경우 **항상 영문이 우선**합니다. 규칙을 바꿀 때는 영문을 먼저 고치세요.
 > (이 번역본은 강제력이 없으며, 한국어 사용자의 이해를 돕기 위한 것입니다.)
+>
+> **런타임 위치**: 이 R1~R7 규칙의 실제 거처는 spec-kit의 `.specify/memory/constitution.md`입니다.
+> `/speckit.constitution`으로 만든 뒤 R1~R7을 거기에 병합합니다. 그러면 이 패키지의 훅·CI(차단)와
+> spec-kit `/speckit.analyze`(constitution 위반을 CRITICAL로 취급)가 함께 강제합니다.
 
 ---
 
@@ -14,6 +18,7 @@ SDD는 권고가 아닙니다. 이 규칙들은 AI에게 정중히 부탁하는 
 
 - **로컬 훅** (`.claude/hooks/`) — 세션 도중 행동을 차단합니다.
 - **CI 게이트** (`.github/workflows/sdd-gate.yml`) — 머지를 차단합니다.
+- **spec-kit `/speckit.analyze`** — constitution 위반을 CRITICAL로 표기(advisory).
 
 AI든 사람이든 단계를 건너뛰려 하면 게이트가 실패하고 행동이 멈춥니다. 핵심은, 준수 여부가 "모델이 규칙을 기억하는지"에 의존하지 않는다는 점입니다.
 
