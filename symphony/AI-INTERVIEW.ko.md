@@ -15,7 +15,7 @@
    [ ] strict   : 운영 시그널 감지 시 자동 (R1–R6; 우회 불가)
 
 2. 흐름에 0단계 조사가 필요한가?
-   [ ] yes : 기존 코드 있음 → 바꾸기 전에 이해 (00-survey, 05b-regression 추가)
+   [ ] yes : 기존 코드 있음 → 바꾸기 전에 이해 (survey, regression 추가)
    [ ] no  : 신규 → 보존할 게 없음
 ```
 
@@ -146,7 +146,7 @@ D. 🧱 **레거시** - 조심히 변경할 기존 코드 있음
 
 **처리** (0단계 조사 여부 결정 — 모드 아님):
 - A → 신규, 조사 **끔**
-- B/C/D → 기존 코드 있음, 조사 **켬** (00-survey, 05b-regression 추가)
+- B/C/D → 기존 코드 있음, 조사 **켬** (survey, regression 추가)
 
 #### 🎯 Q3: 적용 목적
 
@@ -259,13 +259,13 @@ C. 안전한 적용 (롤백 가능성 최우선)
 - Phase A(Q1)에서 운영 시그널 감지 시 **strict** 자동 선택 → R3/R4 우회 불가 (R6)
 
 ### 0단계 조사: [필요 / 불필요]
-- 기존 코드 있으면 **필요** → `00-survey.md` + `05b-regression.md` 추가 (R4)
+- 기존 코드 있으면 **필요** → `survey.md` + `regression.md` 추가 (R4)
 - 신규면 **불필요**
 
 ### 추천 단계: TIER_[1/2/3]
 - **Tier 1 (Core)**: SDD + Karpathy + grill-me — 혼자 / 소규모 / 초기 작업
 - **Tier 2 (Flow)**: + Handoff — 반복 가능한 구조·인계가 필요
-- **Tier 3 (Full)**: + Verification Design + Harness — 대형 기능, 팀 작업
+- **Tier 3 (Full)**: + Harness — 대형 기능, 팀 작업
 - 근거: [프로젝트 규모, 작업 형태(Q5), 복잡도 기반]
 - 🎸 Harness(Tier 3)는 단일 에이전트로 벅찬 작업으로 보일 때만 제안하며, 선택적·실험적입니다.
 
@@ -283,16 +283,16 @@ C. 안전한 적용 (롤백 가능성 최우선)
 - `.git/hooks/pre-commit` (R3, R4, R6)
 - `.claude/hooks/post-task.sh` (R5)
 - `.github/workflows/sdd-gate.yml` (R1, R3, R6, R7)
-- `sdd/CONSTITUTION.md` (게이트가 읽는 규칙)
+- `.specify/memory/constitution.md` (게이트가 읽는 규칙; R1~R7 본문은 `sdd/CONSTITUTION.md`에서)
 
 **2. 생성할 SDD 템플릿**
-- `01~07` 항상; 조사 필요 시 `00-survey.md` + `05b-regression.md`
+- spec-kit의 spec/plan/tasks 항상; 조사 필요 시 이 패키지의 survey/regression
 
 **3. 처리될 기존 자산**
 [archive 대상 또는 없음]
 
 **4. 첫 SDD 사이클**
-F001-[기능]
+001-[slug]
 
 **5. 시작 단계**
 TIER_[1/2/3] — 필요하면 나중에 올라갈 수 있음
@@ -376,7 +376,7 @@ Q1에서 운영 시그널이 드러나면 **차단하지 않습니다**. 대신 
 
 | 신호 | 조사 | 추가 |
 |---|---|---|
-| 기존 코드 있음 (코드 파일 > 약 10, 또는 의미 있는 git 이력) | **켬** | `00-survey.md`, `05b-regression.md` (R4) |
+| 기존 코드 있음 (코드 파일 > 약 10, 또는 의미 있는 git 이력) | **켬** | `survey.md`, `regression.md` (R4) |
 | 신규 (코드 거의 없음, 이력 없음) | **끔** | 없음 — 흐름이 Specify부터 시작 |
 
 ### 항상 동일
@@ -384,15 +384,15 @@ Q1에서 운영 시그널이 드러나면 **차단하지 않습니다**. 대신 
 컨텍스트와 무관하게:
 - 7단계 SDD 흐름이 진입점 (작업 규모로 full/mini/none 조절)
 - 강제 게이트 설치 (`pre-implement`, `pre-commit`, `post-task`, CI)
-- `SPEC.yml`과 `sdd/CONSTITUTION.md`가 단일 출처
-- 첫 기능은 `F001-[기능]` (모드별 특수 `F000-*` 부트스트랩 없음)
+- `SPEC.yml`(패키지 사실)과 `.specify/memory/constitution.md`(R1~R7 규칙)가 단일 출처
+- 첫 기능은 그냥 첫 브랜치 `001-[slug]` (특수 부트스트랩 단계 없음)
 
 ### 단계(Tier) (컨텍스트와 독립)
 
 모드가 아니라 프로젝트 규모와 작업 형태로 시작 단계를 추천:
 - **Tier 1**: SDD + Karpathy + grill-me
 - **Tier 2**: + Handoff
-- **Tier 3**: + Verification Design + Harness (대형/팀 작업; Harness 선택·실험적)
+- **Tier 3**: + Harness (대형/팀 작업; Harness 선택·실험적)
 
 ---
 

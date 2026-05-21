@@ -7,19 +7,18 @@
 
 set -euo pipefail
 
-SDD_DIR="${SDD_DIR:-sdd}"
-ACTIVE_FILE="$SDD_DIR/.active-feature"
+# Feature = current git branch (spec-kit convention); artifacts under specs/<branch>/.
+FEATURE_ID="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || true)"
+FEATURE_DIR="specs/$FEATURE_ID"
+[ -n "$FEATURE_ID" ] && [ -d "$FEATURE_DIR" ] || exit 0
 
-[ -f "$ACTIVE_FILE" ] || exit 0
-FEATURE_ID="$(cat "$ACTIVE_FILE" | tr -d '[:space:]')"
-[ -n "$FEATURE_ID" ] || exit 0
-
-HANDOFF="$SDD_DIR/features/$FEATURE_ID/07-handoff.md"
+# handoff.md is this package's addition (spec-kit has no handoff artifact).
+HANDOFF="$FEATURE_DIR/handoff.md"
 
 if [ ! -f "$HANDOFF" ] || [ "$(wc -w < "$HANDOFF" 2>/dev/null || echo 0)" -lt 20 ]; then
-  echo "⚠️  SDD (R5): feature '$FEATURE_ID' has no meaningful 07-handoff.md." >&2
-  echo "    Next session will lack context. Consider running handoff-writer." >&2
-  echo "    (warning only — not blocking; see $SDD_DIR/CONSTITUTION.md R5)" >&2
+  echo "⚠️  SDD (R5): feature '$FEATURE_ID' has no meaningful specs/$FEATURE_ID/handoff.md." >&2
+  echo "    Next session will lack context. Consider running handoff." >&2
+  echo "    (warning only — not blocking; see .specify/memory/constitution.md R5)" >&2
 fi
 
 exit 0

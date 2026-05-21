@@ -15,7 +15,7 @@ The purpose is to **assess the project's context** and configure SDD accordingly
    [ ] strict   : auto when production signals detected (R1–R6; no bypass)
 
 2. Does the flow need a Step 0 survey?
-   [ ] yes : existing code present → understand before changing (adds 00-survey, 05b-regression)
+   [ ] yes : existing code present → understand before changing (adds survey, regression)
    [ ] no  : greenfield → nothing to preserve
 ```
 
@@ -146,7 +146,7 @@ Reasoning:
 
 **Handling** (sets whether Step 0 survey runs — not a mode):
 - A → greenfield, survey **off**
-- B/C/D → existing code present, survey **on** (adds 00-survey, 05b-regression)
+- B/C/D → existing code present, survey **on** (adds survey, regression)
 
 #### 🎯 Q3: Purpose of Adoption
 
@@ -259,13 +259,13 @@ After synthesizing answers, report in this format:
 - **strict** auto-selected if production signals were detected in Phase A (Q1) → R3/R4 non-bypassable (R6)
 
 ### Step 0 survey: [needed / not needed]
-- **needed** if existing code is present → adds `00-survey.md` + `05b-regression.md` (R4)
+- **needed** if existing code is present → adds `survey.md` + `regression.md` (R4)
 - **not needed** for greenfield
 
 ### Recommended tier: TIER_[1/2/3]
 - **Tier 1 (Core)**: SDD + Karpathy + grill-me — solo / small / early work
 - **Tier 2 (Flow)**: + Handoff — needs repeatable structure & handoffs
-- **Tier 3 (Full)**: + Verification Design + Harness — large features, team work
+- **Tier 3 (Full)**: + Harness — large features, team work
 - Reasoning: [based on project size, work style (Q5), and complexity]
 - 🎸 Harness (Tier 3) is suggested only if a task looks too large for a single agent; it's optional & experimental.
 
@@ -283,16 +283,16 @@ After synthesizing answers, report in this format:
 - `.git/hooks/pre-commit` (R3, R4, R6)
 - `.claude/hooks/post-task.sh` (R5)
 - `.github/workflows/sdd-gate.yml` (R1, R3, R6, R7)
-- `sdd/CONSTITUTION.md` (the rules the gates read)
+- `.specify/memory/constitution.md` (the rules the gates read; R1–R7 text from `sdd/CONSTITUTION.md`)
 
 **2. SDD templates to create**
-- `01~07` always; `00-survey.md` + `05b-regression.md` if survey needed
+- spec-kit's spec/plan/tasks always; this package's survey/regression if survey needed
 
 **3. Existing assets to be handled**
 [archive targets or none]
 
 **4. First SDD cycle**
-F001-[feature]
+001-[slug]
 
 **5. Starting tier**
 TIER_[1/2/3] — you can climb later as needed
@@ -376,7 +376,7 @@ There are no modes to choose. Read the context signals and configure two things:
 
 | Signal | Survey | Adds |
 |---|---|---|
-| Existing code present (code files > ~10, or meaningful git history) | **on** | `00-survey.md`, `05b-regression.md` (R4) |
+| Existing code present (code files > ~10, or meaningful git history) | **on** | `survey.md`, `regression.md` (R4) |
 | Greenfield (almost no code, no history) | **off** | nothing — flow starts at Specify |
 
 ### Always the same
@@ -384,15 +384,15 @@ There are no modes to choose. Read the context signals and configure two things:
 Regardless of context:
 - The 7-step SDD flow is the entry point (scaled full/mini/none by task size)
 - The enforcement gates are installed (`pre-implement`, `pre-commit`, `post-task`, CI)
-- `SPEC.yml` and `sdd/CONSTITUTION.md` are the single sources of truth
-- The first feature is `F001-[feature]` (no special `F000-*` bootstrap by mode)
+- `SPEC.yml` (package facts) and `.specify/memory/constitution.md` (R1–R7 rules) are the single sources of truth
+- The first feature is just the first branch `001-[slug]` (no special bootstrap step)
 
 ### Tier (independent of context)
 
 Recommend a starting tier from project size and work style, not from any mode:
 - **Tier 1**: SDD + Karpathy + grill-me
 - **Tier 2**: + Handoff
-- **Tier 3**: + Verification Design + Harness (large/team work; Harness optional & experimental)
+- **Tier 3**: + Harness (large/team work; Harness optional & experimental)
 
 ---
 

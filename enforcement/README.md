@@ -7,7 +7,7 @@
 
 | File | Enforces | Type |
 |---|---|---|
-| `sdd/CONSTITUTION.md` | The rule set (R1–R7) — single source of truth for rules | Reference |
+| `sdd/CONSTITUTION.md` | The R1–R7 rule **text** — merged into spec-kit's `.specify/memory/constitution.md`, which the gates read and `/speckit.analyze` treats as non-negotiable | Reference |
 | `hooks/pre-implement.sh` | R1, R2 — no code without spec & plan | Local hook (blocks) |
 | `hooks/pre-commit.sh` | R3, R4, R6 — no commit without passing verification | Local hook (blocks) |
 | `hooks/post-task.sh` | R5 — warn on missing handoff | Local hook (warns) |
@@ -27,8 +27,10 @@ enforcement real for shared code. Use both: hooks for speed, CI for guarantee.
 ## Install
 
 ```bash
-# 1. Constitution (rules the gates read)
-mkdir -p sdd && cp enforcement/sdd/CONSTITUTION.md sdd/CONSTITUTION.md
+# 1. Constitution: spec-kit owns it. Run /speckit.constitution to create
+#    .specify/memory/constitution.md, then merge the R1–R7 rules from
+#    enforcement/sdd/CONSTITUTION.md into it. The gates read that file, and
+#    /speckit.analyze treats constitution rules as non-negotiable (CRITICAL).
 
 # 2. Local hooks
 mkdir -p .claude/hooks

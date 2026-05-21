@@ -1,8 +1,11 @@
-# Project Constitution — SDD Enforcement Rules
+# Project Constitution — SDD Enforcement Rules (R1–R7)
 
-> **This file is the single source of truth for enforcement.**
-> Hooks and CI gates read these rules. Changing a rule here changes what the gates block.
-> Edit deliberately — loosening a rule loosens every gate that depends on it.
+> **This file is the rule text.** Its home at runtime is spec-kit's
+> `.specify/memory/constitution.md`: run `/speckit.constitution`, then merge these
+> R1–R7 rules into it. Both layers then enforce them — this package's hooks/CI gates
+> (blocking) and spec-kit's `/speckit.analyze` (treats constitution rules as CRITICAL).
+> Changing a rule here changes what the gates block. Loosening a rule loosens every gate
+> that depends on it.
 
 ---
 
@@ -12,6 +15,7 @@ SDD is not advisory. These rules are enforced by deterministic gates, not by ask
 
 - **Local hooks** (`.claude/hooks/`) block actions during a session.
 - **CI gate** (`.github/workflows/sdd-gate.yml`) blocks merges.
+- **spec-kit `/speckit.analyze`** flags constitution violations as CRITICAL (advisory).
 
 If the AI (or a human) tries to skip a step, the gate fails and the action stops. The point is that compliance does not depend on the model remembering to comply.
 
@@ -21,23 +25,25 @@ If the AI (or a human) tries to skip a step, the gate fails and the action stops
 
 ### R1 — No code without a spec
 Implementation files may not be created or modified for a feature that has no
-`sdd/features/<id>/01-spec.md`. Enforced by: `pre-implement` hook.
+`specs/<branch>/spec.md` (produced by spec-kit's `/speckit.specify`). Enforced by:
+`pre-implement` hook.
 
 ### R2 — No code without a plan
-A feature being implemented must have `03-plan.md`. Enforced by: `pre-implement` hook.
+A feature being implemented must have `specs/<branch>/plan.md` (from `/speckit.plan`).
+Enforced by: `pre-implement` hook.
 
 ### R3 — No commit without passing verification
 A commit touching implementation files must have a passing test/verification run.
 Enforced by: `pre-commit` hook + CI gate.
 
 ### R4 — Preserve existing behavior (context-dependent)
-If the feature touches existing code, regression checks (`05b-regression.md`) must
-exist and pass before commit. On greenfield code with nothing to preserve, this rule
-is satisfied trivially. Enforced by: `pre-commit` hook + CI gate.
+If the feature touches existing code, regression checks (`specs/<branch>/regression.md`,
+this package's addition) must exist and pass before commit. On greenfield code with
+nothing to preserve, this rule is satisfied trivially. Enforced by: `pre-commit` hook.
 
 ### R5 — No silent handoff gaps
-Completing a feature without `07-handoff.md` is allowed but warned. Enforced by:
-`post-task` hook (warning, non-blocking).
+Completing a feature without `specs/<branch>/handoff.md` (this package's addition) is
+allowed but warned. Enforced by: `post-task` hook (warning, non-blocking).
 
 ### R6 — Production strictness
 If production signals are detected (deploy configs, `.env.production`, etc.), R3 and

@@ -7,7 +7,7 @@
 </p>
 
 > [!NOTE]
-> **실험적(Experimental).** 독립적인 6개 오픈소스 방법론을 통합하며, 그 *결합* 효과는 아직 측정되지 않았습니다. 한 번에 다 도입하지 말고 — Tier 1(Karpathy + grill-me)부터 시작해 필요할 때 올라가세요. 전체 단계 가이드와 솔직한 한계는 루트 [README](../README.ko.md)에 있습니다.
+> **실험적(Experimental).** SDD 프레임워크와 그것이 호출하는 4개 스킬을 통합하며 — 5개 악기 모두 오픈소스 저장소 기반(4개 저장소)입니다 — 그 *결합* 효과는 아직 측정되지 않았습니다. 한 번에 다 도입하지 말고 — Tier 1(Karpathy + grill-me)부터 시작해 필요할 때 올라가세요. 전체 단계 가이드와 솔직한 한계는 루트 [README](../README.ko.md)에 있습니다.
 
 ---
 
@@ -20,8 +20,9 @@
 | 3 | **AI-EXECUTION.ko.md** | 실행 지시 (평가 후) |
 | 4 | **ORCHESTRA-GUIDE.ko.md** | SDD와 그 스킬 가이드 |
 | 5 | **INTEGRATION-CHECKLIST.ko.md** | 검증 체크리스트 |
+| 6 | **spec-kit-요약.ko.md** | spec-kit 한국어 다리 (비강제 요약, 영문 원본 우선) |
 
-> 각 파일은 영문 기본판이 있습니다: 접미사 없는 `*.md`.
+> 각 파일은 영문 기본판이 있습니다: 접미사 없는 `*.md` — 단 `spec-kit-요약.ko.md`는 한국어 전용이며, 그 영문 짝은 spec-kit 자체 README입니다.
 > 강제 템플릿(hooks, CI 게이트, CONSTITUTION)은 레포의 `enforcement/` 폴더에, 핵심 사실은 `SPEC.yml`에 있습니다.
 
 ---
@@ -41,7 +42,13 @@
 
 ---
 
-## 🚀 사용 방법 (3단계)
+## 🚀 사용 방법
+
+### Step 0: spec-kit 설치 (전제조건 — 이 패키지가 활용)
+
+```bash
+uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
+```
 
 ### Step 1: 파일 배치
 
@@ -73,7 +80,7 @@ claude
 
 ```
 AI-INTERVIEW.md를 읽고 인터뷰부터 시작해주세요.
-컨텍스트를 평가하고 강제 게이트를 설치한 뒤, SDD로 진행해주세요.
+컨텍스트를 평가하고 `specify init`을 실행하고 강제 게이트를 설치한 뒤, SDD로 진행해주세요.
 ```
 
 ---
@@ -130,21 +137,22 @@ AI-INTERVIEW.md를 읽고 인터뷰부터 시작해주세요.
 ├── INTEGRATION-REPORT.md        # 통합 리포트
 ├── INTERVIEW-RESULT.md          # 인터뷰 결과
 │
-├── .claude/skills/              # 이 패키지가 생성하는 5개 skill
+├── .claude/skills/              # 이 패키지가 생성하는 4개 skill
 │   ├── grill-me/                # 🎹 명확화
 │   ├── sdd-conductor/           # 🎼 지휘자
-│   ├── karpathy-enforcer/       # 🎻 4원칙 강제
-│   ├── harness-builder/         # 🥁 검증 설계
-│   └── handoff-writer/          # 🎺 인계 작성
+│   ├── karpathy-guidelines/       # 🎻 4원칙 강제
+│   └── handoff/          # 🎺 인계 작성
 │                                # 🎸 Harness(에이전트 팀)는 외부 플러그인,
 │                                #    필요 시 별도 설치
 │
-└── sdd/                         # SDD 중심
-    ├── CONSTITUTION.md          # 강제 규칙 R1~R7 (게이트가 읽음)
-    ├── ORCHESTRA.md             # SDD와 스킬 가이드
-    ├── README.md                # SDD 안내
-    ├── templates/               # 단계별 템플릿 (01~07, 필요 시 00/05b)
-    └── features/                # 기능별 작업물
+├── .specify/                    # spec-kit (`specify init`)
+│   ├── memory/constitution.md   # R1~R7 규칙 (게이트가 읽음) + 원칙
+│   └── templates/               # spec-kit의 spec/plan/tasks/checklist 템플릿
+│
+└── specs/<NNN-slug>/            # 기능별 작업물, git 브랜치 단위 (/speckit.*)
+    ├── spec.md  plan.md  tasks.md          # spec-kit 산출
+    └── survey.md  regression.md            # 이 패키지의 추가분
+        handoff.md  implementation-notes.md
 ```
 
 ### 컨텍스트 추가 (모드 아님)
@@ -153,8 +161,8 @@ AI-INTERVIEW.md를 읽고 인터뷰부터 시작해주세요.
 
 ```
 기존 코드 있음
-  └─ 00-survey.md      추가: 바꾸기 전에 이해
-  └─ 05b-regression.md 추가: 기존 동작 보존 (R4)
+  └─ survey.md      추가: 바꾸기 전에 이해
+  └─ regression.md 추가: 기존 동작 보존 (R4)
 
 운영 시그널 감지
   └─ ENFORCEMENT_LEVEL=strict — 테스트/회귀 우회 불가 (R6)
@@ -180,12 +188,12 @@ AI-INTERVIEW.md를 읽고 인터뷰부터 시작해주세요.
         Spec → Clarify → Plan → Tasks → Verify → Implement → Handoff
             + 강제 게이트 (hooks / CI)
                           │
-        ┌─────────────┬───┴───┬─────────────┬─────────────┐
-        │             │       │             │             │
-   🎻 Violin      🎹 Piano  🥁 Perc.    🎺 Brass     🎸 Guitar
-   Karpathy 4원칙  grill-me  Verification  Handoff      Harness
-   (품질)         (명확화)  (검증)        (인계)       (에이전트 팀)
-        └──────────── 지휘자가 호출하는 스킬 ──────────────┘
+        ┌─────────────┬───┴───┬─────────────┐
+        │             │       │             │
+   🎻 Violin      🎹 Piano  🎺 Brass     🎸 Guitar
+   Karpathy 4원칙  grill-me  Handoff      Harness
+   (품질)         (명확화)  (인계)       (에이전트 팀)
+        └────────── 지휘자가 호출하는 스킬 ──────────┘
 ```
 
 ---
@@ -214,18 +222,17 @@ AI-INTERVIEW.md를 읽고 인터뷰부터 시작해주세요.
 
 ## 📚 원본 자료
 
-이 패키지가 통합하는 6가지 AI 코딩론 (성숙도는 정성 표기 — 정확한 스타 수는 변동하므로 각 저장소에서 확인):
+이 패키지가 통합하는 5개 악기 — 모두 오픈소스 프로젝트 (성숙도는 정성 표기 — 정확한 스타 수는 변동하므로 각 저장소에서 확인):
 
 | 도구 | 역할 | 출처 | 성숙도 |
 |---|---|---|---|
 | **Spec Kit** (SDD) | 프레임워크 — 명세 기반 흐름 | https://github.com/github/spec-kit | 확립됨 |
 | **Karpathy Guidelines** | 코드 품질 (4원칙) | https://github.com/multica-ai/andrej-karpathy-skills | 확립됨 |
 | **grill-me Skill** | 명확화 | https://github.com/mattpocock/skills | 확립됨 |
-| **Verification Design** | 검증 기준 (5대 카테고리) | 커뮤니티 방법론 | 일반적 관행 |
 | **Handoff Skill** | 작업 인계 | https://github.com/mattpocock/skills | 확립됨 |
 | **Harness** | 에이전트 팀·스킬 설계자 | https://github.com/revfactory/harness | 널리 채택됨, 가장 신생 |
 
-> 🎸 **Harness**는 선택적 6번째 악기입니다: 외부 플러그인(여기서 생성 안 함)이며, Claude Code의 실험적 Agent Teams 기능에 의존합니다. 작업에 정말 에이전트 팀이 필요할 때만 쓰세요.
+> 🎸 **Harness**는 선택적 5번째 악기입니다: 외부 플러그인(여기서 생성 안 함)이며, Claude Code의 실험적 Agent Teams 기능에 의존합니다. 작업에 정말 에이전트 팀이 필요할 때만 쓰세요.
 
 ---
 

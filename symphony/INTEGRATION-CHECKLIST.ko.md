@@ -4,7 +4,7 @@
 > Day 0 (직후), Day 7 (1주 후), Day 30 (1개월 후) 시점에 사용.
 
 > [!NOTE]
-> 본인의 **단계(Tier)**가 도입한 것만 점검하세요. Tier 1(Karpathy + grill-me)은 여기서 검증할 게 거의 없습니다. 아래 구조 항목들은 Tier 2 이상(SDD 흐름)과 Tier 3(Verification Design + 🎸 Harness)에 도달했을 때 적용됩니다. 🎸 Harness 항목은 선택적이며, 작업에 에이전트 팀이 필요했을 때만 해당합니다.
+> 본인의 **단계(Tier)**가 도입한 것만 점검하세요. Tier 1(Karpathy + grill-me)은 여기서 검증할 게 거의 없습니다. 아래 구조 항목들은 Tier 2 이상(SDD 흐름)과 Tier 3(🎸 Harness)에 도달했을 때 적용됩니다. 🎸 Harness 항목은 선택적이며, 작업에 에이전트 팀이 필요했을 때만 해당합니다.
 
 ---
 
@@ -31,12 +31,11 @@
 - [ ] INTEGRATION-REPORT.md 존재
 - [ ] INTERVIEW-RESULT.md 존재
 
-#### sdd/ 디렉터리
-- [ ] sdd/CONSTITUTION.md 존재 (규칙 R1–R7)
-- [ ] sdd/ORCHESTRA.md 존재
-- [ ] sdd/README.md 존재
-- [ ] sdd/templates/ 존재
-- [ ] sdd/features/ 존재
+#### spec-kit + feature 디렉터리
+- [ ] `specify init` 실행됨 (`.specify/` 존재)
+- [ ] `.specify/memory/constitution.md`에 R1~R7 병합됨
+- [ ] `.specify/templates/` 존재 (spec-kit의 spec/plan/tasks/checklist)
+- [ ] `specs/` 존재 (`/speckit.*`가 만드는 feature별 디렉터리)
 
 #### 강제 레이어 ("권고가 아니라 강제"의 핵심)
 - [ ] `.claude/hooks/pre-implement.sh` 설치 & 실행권한 (R1, R2)
@@ -52,13 +51,12 @@
 - [ ] spec/plan 없이 "구현" 시도 → **차단됨** (R1/R2)
 - [ ] `bash enforcement/sync-check.sh .` → 통과 (R7)
 
-#### .claude/skills/ 디렉터리 (이 패키지가 생성하는 5개)
+#### .claude/skills/ 디렉터리 (이 패키지가 생성하는 4개)
 - [ ] grill-me/SKILL.md
 - [ ] grill-me/VARIANT.md
 - [ ] sdd-conductor/SKILL.md
-- [ ] karpathy-enforcer/SKILL.md
-- [ ] harness-builder/SKILL.md
-- [ ] handoff-writer/SKILL.md
+- [ ] karpathy-guidelines/SKILL.md
+- [ ] handoff/SKILL.md
 
 #### 🎸 Harness (선택 — 작업에 에이전트 팀이 필요했을 때만)
 > Harness는 외부 플러그인(revfactory/harness)이며, 이 패키지가 생성하지 않습니다.
@@ -77,18 +75,13 @@
 - [ ] 기존 코드 디렉터리 변경 없음
 - [ ] Git 추적 가능
 
-#### 표준 템플릿 (항상)
-- [ ] sdd/templates/01-spec.md
-- [ ] sdd/templates/02-clarify.md
-- [ ] sdd/templates/03-plan.md
-- [ ] sdd/templates/04-tasks.md
-- [ ] sdd/templates/05-harness.md
-- [ ] sdd/templates/06-implementation-notes.md
-- [ ] sdd/templates/07-handoff.md
+#### 템플릿
+- [ ] spec-kit 코어 템플릿 존재 (`.specify/templates/`: spec, plan, tasks, checklist, constitution) — `specify init`이 제공, 여기서 작성 안 함
+- [ ] 이 패키지의 추가분 필요 시 사용 가능: `survey.md`·`regression.md`·`handoff.md`·`implementation-notes.md` (`specs/<branch>/`)
 
-#### CONSTITUTION.md 검증
+#### Constitution 검증 (`.specify/memory/constitution.md`)
 - [ ] 프로젝트 정체성과 현재 단계 반영
-- [ ] Karpathy 4원칙과 SDD 7단계 포함
+- [ ] R1~R7 규칙 포함 (`sdd/CONSTITUTION.md`에서 병합)
 - [ ] 강제 레벨 명시 (standard/strict)
 
 ### 컨텍스트 추가 — 기존 코드가 있을 때만 검증
@@ -96,8 +89,8 @@
 > 신규 프로젝트에서는 이 블록 전체를 건너뜁니다 (0단계 조사 꺼짐).
 
 #### 기존 코드 템플릿 & 스킬
-- [ ] sdd/templates/00-survey.md 추가됨
-- [ ] sdd/templates/05b-regression.md 추가됨
+- [ ] specs/<branch>/survey.md (기존 코드 있을 때)
+- [ ] specs/<branch>/regression.md (기존 코드 있을 때)
 - [ ] .claude/skills/code-archaeologist/SKILL.md 추가됨
 - [ ] .claude/skills/migration-strategist/SKILL.md 추가됨
 
@@ -107,8 +100,8 @@
 - [ ] 원본은 참조만, 제자리 수정 없음
 
 #### 조사가 포함된 첫 SDD 사이클
-- [ ] sdd/features/F001-*/00-survey.md 에 의미 있는 분석
-- [ ] 05b-regression.md 에 보존할 동작 명시 (B1, B2, ...)
+- [ ] specs/<branch>/survey.md 에 의미 있는 분석
+- [ ] regression.md 에 보존할 동작 명시 (B1, B2, ...)
 
 #### strict 레벨 (운영 시그널 감지 시)
 - [ ] ENFORCEMENT_LEVEL=strict 확인
@@ -132,7 +125,7 @@
 - [ ] Phase 2 (Clarify) grill-me 질문 과다
 - [ ] Phase 3 (Plan) 기술 선택 어려움
 - [ ] Phase 4 (Tasks) 분할 단위 모호
-- [ ] Phase 5 (Harness) 시나리오 발굴 부족
+- [ ] Phase 5 (검증) 시나리오 발굴 부족
 - [ ] Phase 6 (Implement) Karpathy 적응
 - [ ] Phase 7 (Handoff) 누락 검출 부담
 
@@ -147,7 +140,7 @@
 ### 흐름 진척 (모든 프로젝트)
 
 #### SDD 사이클
-- [ ] F001 완료 또는 진행 중?
+- [ ] feature 브랜치 완료 또는 진행 중?
 - [ ] CONSTITUTION.md 갱신할 것?
 - [ ] 게이트가 예상대로 작동하나 (우회되지 않고)?
 
@@ -326,13 +319,13 @@
 ```bash
 # 가장 부담되는 것부터
 # 예: 매번 Harness 작성이 부담
-echo "Harness only for large features" >> sdd/CONSTITUTION.md
+echo "Harness only for large features" >> .specify/memory/constitution.md
 ```
 
 #### Level 2: 절반 롤백
 ```bash
 # Karpathy + grill-me만 유지 (Tier 1)
-rm -rf sdd/templates/
+rm -f .git/hooks/pre-commit .claude/hooks/pre-implement.sh   (흐름 게이트 제거; Tier 1 스킬 유지)
 ```
 
 #### Level 3: 전체 롤백
@@ -344,7 +337,7 @@ rm -rf sdd/templates/
 #    (신규는 archive가 없으니 이 단계 생략)
 
 # 2. 통합 산출물 제거
-rm -rf sdd/ .claude/skills/ .claude/hooks/
+rm -rf .claude/skills/ .claude/hooks/ .github/workflows/sdd-gate.yml   (spec-kit .specify/specs는 본인 것)
 rm -f .git/hooks/pre-commit .github/workflows/sdd-gate.yml SPEC.yml
 rm CLAUDE.md DECISION-LOG.md INTEGRATION-REPORT.md INTERVIEW-RESULT.md
 ```
