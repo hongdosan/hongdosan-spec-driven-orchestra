@@ -87,7 +87,7 @@ SDD는 모드로 **분기하지 않습니다.** 하나의 흐름을 돌리되, �
 4. Tasks     🎼 (분할)
    ↓  └─ 선택: 🎸 Harness — 단일 에이전트로 벅찬 작업이면
    ↓           에이전트 팀을 설계해 작업을 분담
-5. Verify    🎼 (SDD 소유; 검증 기준 → 05-verify.md)
+5. Verify    🎼 (SDD 소유; 기준은 spec.md / tasks.md에)
    ↓  └─ 기존 코드 있으면: 회귀(regression) 검사도 추가
    ↓     (기존 동작 보존 — B1, B2, ...)
 6. Implement 🎻 (karpathy-guidelines + ⛔ 게이트: spec/plan 없이 코드 불가)
@@ -99,7 +99,7 @@ SDD는 모드로 **분기하지 않습니다.** 하나의 흐름을 돌리되, �
 
 > **\*0단계(Survey)**는 이해해야 할 기존 코드가 있을 때만 나타납니다. 신규 프로젝트는 조사할 게 없으니 SDD가 건너뜁니다. 별도의 "리빌드 모드"는 없습니다 — 컨텍스트가 부르면 같은 흐름에 조사와 회귀 검사가 포함될 뿐입니다.
 
-> **출처 — 어디까지가 spec-kit이고 어디부터가 우리가 더한 것인가.** 이 7단계 흐름은 spec-kit 명령을 그대로 옮긴 것이 아니라 *우리의* 오케스트레이션입니다. spec-kit 명령에 직접 대응하는 단계: **Specify**(`/speckit.specify`), **Clarify**(`/speckit.clarify`), **Plan**(`/speckit.plan`), **Tasks**(`/speckit.tasks`), **Implement**(`/speckit.implement`). **Survey(0)·Verify(5)·Handoff(7)** 단계는 *우리가 추가한 것*으로 spec-kit 명령이 아닙니다. 반대로 spec-kit의 `/speckit.constitution`(원본의 첫 단계)과 `/speckit.analyze`는 여기서 흐름 단계가 아닙니다 — constitution 개념은 번호 단계가 아니라 `sdd/CONSTITUTION.md`로 차용했습니다. "SDD가 7단계 흐름을 소유한다"는 말은 SDD가 *이 순서*를 지휘한다는 뜻이지, spec-kit이 이 7단계를 정의한다는 뜻이 아닙니다.
+> **출처 — 어디까지가 spec-kit이고 어디부터가 우리가 더한 것인가.** 이 7단계 흐름은 spec-kit 명령을 그대로 옮긴 것이 아니라 *우리의* 오케스트레이션입니다. spec-kit 명령에 직접 대응하는 단계: **Specify**(`/speckit.specify`), **Clarify**(`/speckit.clarify`), **Plan**(`/speckit.plan`), **Tasks**(`/speckit.tasks`), **Implement**(`/speckit.implement`). **Survey(0)·Verify(5)·Handoff(7)** 단계는 *우리가 추가한 것*으로 spec-kit 명령이 아닙니다. 반대로 spec-kit의 `/speckit.constitution`(원본의 첫 단계)과 `/speckit.analyze`는 여기서 흐름 단계가 아닙니다 — constitution 개념은 번호 단계가 아니라 spec-kit의 `.specify/memory/constitution.md`로 차용했습니다. "SDD가 7단계 흐름을 소유한다"는 말은 SDD가 *이 순서*를 지휘한다는 뜻이지, spec-kit이 이 7단계를 정의한다는 뜻이 아닙니다.
 
 ## 4. 강제 레이어 — 왜 이것이 단순한 권고가 아닌가
 
@@ -107,7 +107,7 @@ AI에게 "스펙 먼저 써줘"라고 말하는 마크다운은 *부탁*입니�
 
 | 게이트 | 막는 것 | 규칙 |
 |---|---|---|
-| `pre-implement` hook | `01-spec.md` + `03-plan.md` 없이 코드 작성 | R1, R2 |
+| `pre-implement` hook | `specs/<branch>/spec.md` + `plan.md` 없이 코드 작성 | R1, R2 |
 | `pre-commit` hook | 검증 미통과 상태로 구현 커밋 | R3, R4 |
 | `sdd-gate.yml` (CI) | spec 없음 / 테스트 실패 PR 머지 — **우회 불가** | R1, R3, R6 |
 | `post-task` hook | (경고) handoff 없이 종료 | R5 |
@@ -118,199 +118,41 @@ AI에게 "스펙 먼저 써줘"라고 말하는 마크다운은 *부탁*입니�
 
 ---
 
-## 5. 악장별 연주 가이드
+## 5. delta가 spec-kit 흐름에 더하는 것
 
-### 🎼 Movement 1: Specify
+spec → clarify → plan → tasks → implement 코어는 **spec-kit**의 것입니다 — `/speckit.*`를
+호출하고 [spec-kit 문서](https://github.com/github/spec-kit)를 보세요. 규칙 R에 따라 이
+가이드는 그 단계들을 재설명하지 않고, 이 패키지가 *더하는* 지점만 적습니다.
 
-**주역**: SDD
+### 🎹 Clarify — grill-me는 더 깊게
+`/speckit.clarify`는 최대 ~5개 표적 질문을 던지고 spec에 기록합니다. spec이 여전히 불충분하게
+느껴지면, 이 패키지의 **grill-me** 스킬이 더 파고듭니다(`"grill me - <branch> 명확화"`).
 
-#### 무엇을 하는가
-- 01-spec.md 작성
-- What & Why 명문화
-- 범위 정의
+### 🎸 Tasks — Harness를 언제 부르나
+`/speckit.tasks` 후, 기능이 단일 에이전트로 벅차면 **Harness**(외부 플러그인)로 에이전트
+팀을 설계합니다: `"Build a harness for this project"`. `.claude/agents/`와 그들의 스킬을
+생성합니다(Pipeline / Fan-out / Expert Pool / Producer-Reviewer / Supervisor / Hierarchical
+Delegation). 지휘는 여전히 SDD가 소유 — 일반 작업에는 쓰지 않습니다.
 
-#### 안티 패턴
-- ❌ How를 미리 적기
-- ❌ 범위 무한 확장
-- ❌ Why 없이 What만
+### 🎼 Verify — 기준은 spec에, 게이트가 테스트를 강제
+검증은 별도 파일이 아닙니다: 수용/엣지/성공기준은 spec-kit `spec.md`에, 테스트 태스크는
+`tasks.md`에 있습니다. spec-kit의 테스트는 *선택*입니다 — 이 패키지의 delta는 커밋 전 테스트
+통과를 **필수로** 만드는 게이트(R3)입니다.
 
----
+### 🥁 Regression — 기존 코드를 건드릴 때만
+레거시 작업을 위한 이 패키지의 추가분. `specs/<branch>/survey.md`가 있으면 R4가
+`regression.md`의 존재·통과를 커밋 전에 요구합니다: 보존할 동작(B1, B2, ...)을 가져오고,
+동작마다 검증을 쓰고, 점진 전환(Strangler Fig / Feature Flag / Branch by Abstraction)과
+롤백을 계획합니다.
 
-### 🎹 Movement 2: Clarify
+### 🎻 Implement — Karpathy 가드레일
+`/speckit.implement`가 `tasks.md`대로 구현합니다. 그동안 **karpathy-guidelines** 스킬이
+4원칙(Think Before Coding · Simplicity First · Surgical Changes · Goal-Driven Execution)을
+적용합니다. 게이트(R1/R2)가 `spec.md` + `plan.md` 없이 구현하는 것을 막습니다.
 
-**주역**: grill-me (Piano)
-
-#### 무엇을 하는가
-- 02-clarify.md 작성
-- 모든 모호함 제거
-
-#### 발동
-```
-"grill me - F[ID] 명확화"
-```
-
-#### 흐름
-1. AI가 15-50개 질문 (추천 답변 포함)
-2. 사용자 답변 (또는 "yes")
-3. 결정이 명확해질 때까지
-4. AI 요약 → 02-clarify.md
-
-#### 안티 패턴
-- ❌ "아무거나"
-- ❌ "나중에 결정"
-- ❌ 추천 무조건 거부
-
----
-
-### 🎼 Movement 3: Plan
-
-**주역**: SDD
-
-#### 무엇을 하는가
-- 03-plan.md 작성
-- 기술 선택
-- 아키텍처
-
-#### 다른 악기
-- 🎻 Karpathy: 더 단순한 방법 검토
-- 🎹 grill-me: 기술 모호 시 발동
-
----
-
-### 🎼 Movement 4: Tasks
-
-**주역**: SDD
-
-#### 무엇을 하는가
-- 04-tasks.md 작성
-- 30분~2시간 단위 분할
-
-#### 다른 악기
-- 🎻 Karpathy: Goal-Driven → 각 Task 검증 기준
-- 🎸 Harness: 단일 에이전트로 벅찬 작업이면 → 에이전트 팀 설계
-
-#### 🎸 Harness(에이전트 팀)를 언제 부르나
-[Harness](https://github.com/revfactory/harness)는 도메인별 에이전트 팀을 설계하고, 전문 에이전트를 정의하며, 그들이 쓸 스킬을 생성하는 메타-스킬입니다. 작업을 분할해 보니 단일 에이전트로는 벅찰 때 — 예를 들어 프론트엔드 / 백엔드 / QA처럼 뚜렷한 전문 분야로 나뉘는 작업이나, 대규모 조사·구축 작업일 때 — 꺼내 씁니다.
-
-흐름에 어떻게 맞물리나:
-- 트리거: `"Build a harness for this project"` / `"Design an agent team for this domain"`
-- `.claude/agents/` (에이전트 정의)와 `.claude/skills/` (그들의 스킬)을 생성
-- 아키텍처 패턴 선택: Pipeline, Fan-out/Fan-in, Expert Pool, Producer-Reviewer, Supervisor, Hierarchical Delegation
-- 전체 사이클은 여전히 지휘자(SDD)가 소유하며, Harness는 무거운 작업을 위한 단원(에이전트)만 편성
-
-일반적인 작업에는 쓰지 않습니다 — 표준 SDD 아래 단일 에이전트로 충분합니다.
-
----
-
-### 🎼 Movement 5: Verification
-
-**주역**: SDD (검증은 SDD 자체 흐름의 일부이며 별도 스킬이 아님; grill-me가 보조 가능)
-
-#### 무엇을 하는가
-- 05-verify.md 작성
-- 5대 카테고리 모두 커버
-
-#### 발동
-```
-"grill me - F[ID] 검증 설계"
-```
-
-#### 5대 카테고리
-1. Happy Path
-2. Sad Path
-3. Edge Cases
-4. Adversarial
-5. Performance
-
-> **출처 계보.** 이 카테고리들은 인용 가능한 외부 분류 체계가 아닙니다. 4개는 spec-kit
-> `spec-template.md` 섹션에 대응합니다 — Happy/Sad Path → Acceptance Scenarios(:34),
-> Edge Cases → Edge Cases(:71), Performance → Success Criteria(:106) — 그리고 Adversarial은
-> spec-kit Red Team 확장에 대응합니다. 마이그레이션 Phase 3에서 이를 `spec.md`로 직접 합치며,
-> 그 전까지는 `05-verify.md`가 보관합니다.
-
----
-
-### 🎼 Movement 5b: Regression (기존 코드를 건드릴 때)
-
-**주역**: SDD (0단계 조사 결과를 입력으로)
-
-> 모드가 아닙니다 — 이 악장은 작업이 기존 코드를 건드릴 때만 나타납니다. 신규 작업에는 없습니다. R4가 강제: `00-survey.md`가 있으면 `05b-regression.md`가 존재하고 커밋 전에 통과해야 합니다.
-
-#### 무엇을 하는가
-- 05b-regression.md 작성
-- 기존 동작 보존 검증
-
-#### 작업
-1. `00-survey.md`에서 "B1, B2, ..." (보존할 동작) 가져오기
-2. 각 동작에 대한 검증 시나리오 작성
-3. 점진 전환 단계 정의
-4. 롤백 시나리오 명시
-
----
-
-### 🎻 Movement 6: Implement
-
-**주역**: Karpathy 4원칙 (1st Violin)
-
-#### 무엇을 하는가
-- 코드 작성
-- 06-implementation-notes.md 갱신
-
-#### 4원칙 적용
-
-##### Think Before Coding
-```
-- 가정 명시
-- 모호하면 grill-me
-- 트레이드오프 제시
-```
-
-##### Simplicity First
-```
-- 50줄 가능한가?
-- 추측성 기능?
-- 단일 사용처 추상화?
-```
-
-##### Surgical Changes
-```
-- 영향 받는 파일만?
-- 인접 코드 보호?
-- 기존 스타일 유지?
-```
-
-##### Goal-Driven Execution
-```
-- 검증 시나리오의 어떤 H 만족?
-- 검증 가능한가?
-```
-
-#### 기존 코드를 마이그레이션할 때 (모드 아닌 컨텍스트 기반)
-Implement가 기존 동작을 건드리면 점진 전환 기법을 적용:
-- Strangler Fig 패턴
-- Feature Flag
-- Branch by Abstraction
-
----
-
-### 🎺 Movement 7: Handoff
-
-**주역**: handoff (Brass)
-
-#### 무엇을 하는가
-- 07-handoff.md 작성
-- 누락 검출
-- 다음 작업자 컨텍스트
-
-#### 발동
-```
-"grill me - F[ID] 핸드오프"
-```
-
-#### 안티 패턴
-- ❌ "잘 됩니다"
-- ❌ "별 문제 없음"
-- ❌ 다음 액션 없이 종료
+### 🎺 Handoff — 다음 세션용 컨텍스트
+이 패키지의 추가분: **handoff** 스킬이 `specs/<branch>/handoff.md`를 작성해 다음 세션에
+컨텍스트를 남깁니다. 없으면 R5가 경고(차단 아님)합니다.
 
 ---
 
@@ -371,11 +213,10 @@ grill-me 발동
 ```
 사용자: "새 기능 [이름]"
 
-AI: [sdd-conductor] F001-[이름]/ 생성
-    (기존 코드 없음 → 0단계 조사 없음)
-AI: 01-spec.md → 02-clarify.md (grill-me) → 03-plan.md
-AI: 04-tasks.md → 05-verify.md (검증)
-AI: 06-implement (karpathy-guidelines) → 07-handoff.md
+AI: 브랜치 001-[이름] 생성   (기존 코드 없음 → 조사 없음)
+AI: /speckit.specify → /speckit.clarify (더 깊으면 grill-me) → /speckit.plan
+AI: /speckit.tasks → /speckit.analyze → /speckit.implement
+AI: handoff.md   (이 패키지의 추가분)
     ⛔ 게이트: implement 전 spec+plan; 커밋 전 테스트
 ```
 
@@ -384,12 +225,12 @@ AI: 06-implement (karpathy-guidelines) → 07-handoff.md
 ```
 사용자: "X 기능 개선"
 
-AI: 00-survey.md (현재 동작 먼저 이해)
-AI: 01-spec.md → ... → 04-tasks.md
-AI: 05-verify.md + 05b-regression.md (B1, B2, ... 보존)
-AI: 06-implement — 동작 교체면 Strangler Fig / Feature Flag
+AI: survey.md (현재 동작 먼저 이해 — 이 패키지의 추가분)
+AI: /speckit.specify → ... → /speckit.tasks → /speckit.analyze
+AI: regression.md (B1, B2, ... 보존) → /speckit.implement
+    (동작 교체면 Strangler Fig / Feature Flag)
     ⛔ R4 게이트: 커밋 전 회귀 통과 필수
-AI: 07-handoff.md
+AI: handoff.md
 ```
 
 ### 운영(Production) 컨텍스트
@@ -398,10 +239,9 @@ AI: 07-handoff.md
 사용자: "결제 반올림 버그 수정"  (배포된 서비스에서)
 
 AI: 운영 시그널 감지 → ENFORCEMENT_LEVEL=strict (R6)
-AI: 00-survey.md → 01-spec.md → ... → 05b-regression.md
-AI: 06-implement
+AI: survey.md → /speckit.specify → ... → regression.md → /speckit.implement
     ⛔ strict 게이트: 테스트 + 회귀 필수, 우회 경로 없음
-AI: 07-handoff.md
+AI: handoff.md
 ```
 
 > 보세요: 단계는 동일합니다. 운영이 다른 "모드"를 발동한 게 아니라 — 강제 레벨을 올려 기존 게이트를 우회 불가로 만든 것뿐입니다.
@@ -436,7 +276,7 @@ AI: 07-handoff.md
 - ❌ 0단계 조사 없이 기존 코드 건드리기
 
 ### 지휘자 무시
-- ❌ sdd/features/ 밖에서 작업
+- ❌ specs/<branch>/ 밖에서 작업
 - ❌ 템플릿 무시
 - ❌ Constitution 어기기
 
