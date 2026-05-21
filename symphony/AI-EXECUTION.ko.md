@@ -164,7 +164,7 @@ description: |
 Claude Code 플러그인으로 설치합니다 (upstream 문서화 — 고정 raw 경로보다 견고):
 
 ```
-/plugin marketplace add forrestchang/andrej-karpathy-skills
+/plugin marketplace add multica-ai/andrej-karpathy-skills
 /plugin install andrej-karpathy-skills@karpathy-skills
 ```
 

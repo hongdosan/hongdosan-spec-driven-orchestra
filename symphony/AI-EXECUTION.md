@@ -164,7 +164,7 @@ description: |
 Install via Claude Code plugins (upstream-documented — more robust than a pinned raw path):
 
 ```
-/plugin marketplace add forrestchang/andrej-karpathy-skills
+/plugin marketplace add multica-ai/andrej-karpathy-skills
 /plugin install andrej-karpathy-skills@karpathy-skills
 ```
 
