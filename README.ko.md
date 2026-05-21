@@ -361,7 +361,7 @@ hongdosan-spec-driven-orchestra/
 공정한 문서라면 도움이 *안 될 수도* 있는 지점을 밝혀야 합니다:
 
 - **결합 효과는 미검증.** 각 도구는 개별적으로 신뢰할 만하지만, 5개를 결합하면 누적 효과가 난다는 주장은 측정된 결과가 아니라 가설입니다. 아직 공개된 실사용 데이터가 없습니다.
-- **upstream 스킬 설치는 `main` 경로에 고정됨.** `grill-me`·`handoff`·`karpathy-guidelines`는 각 repo의 `main` 브랜치 고정 경로에서 `curl`로 받아옵니다. upstream이 그 파일을 옮기거나 이름을 바꾸면, 경로를 갱신하기 전까지 설치가 깨집니다. (spec-kit은 자체 CLI라 영향 없음.) 이 부분의 견고화 — 커밋 SHA 고정 또는 `/plugin install` — 는 **현재 보류** 상태이며, 스킬 설치 실패 시 "upstream 경로 변경"으로 보시면 됩니다.
+- **스킬 2개가 `main` 경로에 고정됨.** `grill-me`·`handoff`는 `mattpocock/skills`의 `main` 브랜치 고정 경로에서 `curl`로 받아옵니다(해당 repo는 플러그인을 문서화하지 않음). upstream이 그 파일을 옮기거나 이름을 바꾸면 경로를 갱신하기 전까지 설치가 깨집니다. (spec-kit은 자체 CLI; `karpathy-guidelines`·`harness`는 `/plugin`으로 설치 — 모두 영향 없음.) 이 `curl` 2개의 견고화 — 커밋 SHA 고정 — 는 **현재 보류** 상태이며, 스킬 설치 실패 시 "upstream 경로 변경"으로 보시면 됩니다.
 - **spec-kit 동작은 가정일 뿐, 여기서 검증하지 않음.** 이 패키지는 `specify init`·`/speckit.*`를 호출하고 그것이 `spec.md`/`plan.md`/`tasks.md`를 만든다고 *전제*합니다. upstream 흐름이 실제로 동작하는지 확인하는 테스트가 없고, 스킬 설치는 upstream `main`에 고정됩니다(위 보류 항목 참조). upstream 버전은 직접 추적하세요.
 - **부담은 실재.** 전체 흐름은 작거나 사소한 작업을 오히려 느리게 합니다. 그래서 [단계적 도입](#-단계적-도입)이 있습니다 — 모든 걸 어디에나 쓰는 건 이 패키지가 설파하는 "Simplicity First" 원칙에 위배됩니다.
 - **에이전트 준수는 보장 안 됨.** Claude Code는 긴 세션에서 단계를 건너뛰거나, 형식만 채우거나, `CONSTITUTION.md`에서 이탈할 수 있습니다. 스킬이 유도하지만, LLM의 확률적 특성상 100% 준수는 불가능합니다.
