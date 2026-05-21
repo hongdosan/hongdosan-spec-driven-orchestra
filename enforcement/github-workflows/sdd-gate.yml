@@ -3,8 +3,25 @@ name: SDD Gate
 # Enforces the SDD constitution at the merge boundary.
 # Local hooks can be skipped (--no-verify); this CI gate cannot — it is the
 # backstop that makes "advisory → enforced" actually true for shared branches.
+# (Non-bypassable ONLY if you enable required-PR branch protection on the default branch.)
+# (기본 브랜치에 required-PR 브랜치 보호를 켰을 때에만 우회 불가입니다.)
 #
 # Install: copy to .github/workflows/sdd-gate.yml and set SDD_TEST_CMD below.
+#
+# Flow (steps run in order) / 흐름 (단계는 순서대로):
+#   1. Detect implementation changes (code-file extensions in the PR diff).
+#      구현 변경 감지 (PR diff에 코드 파일 확장자가 있는가).
+#   2. R1/R2 (only if impl): require specs/<head_ref>/spec.md (non-trivial) + plan.md,
+#      keyed to THIS PR's source branch — not "any spec anywhere".
+#      R1/R2 (구현일 때만): 이 PR의 소스 브랜치 기준 specs/<head_ref>/spec.md(비자명) + plan.md 필수.
+#   3. Detect production signals → enforcement level strict (R6).
+#      운영 시그널 감지 → 강제 레벨 strict (R6).
+#   4. R3 (only if impl): SDD_TEST_CMD must be set, not a no-op; then run it (must pass).
+#      R3 (구현일 때만): SDD_TEST_CMD 설정 + no-op 아님 + 실행 통과.
+#   5. R7: run sync-check (docs ↔ SPEC.yml).
+#      R7: sync-check 실행 (문서 ↔ SPEC.yml).
+#   6. Summary (always).
+#      요약 (항상).
 
 on:
   pull_request:
