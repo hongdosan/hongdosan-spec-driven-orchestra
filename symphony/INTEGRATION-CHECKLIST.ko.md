@@ -39,9 +39,9 @@
 
 #### 강제 레이어 ("권고가 아니라 강제"의 핵심)
 - [ ] `.claude/hooks/pre-implement.sh` 설치 & 실행권한 (R1, R2)
-- [ ] `.git/hooks/pre-commit` 설치 & 실행권한 (R3, R4, R6)
+- [ ] `.git/hooks/pre-commit` 설치 & 실행권한 (R1, R2, R3, R4, R6)
 - [ ] `.claude/hooks/post-task.sh` 설치 (R5)
-- [ ] `.github/workflows/sdd-gate.yml` 존재 (R1, R3, R6, R7)
+- [ ] `.github/workflows/sdd-gate.yml` 존재 (R1, R2, R3, R6, R7)
 - [ ] `SPEC.yml` 레포 루트에 존재 (SSOT)
 - [ ] `SDD_TEST_CMD` 설정됨 (게이트가 검증 방법을 앎)
 - [ ] 운영 시그널이면: `ENFORCEMENT_LEVEL=strict` 설정됨

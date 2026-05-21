@@ -280,9 +280,9 @@ C. 안전한 적용 (롤백 가능성 최우선)
 
 **1. 설치할 강제 게이트**
 - `.claude/hooks/pre-implement.sh` (R1, R2)
-- `.git/hooks/pre-commit` (R3, R4, R6)
+- `.git/hooks/pre-commit` (R1, R2, R3, R4, R6)
 - `.claude/hooks/post-task.sh` (R5)
-- `.github/workflows/sdd-gate.yml` (R1, R3, R6, R7)
+- `.github/workflows/sdd-gate.yml` (R1, R2, R3, R6, R7)
 - `.specify/memory/constitution.md` (게이트가 읽는 규칙; R1~R7 본문은 `sdd/CONSTITUTION.md`에서)
 
 **2. 생성할 SDD 템플릿**

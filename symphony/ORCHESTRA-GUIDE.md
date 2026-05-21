@@ -108,8 +108,8 @@ A markdown file telling an AI "write a spec first" is a *request*. Over a long s
 | Gate | Blocks | Rule |
 |---|---|---|
 | `pre-implement` hook | writing code before `specs/<branch>/spec.md` + `plan.md` exist | R1, R2 |
-| `pre-commit` hook | committing implementation when verification hasn't passed | R3, R4 |
-| `sdd-gate.yml` (CI) | merging a PR with no spec / failing tests — **non-bypassable** | R1, R3, R6 |
+| `pre-commit` hook | committing implementation without spec/plan or passing verification | R1–R4 |
+| `sdd-gate.yml` (CI) | merging a PR with no spec/plan (for its branch) / failing tests — **non-bypassable** | R1, R2, R3, R6 |
 | `post-task` hook | (warns) finishing without a handoff | R5 |
 
 The rules live in one place — spec-kit's `.specify/memory/constitution.md` (the R1–R7 text comes from this package's `sdd/CONSTITUTION.md`) — which the gates read. Context only changes **how strict** the gates are (production → `strict`, no bypass), never *what* they check. See the `enforcement/` folder for the actual scripts and install steps.

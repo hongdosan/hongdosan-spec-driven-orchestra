@@ -14,10 +14,10 @@
 |---|---|---|
 | `sdd/CONSTITUTION.md` | R1–R7 규칙 **본문** — spec-kit의 `.specify/memory/constitution.md`에 병합되며, 게이트가 이를 읽고 `/speckit.analyze`가 비협상(CRITICAL)으로 취급 | 참조 |
 | `hooks/pre-implement.sh` | R1, R2 — 스펙·계획 없이 코드 없음 | 로컬 훅 (차단) |
-| `hooks/pre-commit.sh` | R3, R4, R6 — 검증 통과 없이 커밋 없음 | 로컬 훅 (차단) |
+| `hooks/pre-commit.sh` | R1–R4, R6 — spec+plan+검증 통과 없이 커밋 없음 (no-op 테스트 명령 거부) | 로컬 훅 (차단) |
 | `hooks/post-task.sh` | R5 — 인계 누락 경고 | 로컬 훅 (경고) |
 | `sync-check.sh` | R7 — 모든 문서가 SPEC.yml과 일치 | 스크립트 + CI (차단) |
-| `github-workflows/sdd-gate.yml` | R1, R3, R6, R7 — 우회 불가 머지 게이트 | CI (머지 차단) |
+| `github-workflows/sdd-gate.yml` | R1, R2, R3, R6, R7 — 우회 불가 머지 게이트 (spec/plan을 PR의 feature 브랜치에 연결) | CI (머지 차단) |
 
 > **SPEC.yml** (레포 루트)은 *사실*의 단일 출처입니다 (악기 수, 출처, 라이선스,
 > 모드 부재). `sync-check.sh`가 모든 문서의 일치를 검증합니다. SPEC.yml에서 사실을

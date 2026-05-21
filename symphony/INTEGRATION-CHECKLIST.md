@@ -39,9 +39,9 @@ After a month of use — decide keep/adjust/rollback.
 
 #### Enforcement layer (the core of "enforced, not advised")
 - [ ] `.claude/hooks/pre-implement.sh` installed & executable (R1, R2)
-- [ ] `.git/hooks/pre-commit` installed & executable (R3, R4, R6)
+- [ ] `.git/hooks/pre-commit` installed & executable (R1, R2, R3, R4, R6)
 - [ ] `.claude/hooks/post-task.sh` installed (R5)
-- [ ] `.github/workflows/sdd-gate.yml` present (R1, R3, R6, R7)
+- [ ] `.github/workflows/sdd-gate.yml` present (R1, R2, R3, R6, R7)
 - [ ] `SPEC.yml` present at repo root (SSOT)
 - [ ] `SDD_TEST_CMD` is set (gates know how to verify)
 - [ ] If production signals: `ENFORCEMENT_LEVEL=strict` was set

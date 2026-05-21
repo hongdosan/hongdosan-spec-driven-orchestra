@@ -280,9 +280,9 @@ After synthesizing answers, report in this format:
 
 **1. Enforcement gates to install**
 - `.claude/hooks/pre-implement.sh` (R1, R2)
-- `.git/hooks/pre-commit` (R3, R4, R6)
+- `.git/hooks/pre-commit` (R1, R2, R3, R4, R6)
 - `.claude/hooks/post-task.sh` (R5)
-- `.github/workflows/sdd-gate.yml` (R1, R3, R6, R7)
+- `.github/workflows/sdd-gate.yml` (R1, R2, R3, R6, R7)
 - `.specify/memory/constitution.md` (the rules the gates read; R1–R7 text from `sdd/CONSTITUTION.md`)
 
 **2. SDD templates to create**

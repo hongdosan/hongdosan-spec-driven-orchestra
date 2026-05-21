@@ -28,15 +28,16 @@ AI든 사람이든 단계를 건너뛰려 하면 게이트가 실패하고 행�
 
 ### R1 — 스펙 없이 코드 없음
 `specs/<branch>/spec.md`(spec-kit `/speckit.specify` 산출)가 없는 기능의 구현 파일은
-생성·수정할 수 없습니다. 강제: `pre-implement` 훅.
+생성·수정할 수 없습니다. 강제: `pre-implement` 훅(세션 중) **및** `pre-commit` + CI 게이트
+(fail-closed: 브랜치 `spec.md` 없이 코드가 staged/변경되면 차단, override로 우회 불가).
 
 ### R2 — 계획 없이 코드 없음
 구현 중인 기능은 `specs/<branch>/plan.md`(`/speckit.plan` 산출)가 있어야 합니다.
-강제: `pre-implement` 훅.
+강제: `pre-implement` 훅 **및** `pre-commit` + CI 게이트(같은 fail-closed 검사).
 
 ### R3 — 검증 통과 없이 커밋 없음
 구현 파일을 건드리는 커밋은 테스트/검증이 통과해야 합니다.
-강제: `pre-commit` 훅 + CI 게이트.
+no-op 테스트 명령(`true`, `:`, `echo …`)은 거부됩니다. 강제: `pre-commit` 훅 + CI 게이트.
 
 ### R4 — 기존 동작 보존 (컨텍스트 의존)
 기능이 기존 코드를 건드리면, 회귀 검사(`specs/<branch>/regression.md`, 이 패키지의

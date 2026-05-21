@@ -108,8 +108,8 @@ AI에게 "스펙 먼저 써줘"라고 말하는 마크다운은 *부탁*입니�
 | 게이트 | 막는 것 | 규칙 |
 |---|---|---|
 | `pre-implement` hook | `specs/<branch>/spec.md` + `plan.md` 없이 코드 작성 | R1, R2 |
-| `pre-commit` hook | 검증 미통과 상태로 구현 커밋 | R3, R4 |
-| `sdd-gate.yml` (CI) | spec 없음 / 테스트 실패 PR 머지 — **우회 불가** | R1, R3, R6 |
+| `pre-commit` hook | spec/plan 없거나 검증 미통과 상태로 구현 커밋 | R1–R4 |
+| `sdd-gate.yml` (CI) | (브랜치) spec/plan 없음 / 테스트 실패 PR 머지 — **우회 불가** | R1, R2, R3, R6 |
 | `post-task` hook | (경고) handoff 없이 종료 | R5 |
 
 규칙은 한 곳 — spec-kit의 `.specify/memory/constitution.md`(R1~R7 본문은 이 패키지의 `sdd/CONSTITUTION.md`에서 옴) — 에 모여 있고, 게이트들이 이를 읽습니다. 컨텍스트는 게이트가 **얼마나 엄격한지**만 바꾸며(운영 → `strict`, 우회 불가), *무엇을* 검사하는지는 바꾸지 않습니다. 실제 스크립트와 설치법은 `enforcement/` 폴더를 참고하세요.

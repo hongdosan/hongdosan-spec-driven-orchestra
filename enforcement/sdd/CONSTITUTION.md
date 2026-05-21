@@ -26,15 +26,17 @@ If the AI (or a human) tries to skip a step, the gate fails and the action stops
 ### R1 — No code without a spec
 Implementation files may not be created or modified for a feature that has no
 `specs/<branch>/spec.md` (produced by spec-kit's `/speckit.specify`). Enforced by:
-`pre-implement` hook.
+`pre-implement` hook (in-session) **and** `pre-commit` + CI gate (fail-closed: code
+staged/changed without the branch's `spec.md` is blocked; not bypassable by override).
 
 ### R2 — No code without a plan
 A feature being implemented must have `specs/<branch>/plan.md` (from `/speckit.plan`).
-Enforced by: `pre-implement` hook.
+Enforced by: `pre-implement` hook **and** `pre-commit` + CI gate (same fail-closed check).
 
 ### R3 — No commit without passing verification
 A commit touching implementation files must have a passing test/verification run.
-Enforced by: `pre-commit` hook + CI gate.
+A no-op test command (`true`, `:`, `echo …`) is rejected. Enforced by: `pre-commit`
+hook + CI gate.
 
 ### R4 — Preserve existing behavior (context-dependent)
 If the feature touches existing code, regression checks (`specs/<branch>/regression.md`,

@@ -9,10 +9,10 @@
 |---|---|---|
 | `sdd/CONSTITUTION.md` | The R1–R7 rule **text** — merged into spec-kit's `.specify/memory/constitution.md`, which the gates read and `/speckit.analyze` treats as non-negotiable | Reference |
 | `hooks/pre-implement.sh` | R1, R2 — no code without spec & plan | Local hook (blocks) |
-| `hooks/pre-commit.sh` | R3, R4, R6 — no commit without passing verification | Local hook (blocks) |
+| `hooks/pre-commit.sh` | R1–R4, R6 — no commit without spec + plan + passing verification (no-op test commands rejected) | Local hook (blocks) |
 | `hooks/post-task.sh` | R5 — warn on missing handoff | Local hook (warns) |
 | `sync-check.sh` | R7 — all docs agree with SPEC.yml | Script + CI (blocks) |
-| `github-workflows/sdd-gate.yml` | R1, R3, R6, R7 — non-bypassable merge gate | CI (blocks merge) |
+| `github-workflows/sdd-gate.yml` | R1, R2, R3, R6, R7 — non-bypassable merge gate (spec/plan keyed to the PR's feature branch) | CI (blocks merge) |
 
 > **SPEC.yml** (repo root) is the single source of truth for *facts* (instrument
 > counts, sources, licenses, modes-absence). `sync-check.sh` verifies every document

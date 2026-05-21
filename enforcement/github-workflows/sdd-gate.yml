@@ -30,20 +30,33 @@ jobs:
             echo "impl=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: R1 — implementation PR must reference a spec
+      - name: R1/R2 — this PR's feature must have a spec + plan
         if: steps.impl.outputs.impl == 'true'
         run: |
-          # spec-kit produces specs/<NNN-slug>/spec.md per feature branch.
-          if ! find specs -name 'spec.md' 2>/dev/null | grep -q .; then
-            echo "⛔ SDD GATE (R1): implementation changes but no specs/*/spec.md found."
-            echo "   See .specify/memory/constitution.md."
+          # spec-kit names the feature branch NNN-slug with specs/<branch>/.
+          # Tie the check to THIS PR's source branch, not "any spec anywhere".
+          BRANCH="${{ github.head_ref }}"
+          SPEC="specs/$BRANCH/spec.md"; PLAN="specs/$BRANCH/plan.md"
+          if [ ! -f "$SPEC" ]; then
+            echo "⛔ SDD GATE (R1): implementation changes but $SPEC is missing for branch '$BRANCH'."
+            echo "   Run /speckit.specify on the feature branch. See .specify/memory/constitution.md."
+            exit 1
+          fi
+          if [ "$(wc -w < "$SPEC")" -lt 20 ]; then
+            echo "⛔ SDD GATE (R1): $SPEC is effectively empty."
+            exit 1
+          fi
+          if [ ! -f "$PLAN" ]; then
+            echo "⛔ SDD GATE (R2): implementation changes but $PLAN is missing. Run /speckit.plan."
             exit 1
           fi
 
       - name: Detect production strictness (R6)
         id: level
         run: |
-          if ls .env.production .env.prod docker-compose.prod.* 2>/dev/null | grep -q .; then
+          if ls .env.production .env.prod docker-compose.prod.* 2>/dev/null | grep -q . \
+             || find . -maxdepth 2 \( -name 'Dockerfile.prod*' -o -name '*.tf' -o -name 'Chart.yaml' \) 2>/dev/null | grep -q . \
+             || ls -d k8s kubernetes helm 2>/dev/null | grep -q .; then
             echo "level=strict" >> "$GITHUB_OUTPUT"
           else
             echo "level=standard" >> "$GITHUB_OUTPUT"
@@ -60,6 +73,11 @@ jobs:
             echo "   Define it in Settings → Secrets and variables → Actions → Variables."
             exit 1
           fi
+          case "$(printf '%s' "$SDD_TEST_CMD" | tr -d ' ')" in
+            true|:|echo*|exit0)
+              echo "⛔ SDD GATE (R3): SDD_TEST_CMD looks like a no-op ('$SDD_TEST_CMD')."
+              exit 1 ;;
+          esac
           echo "Running: $SDD_TEST_CMD"
           eval "$SDD_TEST_CMD"
 
