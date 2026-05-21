@@ -394,7 +394,7 @@ Spec Kit *is* SDD — the framework itself. Spec-Driven Orchestra makes SDD the 
 
 No. Scale to your work:
 - One-line fix → No SDD (Karpathy only)
-- Small feature → Mini SDD (01, 06, 07 only)
+- Small feature → Mini SDD (spec → implement → handoff only)
 - Large feature → Full SDD (all 7 steps)
 </details>
 

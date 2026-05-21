@@ -419,7 +419,7 @@ cp -r archive/legacy/* ./
 
 아니오. 작업 크기에 비례:
 - 1줄 수정 → No SDD (Karpathy만)
-- 작은 기능 → Mini SDD (01, 06, 07만)
+- 작은 기능 → Mini SDD (spec → implement → handoff만)
 - 큰 기능 → Full SDD (7단계 모두)
 </details>
 
