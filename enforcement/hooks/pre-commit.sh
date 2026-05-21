@@ -10,11 +10,10 @@
 
 set -euo pipefail
 
-SDD_DIR="${SDD_DIR:-sdd}"
 LEVEL="${ENFORCEMENT_LEVEL:-standard}"
 OVERRIDE="${SDD_OVERRIDE:-}"
 
-fail() { echo "⛔ SDD COMMIT GATE BLOCKED: $1" >&2; echo "   See $SDD_DIR/CONSTITUTION.md ($2)." >&2; exit 1; }
+fail() { echo "⛔ SDD COMMIT GATE BLOCKED: $1" >&2; echo "   See .specify/memory/constitution.md ($2)." >&2; exit 1; }
 note() { echo "ℹ️  SDD: $1" >&2; }
 
 # Detect production signals → force strict (R6)
@@ -47,13 +46,14 @@ if ! eval "$SDD_TEST_CMD"; then
   fail "verification failed (set SDD_OVERRIDE=\"reason\" to bypass at standard level)" "R3"
 fi
 
-# R4 — if feature touches existing code, regression must exist
-ACTIVE_FILE="$SDD_DIR/.active-feature"
-if [ -f "$ACTIVE_FILE" ]; then
-  FEATURE_ID="$(cat "$ACTIVE_FILE" | tr -d '[:space:]')"
-  REG="$SDD_DIR/features/$FEATURE_ID/05b-regression.md"
-  if [ -f "$SDD_DIR/features/$FEATURE_ID/00-survey.md" ] && [ ! -f "$REG" ]; then
-    fail "existing code touched but 05b-regression.md missing for '$FEATURE_ID'" "R4"
+# R4 — if feature touches existing code, regression must exist.
+# Feature = current git branch (spec-kit convention); artifacts under specs/<branch>/.
+FEATURE_ID="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || true)"
+FEATURE_DIR="specs/$FEATURE_ID"
+if [ -n "$FEATURE_ID" ] && [ -d "$FEATURE_DIR" ]; then
+  REG="$FEATURE_DIR/regression.md"
+  if [ -f "$FEATURE_DIR/survey.md" ] && [ ! -f "$REG" ]; then
+    fail "existing code touched but specs/$FEATURE_ID/regression.md missing" "R4"
   fi
 fi
 

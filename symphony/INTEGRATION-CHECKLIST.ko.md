@@ -4,7 +4,7 @@
 > Day 0 (직후), Day 7 (1주 후), Day 30 (1개월 후) 시점에 사용.
 
 > [!NOTE]
-> 본인의 **단계(Tier)**가 도입한 것만 점검하세요. Tier 1(Karpathy + grill-me)은 여기서 검증할 게 거의 없습니다. 아래 구조 항목들은 Tier 2 이상(SDD 흐름)과 Tier 3(Verification Design + 🎸 Harness)에 도달했을 때 적용됩니다. 🎸 Harness 항목은 선택적이며, 작업에 에이전트 팀이 필요했을 때만 해당합니다.
+> 본인의 **단계(Tier)**가 도입한 것만 점검하세요. Tier 1(Karpathy + grill-me)은 여기서 검증할 게 거의 없습니다. 아래 구조 항목들은 Tier 2 이상(SDD 흐름)과 Tier 3(🎸 Harness)에 도달했을 때 적용됩니다. 🎸 Harness 항목은 선택적이며, 작업에 에이전트 팀이 필요했을 때만 해당합니다.
 
 ---
 
@@ -52,13 +52,12 @@
 - [ ] spec/plan 없이 "구현" 시도 → **차단됨** (R1/R2)
 - [ ] `bash enforcement/sync-check.sh .` → 통과 (R7)
 
-#### .claude/skills/ 디렉터리 (이 패키지가 생성하는 5개)
+#### .claude/skills/ 디렉터리 (이 패키지가 생성하는 4개)
 - [ ] grill-me/SKILL.md
 - [ ] grill-me/VARIANT.md
 - [ ] sdd-conductor/SKILL.md
-- [ ] karpathy-enforcer/SKILL.md
-- [ ] harness-builder/SKILL.md
-- [ ] handoff-writer/SKILL.md
+- [ ] karpathy-guidelines/SKILL.md
+- [ ] handoff/SKILL.md
 
 #### 🎸 Harness (선택 — 작업에 에이전트 팀이 필요했을 때만)
 > Harness는 외부 플러그인(revfactory/harness)이며, 이 패키지가 생성하지 않습니다.
@@ -82,7 +81,7 @@
 - [ ] sdd/templates/02-clarify.md
 - [ ] sdd/templates/03-plan.md
 - [ ] sdd/templates/04-tasks.md
-- [ ] sdd/templates/05-harness.md
+- [ ] sdd/templates/05-verify.md
 - [ ] sdd/templates/06-implementation-notes.md
 - [ ] sdd/templates/07-handoff.md
 
@@ -132,7 +131,7 @@
 - [ ] Phase 2 (Clarify) grill-me 질문 과다
 - [ ] Phase 3 (Plan) 기술 선택 어려움
 - [ ] Phase 4 (Tasks) 분할 단위 모호
-- [ ] Phase 5 (Harness) 시나리오 발굴 부족
+- [ ] Phase 5 (검증) 시나리오 발굴 부족
 - [ ] Phase 6 (Implement) Karpathy 적응
 - [ ] Phase 7 (Handoff) 누락 검출 부담
 

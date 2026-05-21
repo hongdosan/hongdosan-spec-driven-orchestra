@@ -1,11 +1,11 @@
 # 🎼 Spec-Driven Orchestra
 
-> **6개의 오픈소스 AI 코딩 방법론을 하나의 Claude Code 워크플로우로 통합하려는 실험적 패키지**
+> **SDD 프레임워크를 지휘자로 삼아 그것이 호출하는 4개 스킬을 하나의 Claude Code 워크플로우로 통합하려는 실험적 패키지. 5개 악기 모두 오픈소스 프로젝트(4개 저장소) 출처입니다.**
 > 
 > 신규/초기/리팩토링 프로젝트용. Claude Code가 프로젝트를 인터뷰한 뒤, 방법론을 반자율적으로 통합합니다.
 
 > [!NOTE]
-> **상태: 실험적(Experimental).** 이것은 검증된 베스트 프랙티스가 아니라, 독립적인 6개 도구를 결합하려는 *제안*입니다. 개별 방법론은 충분히 검증됐지만, 이들의 *결합* 효과는 아직 실사용 데이터로 측정되지 않았습니다. 작게 시작하고([단계적 도입](#-단계적-도입) 참조), 이 오케스트라를 보장이 아니라 검증할 가설로 다뤄 주세요.
+> **상태: 실험적(Experimental).** 이것은 검증된 베스트 프랙티스가 아니라, 5개 악기를 결합하려는 *제안*입니다. 모두 충분히 검증된 오픈소스 프로젝트이지만, 이들의 *결합* 효과는 아직 실사용 데이터로 측정되지 않았습니다. 작게 시작하고([단계적 도입](#-단계적-도입) 참조), 이 오케스트라를 보장이 아니라 검증할 가설로 다뤄 주세요.
 
 <p align="center">
   🌐 <b>언어</b>: <a href="./README.md">English</a> | <b>한국어</b>
@@ -13,7 +13,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Method-SDD%20Orchestra-orange?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/Instruments-6-blue?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Instruments-5-blue?style=for-the-badge" />
   <img src="https://img.shields.io/badge/Status-Experimental-red?style=for-the-badge" />
   <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" />
   <img src="https://img.shields.io/badge/Made%20for-Claude%20Code-purple?style=for-the-badge" />
@@ -40,7 +40,7 @@
 
 ## ✨ 무엇을 하는 도구인가요?
 
-**프레임워크는 하나 — SDD — 이며, 나머지는 그것이 거느리는 스킬입니다.** 6개 동등한 도구가 아니라, 지휘자(SDD)가 필요할 때 스킬을 호출하는 구조이며, 흐름을 선택이 아닌 필수로 만드는 강제 게이트가 뒷받침합니다.
+**프레임워크는 하나 — SDD — 이며, 나머지는 그것이 거느리는 스킬입니다.** 5개 동등한 도구가 아니라, 지휘자(SDD)가 필요할 때 스킬을 호출하는 구조이며, 흐름을 선택이 아닌 필수로 만드는 강제 게이트가 뒷받침합니다.
 
 **🎼 프레임워크 (지휘자):**
 
@@ -54,7 +54,6 @@
 |---|---|---|---|
 | 🎻 1st Violin | **Karpathy 4원칙** | Implement — 코드 품질 강제 | [multica-ai](https://github.com/multica-ai/andrej-karpathy-skills) |
 | 🎹 Piano | **grill-me** | 모든 단계 — 필요 시 모호함 제거 | [mattpocock/skills](https://github.com/mattpocock/skills) |
-| 🥁 Percussion | **Verification Design** | Verify — 검증 시나리오 (5대 카테고리) | 커뮤니티 방법론 |
 | 🎺 Brass | **Handoff** | Handoff — 매끄러운 인계 | [mattpocock/skills](https://github.com/mattpocock/skills) |
 | 🎸 Guitar | **Harness** | Tasks — 큰 작업용 에이전트 팀 (선택·외부) | [revfactory/harness](https://github.com/revfactory/harness) |
 
@@ -70,7 +69,7 @@
 |---|---|---|---|
 | **Tier 1 — Core** | 🎻 Karpathy 4원칙 + 🎹 grill-me | 모든 프로젝트, 혼자 작업, 첫날 | 약 5분 |
 | **Tier 2 — Flow** | + 🎼 SDD + 🎺 Handoff | 반복 가능한 구조·인계가 필요할 때 | 중간 |
-| **Tier 3 — Full** | + 🥁 Verification Design + 🎸 Harness | 대형 기능, 팀/TF 작업, 리팩토링 | 높음 |
+| **Tier 3 — Full** | + 🎸 Harness | 대형 기능, 팀/TF 작업, 리팩토링 | 높음 |
 
 AI 인터뷰가 모드와 함께 단계도 추천합니다. 언제든 직접 바꿀 수 있습니다. 가장 검증되고 널리 채택된 둘(Karpathy, grill-me/Handoff)을 일부러 Tier 1에 둔 이유 — 가장 적은 비용으로 가장 큰 가치를 얻게 하기 위함입니다.
 
@@ -206,7 +205,7 @@ hongdosan-spec-driven-orchestra/
    ↓
 4. Tasks      🎼  분할 (30분-2시간 단위)
    ↓
-5. Harness    🥁  검증 기준 설계
+5. Verify     🎼  검증 기준 설계 (SDD 소유)
    ↓
 6. Implement  🎻  Karpathy 4원칙
    ↓
@@ -218,7 +217,7 @@ hongdosan-spec-driven-orchestra/
 ```
 0. Survey      🎼  기존 코드 분석     ← 기존 코드 있을 때만
 1-5. [표준]
-5b. Regression 🥁  기존 동작 보존     ← 기존 코드 있을 때만
+5b. Regression 🎼  기존 동작 보존     ← 기존 코드 있을 때만
 6. Implement   🎻  Karpathy (+ 동작 교체 시 마이그레이션)
 7. Handoff
 ```
@@ -235,7 +234,7 @@ hongdosan-spec-driven-orchestra/
 
 ## 🎵 통합 후 생기는 것
 
-### 공통 자산 (모든 모드)
+### 공통 자산
 
 ```
 프로젝트 루트/
@@ -247,9 +246,8 @@ hongdosan-spec-driven-orchestra/
 ├── .claude/skills/              # 이 패키지가 생성하는 5개 AI Skill
 │   ├── grill-me/                # 🎹 명확화
 │   ├── sdd-conductor/           # 🎼 지휘자
-│   ├── karpathy-enforcer/       # 🎻 4원칙 강제
-│   ├── harness-builder/         # 🥁 검증 설계
-│   └── handoff-writer/          # 🎺 인계 작성
+│   ├── karpathy-guidelines/       # 🎻 4원칙 강제
+│   └── handoff/          # 🎺 인계 작성
 │                                # 🎸 Harness(에이전트 팀) = 외부 플러그인
 │
 └── sdd/                         # 🎼 SDD 중심 디렉터리
@@ -317,7 +315,7 @@ hongdosan-spec-driven-orchestra/
 
 ## 📚 통합되는 원본 자료
 
-이 패키지는 독립적인 6개 작업을 통합합니다. 성숙도는 아래에 정성적으로 표기하니 직접 판단하시고, 정확한 스타 수는 변동하므로 각 저장소에서 확인하세요:
+이 패키지는 5개 악기를 통합합니다 — 모두 오픈소스 저장소 기반(4개 저장소)입니다. 성숙도는 아래에 정성적으로 표기하니 직접 판단하시고, 정확한 스타 수는 변동하므로 각 저장소에서 확인하세요:
 
 | 도구 | 출처 | 라이선스 | 성숙도 |
 |---|---|---|---|
@@ -325,17 +323,16 @@ hongdosan-spec-driven-orchestra/
 | **Karpathy Guidelines** | [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) | MIT | 확립됨 |
 | **grill-me Skill** | [mattpocock/skills](https://github.com/mattpocock/skills) | MIT | 확립됨 |
 | **Handoff Skill** | [mattpocock/skills](https://github.com/mattpocock/skills) | MIT | 확립됨 |
-| **Verification Design** | 커뮤니티 방법론 | - | 일반적 관행, 단일 레포 없음 |
 | **Harness** | [revfactory/harness](https://github.com/revfactory/harness) | Apache-2.0 | 널리 채택됨, 활발히 유지보수 |
 
 > [!NOTE]
-> 레포가 있는 5개는 모두 활발히 채택되는 오픈소스입니다. **Harness**는 그중 가장 신생이며 Claude Code의 *실험적* Agent Teams 기능(`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`)에 의존합니다. Harness가 내세우는 "품질 +60%" 수치는 **저자 본인의 논문(Hwang, 2026) 기준**이며 독립적으로 재현되지 않았습니다 — 신뢰할 만하지만, 본인 사례에서 직접 확인해볼 가치가 있습니다. 스타 수는 변동하므로 각 저장소에서 현재 수치를 확인하세요.
+> 5개 악기 모두 활발히 채택되는 오픈소스입니다(grill-me와 Handoff는 둘 다 `mattpocock/skills`에서 와서, 5개는 4개 저장소에 걸쳐 있습니다). **Harness**는 그중 가장 신생이며 Claude Code의 *실험적* Agent Teams 기능(`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`)에 의존합니다. Harness가 내세우는 "품질 +60%" 수치는 **저자 본인의 논문(Hwang, 2026) 기준**이며 독립적으로 재현되지 않았습니다 — 신뢰할 만하지만, 본인 사례에서 직접 확인해볼 가치가 있습니다. 스타 수는 변동하므로 각 저장소에서 현재 수치를 확인하세요. **Karpathy** 4원칙은 카파시가 LLM 코딩 함정에 대해 공개적으로 남긴 관찰에서 *영감을 받아* `multica-ai`가 정리한 것으로, 카파시 본인이 이 네 가지를 열거한 것은 아닙니다 — 명칭과 문구는 저장소 저자의 것입니다.
 
 ---
 
-## 🎸 6번째 악기에 대하여
+## 🎸 5번째 악기에 대하여
 
-6개 중 5개는 **단일 에이전트가 더 잘 일하도록** 돕습니다(명세·명확화·품질·검증·인계). Harness는 종류가 다릅니다 — **하나의 큰 작업을 여러 에이전트 팀에 나누는** 도구입니다. 이 차이 때문에 Harness는 *선택적* 6번째이며, Tier 3과 단 하나의 조건 뒤에 둡니다:
+4개는 **단일 에이전트가 더 잘 일하도록** 돕습니다(명세·검증·명확화·품질·인계). Harness는 종류가 다릅니다 — **하나의 큰 작업을 여러 에이전트 팀에 나누는** 도구입니다. 이 차이 때문에 Harness는 *선택적* 5번째이며, Tier 3과 단 하나의 조건 뒤에 둡니다:
 
 > 작업이 단일 에이전트로는 정말 벅찰 때만 Harness를 부르세요 — 예: 뚜렷한 전문 분야(프론트엔드 / 백엔드 / QA)로 나뉘는 작업, 또는 대규모 조사·구축 작업.
 
@@ -347,7 +344,8 @@ hongdosan-spec-driven-orchestra/
 
 공정한 문서라면 도움이 *안 될 수도* 있는 지점을 밝혀야 합니다:
 
-- **결합 효과는 미검증.** 각 도구는 개별적으로 신뢰할 만하지만, 6개를 결합하면 누적 효과가 난다는 주장은 측정된 결과가 아니라 가설입니다. 아직 공개된 실사용 데이터가 없습니다.
+- **결합 효과는 미검증.** 각 도구는 개별적으로 신뢰할 만하지만, 5개를 결합하면 누적 효과가 난다는 주장은 측정된 결과가 아니라 가설입니다. 아직 공개된 실사용 데이터가 없습니다.
+- **upstream 스킬 설치는 `main` 경로에 고정됨.** `grill-me`·`handoff`·`karpathy-guidelines`는 각 repo의 `main` 브랜치 고정 경로에서 `curl`로 받아옵니다. upstream이 그 파일을 옮기거나 이름을 바꾸면, 경로를 갱신하기 전까지 설치가 깨집니다. (spec-kit은 자체 CLI라 영향 없음.) 이 부분의 견고화 — 커밋 SHA 고정 또는 `/plugin install` — 는 **현재 보류** 상태이며, 스킬 설치 실패 시 "upstream 경로 변경"으로 보시면 됩니다.
 - **부담은 실재.** 전체 흐름은 작거나 사소한 작업을 오히려 느리게 합니다. 그래서 [단계적 도입](#-단계적-도입)이 있습니다 — 모든 걸 어디에나 쓰는 건 이 패키지가 설파하는 "Simplicity First" 원칙에 위배됩니다.
 - **에이전트 준수는 보장 안 됨.** Claude Code는 긴 세션에서 단계를 건너뛰거나, 형식만 채우거나, `CONSTITUTION.md`에서 이탈할 수 있습니다. 스킬이 유도하지만, LLM의 확률적 특성상 100% 준수는 불가능합니다.
 - **도구 간 마찰 존재.** 구성요소들이 서로 당길 수 있습니다 — 예: grill-me의 집요한 질문 vs "빠르게" 우선순위. 충돌 시 더 낮은 단계와 사용자의 명시적 의도를 우선하세요.
@@ -481,7 +479,7 @@ cp -r archive/legacy/* ./
 - ✅ 강제 게이트 (R1–R7)
 - ✅ 보편 적용 (신규/레거시/운영)
 - ✅ 컨텍스트 기반 동적 평가 (모드 없음)
-- ✅ SDD 아래 5개 스킬
+- ✅ SDD 아래 4개 스킬
 - ✅ archive 백업 전략
 - ✅ 이중 언어 문서 (영문 + 한국어)
 
@@ -543,7 +541,8 @@ MIT License - [LICENSE](./LICENSE) 파일 참조.
 
 이 프로젝트는 다음의 거인들 어깨 위에 서있습니다:
 
-- **Andrej Karpathy** ([@karpathy](https://x.com/karpathy)) - 4원칙
+- **Andrej Karpathy** ([@karpathy](https://x.com/karpathy)) - 원칙의 바탕이 된 LLM 코딩 함정 관찰
+- **multica-ai** ([@jiayuan_jy](https://x.com/jiayuan_jy)) - 그 관찰에서 도출한 [4원칙 정리](https://github.com/multica-ai/andrej-karpathy-skills)
 - **GitHub Spec Kit** 팀
 - **Matt Pocock** ([@mpocock1](https://x.com/mpocock1)) - grill-me
 - **Anthropic** ([@AnthropicAI](https://x.com/AnthropicAI)) - Claude Code

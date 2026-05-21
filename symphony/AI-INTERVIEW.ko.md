@@ -265,7 +265,7 @@ C. 안전한 적용 (롤백 가능성 최우선)
 ### 추천 단계: TIER_[1/2/3]
 - **Tier 1 (Core)**: SDD + Karpathy + grill-me — 혼자 / 소규모 / 초기 작업
 - **Tier 2 (Flow)**: + Handoff — 반복 가능한 구조·인계가 필요
-- **Tier 3 (Full)**: + Verification Design + Harness — 대형 기능, 팀 작업
+- **Tier 3 (Full)**: + Harness — 대형 기능, 팀 작업
 - 근거: [프로젝트 규모, 작업 형태(Q5), 복잡도 기반]
 - 🎸 Harness(Tier 3)는 단일 에이전트로 벅찬 작업으로 보일 때만 제안하며, 선택적·실험적입니다.
 
@@ -392,7 +392,7 @@ Q1에서 운영 시그널이 드러나면 **차단하지 않습니다**. 대신 
 모드가 아니라 프로젝트 규모와 작업 형태로 시작 단계를 추천:
 - **Tier 1**: SDD + Karpathy + grill-me
 - **Tier 2**: + Handoff
-- **Tier 3**: + Verification Design + Harness (대형/팀 작업; Harness 선택·실험적)
+- **Tier 3**: + Harness (대형/팀 작업; Harness 선택·실험적)
 
 ---
 

@@ -32,8 +32,10 @@ echo "skills=$N_SKILLS  instruments_total=$N_INSTR  sdd_steps=$N_STEPS"
 echo ""
 
 # Document set (12 docs); adjust globs to your layout.
-EN_DOCS=$(find "$DOC_DIR" -name '*.md' ! -name '*.ko.md' ! -name 'README.ko.md' ! -name 'SPEC*' ! -path '*/enforcement/*' ! -name '_*' 2>/dev/null)
-KO_DOCS=$(find "$DOC_DIR" \( -name '*.ko.md' \) ! -name '_*' 2>/dev/null)
+# Exclude .claude/ — it holds the read-only reference clones (and CLAUDE.md),
+# which are external originals, not package docs governed by this SSOT.
+EN_DOCS=$(find "$DOC_DIR" -name '*.md' ! -name '*.ko.md' ! -name 'README.ko.md' ! -name 'SPEC*' ! -path '*/enforcement/*' ! -path '*/.claude/*' ! -name '_*' 2>/dev/null)
+KO_DOCS=$(find "$DOC_DIR" \( -name '*.ko.md' \) ! -path '*/.claude/*' ! -name '_*' 2>/dev/null)
 
 # --- CHECK 1: bilingual pairing (every EN doc has a KO counterpart) ---
 echo "=== Check 1: bilingual pairing ==="
@@ -72,8 +74,8 @@ echo ""
 # --- CHECK 3: instrument count consistency ---
 echo "=== Check 3: instrument/skill counts match SSOT ==="
 # Any doc that states a number of instruments must say $N_INSTR, not 5.
-BAD_COUNT=$(grep -rnoE '\b5 (instruments|powerful|AI coding)' $EN_DOCS 2>/dev/null || true)
-[ -z "$BAD_COUNT" ] && ok "no stale '5 instruments' claims" || { red "stale instrument count (should be $N_INSTR):"; echo "$BAD_COUNT"; }
+BAD_COUNT=$(grep -rnoE '\b6 (instruments|powerful|AI coding)|6th instrument|6 of the instruments' $EN_DOCS 2>/dev/null || true)
+[ -z "$BAD_COUNT" ] && ok "no stale '6 instruments' claims" || { red "stale instrument count (should be $N_INSTR):"; echo "$BAD_COUNT"; }
 echo ""
 
 # --- CHECK 4: no leftover modes (SPEC says modes: none) ---
@@ -97,7 +99,10 @@ echo ""
 echo "=== Check 6: EN/KO heading correspondence (symphony) ==="
 for en in $EN_DOCS; do
   base=$(basename "$en" .md); dir=$(dirname "$en")
-  [ "$base" = "README" ] && [ "$dir" = "$DOC_DIR" ] && continue   # root readmes differ by design
+  # Root READMEs differ by design: the KO root README intentionally carries extra
+  # reader-aids (troubleshooting, expected-changes, a one-line summary) and a different
+  # section order. This divergence is accepted, so heading counts are NOT compared here.
+  [ "$base" = "README" ] && [ "$dir" = "$DOC_DIR" ] && continue
   ko="$dir/$base.ko.md"; [ -f "$ko" ] || continue
   e=$(grep -cE '^#{1,4} ' "$en"); k=$(grep -cE '^#{1,4} ' "$ko")
   [ "$e" = "$k" ] && ok "$base: EN=$k KO=$k headings" || red "$base heading mismatch: EN=$e KO=$k"

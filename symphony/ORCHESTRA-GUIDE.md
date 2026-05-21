@@ -2,25 +2,26 @@
 
 > **SDD is the framework — the conductor.** The other tools are not equals; they are **skills the conductor calls** when the score needs them.
 > Applies universally: new, early, legacy, maintenance, or production projects (no modes — SDD adapts to context).
+>
+> **Rule R (defer to the originals).** This package does not re-explain spec-kit/harness; it invokes their real commands (`/speckit.*`) and adds only its own *delta* — blocking gates, orchestration order, legacy survey/regression, and Korean onboarding. Any Korean helper text is for human understanding only and non-authoritative; the installed spec-kit command definitions and the English source govern execution.
 
 ---
 
 ## 1. The Hierarchy — One Conductor, Several Instruments
 
-There is exactly one framework here: **SDD (Spec-Driven Development)**. Everything else is a skill it invokes. This is not a democracy of six equal tools; it is a conductor directing instruments.
+There is exactly one framework here: **SDD (Spec-Driven Development)**. Everything else is a skill it invokes. This is not a democracy of five equal tools; it is a conductor directing instruments.
 
 ```
             🎼 SDD — THE FRAMEWORK (Conductor)
         Spec → Clarify → Plan → Tasks → Verify → Implement → Handoff
             + Enforcement layer (hooks / CI gates)
                           │
-        ┌─────────────┬───┴───┬─────────────┬─────────────┐
-        │             │       │             │             │
-   🎻 Violin      🎹 Piano  🥁 Perc.    🎺 Brass     🎸 Guitar
-   Karpathy 4     grill-me  Verification  Handoff      Harness
-   (quality)      (clarify) Design        (handover)   (agent teams)
-                            (verify)
-        └──────────── skills the conductor calls ─────────┘
+        ┌─────────────┬───┴───┬─────────────┐
+        │             │       │             │
+   🎻 Violin      🎹 Piano  🎺 Brass     🎸 Guitar
+   Karpathy 4     grill-me  Handoff      Harness
+   (quality)      (clarify) (handover)   (agent teams)
+        └────────── skills the conductor calls ────────┘
 ```
 
 The instruments never lead. SDD decides *when* a skill is needed and calls it; a skill never drives the flow on its own.
@@ -35,13 +36,12 @@ The instruments never lead. SDD decides *when* a skill is needed and calls it; a
 
 | Instrument | Skill | Called during | Source |
 |---|---|---|---|
-| 🎻 1st Violin | **karpathy-enforcer** | Implement — enforce 4 principles | [multica-ai](https://github.com/multica-ai/andrej-karpathy-skills) |
+| 🎻 1st Violin | **karpathy-guidelines** | Implement — enforce 4 principles | [multica-ai](https://github.com/multica-ai/andrej-karpathy-skills) |
 | 🎹 Piano | **grill-me** | Any step — remove ambiguity, on demand | [mattpocock/skills](https://github.com/mattpocock/skills) |
-| 🥁 Percussion | **verification-design** | Verify — design verification criteria | Community methodology |
-| 🎺 Brass | **handoff-writer** | Handoff — hand off work | [mattpocock/skills](https://github.com/mattpocock/skills) |
+| 🎺 Brass | **handoff** | Handoff — hand off work | [mattpocock/skills](https://github.com/mattpocock/skills) |
 | 🎸 Guitar | **harness** | Tasks — design an agent team for large tasks (optional, external) | [revfactory/harness](https://github.com/revfactory/harness) |
 
-> **Adopt in tiers.** SDD always runs; the skills layer on as needed. **Tier 1**: SDD + 🎻 Karpathy + 🎹 grill-me. **Tier 2** adds 🎺 Handoff + 🥁 Verification. **Tier 3** adds 🎸 Harness (large/team work; optional & experimental). The framework is constant; only how many skills it calls changes.
+> **Adopt in tiers.** SDD always runs; the skills layer on as needed. **Tier 1**: SDD + 🎻 Karpathy + 🎹 grill-me. **Tier 2** adds 🎺 Handoff (verification is part of SDD's own flow). **Tier 3** adds 🎸 Harness (large/team work; optional & experimental). The framework is constant; only how many skills it calls changes.
 
 ---
 
@@ -87,17 +87,19 @@ User request
 4. Tasks     🎼 (break down)
    ↓  └─ optional: 🎸 Harness — if a task is too large for one
    ↓              agent, design an agent team to split the work
-5. Verify    🥁 (verification design, 05-harness.md)
+5. Verify    🎼 (SDD-owned; verification criteria → 05-verify.md)
    ↓  └─ if existing code: also add regression checks
    ↓     (preserve existing behavior — B1, B2, ...)
-6. Implement 🎻 (karpathy-enforcer + ⛔ gates: no code without spec/plan)
+6. Implement 🎻 (karpathy-guidelines + ⛔ gates: no code without spec/plan)
    ↓
-7. Handoff   🎺 (handoff-writer)
+7. Handoff   🎺 (handoff)
    ↓
 ⛔ Commit/PR gate: verification must pass, or the gate blocks it
 ```
 
 > **\*Step 0 (Survey)** appears only when there is existing code to understand. On a greenfield project there's nothing to survey, so SDD skips it. No separate "rebuild mode" — the same flow simply includes a survey and regression checks when the context calls for them.
+
+> **Provenance — what is spec-kit and what we added.** This 7-step flow is *our* orchestration, not a verbatim copy of spec-kit's commands. Steps that map directly to spec-kit commands: **Specify** (`/speckit.specify`), **Clarify** (`/speckit.clarify`), **Plan** (`/speckit.plan`), **Tasks** (`/speckit.tasks`), **Implement** (`/speckit.implement`). Steps **Survey (0)**, **Verify (5)**, and **Handoff (7)** are *our additions* — they are not spec-kit commands. Conversely, spec-kit's `/speckit.constitution` (its first step) and `/speckit.analyze` are not flow steps here: we reuse the constitution idea in `sdd/CONSTITUTION.md` rather than as a numbered step. "SDD owns the 7-step flow" means SDD conducts *this* sequence; it does not mean spec-kit defines these seven steps.
 
 ## 4. The Enforcement Layer — Why This Isn't Just Advice
 
@@ -200,17 +202,17 @@ Skip it for ordinary tasks — a single agent under standard SDD is enough.
 
 ---
 
-### 🥁 Movement 5: Verification Design
+### 🎼 Movement 5: Verification
 
-**Lead**: Verification Design (Percussion)
+**Lead**: SDD (verification is part of SDD's own flow, not a separate skill; grill-me may assist)
 
 #### What it does
-- Write 05-harness.md
+- Write 05-verify.md
 - Cover all 5 categories
 
 #### Trigger
 ```
-"grill me - F[ID] harness design"
+"grill me - F[ID] verification design"
 ```
 
 #### The 5 Categories
@@ -220,11 +222,17 @@ Skip it for ordinary tasks — a single agent under standard SDD is enough.
 4. Adversarial
 5. Performance
 
+> **Source lineage.** These categories are not a cited external taxonomy. Four map to
+> spec-kit's `spec-template.md` sections — Happy/Sad Path → Acceptance Scenarios (:34),
+> Edge Cases → Edge Cases (:71), Performance → Success Criteria (:106) — and Adversarial
+> maps to spec-kit's Red Team extension. Phase 3 of the migration folds these into `spec.md`
+> directly; until then `05-verify.md` holds them.
+
 ---
 
-### 🥁 Movement 5b: Regression (when existing code is touched)
+### 🎼 Movement 5b: Regression (when existing code is touched)
 
-**Lead**: verification-design (with the Step 0 survey as input)
+**Lead**: SDD (with the Step 0 survey as input)
 
 > Not a mode — this movement simply appears whenever the work touches existing
 > code. On greenfield work it's absent. Enforced by R4: if a `00-survey.md` exists,
@@ -275,7 +283,7 @@ Skip it for ordinary tasks — a single agent under standard SDD is enough.
 
 ##### Goal-Driven Execution
 ```
-- Which H in the harness scenarios is satisfied?
+- Which H in the verification scenarios is satisfied?
 - Is it verifiable?
 ```
 
@@ -289,7 +297,7 @@ If Implement touches existing behavior, apply gradual-transition techniques:
 
 ### 🎺 Movement 7: Handoff
 
-**Lead**: handoff-writer (Brass)
+**Lead**: handoff (Brass)
 
 #### What it does
 - Write 07-handoff.md
@@ -321,7 +329,7 @@ grill-me auto-triggers
 Clarify, then update Spec
 ```
 
-### Karpathy + Verification Design
+### Karpathy + Verification
 
 Quality combo:
 ```
@@ -349,7 +357,7 @@ Existing-code combo:
 ```
 Step 0 Survey excavates existing behavior (B1, B2, ...)
    ↓
-verification-design turns each into a regression scenario
+the verification step turns each into a regression scenario
    ↓
 Gradual, safe transition (Strangler Fig / Feature Flag)
 ```
@@ -368,8 +376,8 @@ User: "new feature [name]"
 AI: [sdd-conductor] create F001-[name]/
     (no existing code → no Step 0 survey)
 AI: 01-spec.md → 02-clarify.md (grill-me) → 03-plan.md
-AI: 04-tasks.md → 05-harness.md (verification)
-AI: 06-implement (karpathy-enforcer) → 07-handoff.md
+AI: 04-tasks.md → 05-verify.md (verification)
+AI: 06-implement (karpathy-guidelines) → 07-handoff.md
     ⛔ gates: spec+plan before implement; tests before commit
 ```
 
@@ -380,7 +388,7 @@ User: "improve feature X"
 
 AI: 00-survey.md (understand current behavior first)
 AI: 01-spec.md → ... → 04-tasks.md
-AI: 05-harness.md + 05b-regression.md (preserve B1, B2, ...)
+AI: 05-verify.md + 05b-regression.md (preserve B1, B2, ...)
 AI: 06-implement — Strangler Fig / Feature Flag if replacing behavior
     ⛔ R4 gate: regression must pass before commit
 AI: 07-handoff.md
@@ -410,7 +418,7 @@ AI: 07-handoff.md
 ### When Instruments Conflict
 The tools can pull against each other. Resolve predictably:
 - 🎹 grill-me's relentless questioning vs a "move fast" priority → for trivial work, drop to Tier 1; grill-me is for decisions that matter.
-- 🥁 Verification rigor vs speed → match verification depth to risk, not to ceremony.
+- 🎼 Verification rigor vs speed → match verification depth to risk, not to ceremony.
 - 🎸 Harness (multi-agent) vs simplicity → default to a single agent; only split when the task truly demands it.
 - **Rule of thumb**: when in doubt, prefer the lower tier and the user's explicit intent over maximal process.
 
@@ -421,7 +429,7 @@ The tools can pull against each other. Resolve predictably:
 
 ### Dissonance
 - ❌ Ignoring Spec decisions during Implement
-- ❌ PR-ing while ignoring verification (Harness)
+- ❌ PR-ing while ignoring verification
 - ❌ False info in Handoff
 
 ### Ignoring the Beat

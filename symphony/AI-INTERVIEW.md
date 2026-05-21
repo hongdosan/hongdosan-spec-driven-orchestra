@@ -265,7 +265,7 @@ After synthesizing answers, report in this format:
 ### Recommended tier: TIER_[1/2/3]
 - **Tier 1 (Core)**: SDD + Karpathy + grill-me — solo / small / early work
 - **Tier 2 (Flow)**: + Handoff — needs repeatable structure & handoffs
-- **Tier 3 (Full)**: + Verification Design + Harness — large features, team work
+- **Tier 3 (Full)**: + Harness — large features, team work
 - Reasoning: [based on project size, work style (Q5), and complexity]
 - 🎸 Harness (Tier 3) is suggested only if a task looks too large for a single agent; it's optional & experimental.
 
@@ -392,7 +392,7 @@ Regardless of context:
 Recommend a starting tier from project size and work style, not from any mode:
 - **Tier 1**: SDD + Karpathy + grill-me
 - **Tier 2**: + Handoff
-- **Tier 3**: + Verification Design + Harness (large/team work; Harness optional & experimental)
+- **Tier 3**: + Harness (large/team work; Harness optional & experimental)
 
 ---
 

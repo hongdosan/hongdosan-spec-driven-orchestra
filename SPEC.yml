@@ -18,13 +18,15 @@ framework:
 
 # The framework calls these skills. They are NOT equal peers to SDD.
 skills:
-  - id: karpathy-enforcer
+  - id: karpathy-guidelines        # installed from origin (skills/karpathy-guidelines/SKILL.md)
     instrument: 1st Violin
     emoji: "🎻"
     role: Code quality — enforce the 4 principles
     called_during: Implement
     source: https://github.com/multica-ai/andrej-karpathy-skills
-    license: MIT
+    # The 4 principles are multica-ai's formulation, INSPIRED BY Karpathy's
+    # observations — Karpathy himself did not enumerate these four.
+    license: MIT  # declared in the SKILL.md frontmatter; repo has no top-level LICENSE file
     maturity: established
     external_plugin: false
 
@@ -38,17 +40,7 @@ skills:
     maturity: established
     external_plugin: false
 
-  - id: verification-design
-    instrument: Percussion
-    emoji: "🥁"
-    role: Verification criteria (5 categories)
-    called_during: Verify
-    source: Community methodology
-    license: none
-    maturity: generic-practice
-    external_plugin: false
-
-  - id: handoff-writer
+  - id: handoff
     instrument: Brass
     emoji: "🎺"
     role: Work handover
@@ -70,18 +62,28 @@ skills:
     experimental_dependency: "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1"
 
 counts:
-  skills: 5            # number of skills the framework calls
-  instruments_total: 6 # SDD + 5 skills (the "orchestra")
+  skills: 4            # number of skills the framework calls
+  instruments_total: 5 # SDD + 4 skills (the "orchestra")
   sdd_steps: 7         # Specify, Clarify, Plan, Tasks, Verify, Implement, Handoff
 
-# The 7-step flow (canonical order and emoji owner)
+# The 7-step flow (canonical order and emoji owner).
+# Provenance: this is OUR orchestration, not a verbatim copy of spec-kit's commands.
+#   - Maps to spec-kit commands: Specify, Clarify, Plan, Tasks, Implement
+#   - OUR additions (not spec-kit commands): Survey (0), Verify (5), Handoff (7)
+#   - spec-kit's /speckit.constitution and /speckit.analyze are NOT flow steps here
+#     (constitution is reused as sdd/CONSTITUTION.md, not a numbered step).
+# "SDD owns the flow" = SDD conducts this sequence; spec-kit does not define these 7 steps.
+# Verify (5) is owned by SDD itself (no dedicated skill). Its verification criteria
+# correspond to spec-kit's spec-template sections — Acceptance Scenarios, Edge Cases,
+# Success Criteria — plus the Red Team extension for adversarial review. In Phase 3 of
+# the dependency-inversion migration these fold into spec.md; until then they live in 05-verify.md.
 flow:
   - { step: 0,  name: Survey,    emoji: "🎼", conditional: existing-code-only }
   - { step: 1,  name: Specify,   emoji: "🎼" }
   - { step: 2,  name: Clarify,   emoji: "🎹" }
   - { step: 3,  name: Plan,      emoji: "🎼" }
   - { step: 4,  name: Tasks,     emoji: "🎼" }
-  - { step: 5,  name: Verify,    emoji: "🥁" }
+  - { step: 5,  name: Verify,    emoji: "🎼" }   # SDD-owned (no dedicated skill)
   - { step: 6,  name: Implement, emoji: "🎻" }
   - { step: 7,  name: Handoff,   emoji: "🎺" }
 
@@ -107,6 +109,13 @@ invariants:
   legacy_priority: false      # universal, but legacy is NOT prioritized
   status: experimental        # combined effect not yet measured
   control_model: enforced     # gates, not advice
+  # Rule R — defer to the originals, never re-state them:
+  #   Package docs MUST NOT re-state spec-kit's procedure; they invoke /speckit.*
+  #   and let spec-kit's own installed command definitions govern execution.
+  #   Any Korean (or other) helper doc is for HUMAN understanding only — explicitly
+  #   non-authoritative, with a link to the English source. The package owns only its
+  #   delta (blocking gates, orchestration order, legacy survey/regression, KO onboarding).
+  defer_to_originals: true
 
 # Bilingual contract
 languages:

@@ -7,7 +7,7 @@
 </p>
 
 > [!NOTE]
-> **실험적(Experimental).** 독립적인 6개 오픈소스 방법론을 통합하며, 그 *결합* 효과는 아직 측정되지 않았습니다. 한 번에 다 도입하지 말고 — Tier 1(Karpathy + grill-me)부터 시작해 필요할 때 올라가세요. 전체 단계 가이드와 솔직한 한계는 루트 [README](../README.ko.md)에 있습니다.
+> **실험적(Experimental).** SDD 프레임워크와 그것이 호출하는 4개 스킬을 통합하며 — 5개 악기 모두 오픈소스 저장소 기반(4개 저장소)입니다 — 그 *결합* 효과는 아직 측정되지 않았습니다. 한 번에 다 도입하지 말고 — Tier 1(Karpathy + grill-me)부터 시작해 필요할 때 올라가세요. 전체 단계 가이드와 솔직한 한계는 루트 [README](../README.ko.md)에 있습니다.
 
 ---
 
@@ -130,12 +130,11 @@ AI-INTERVIEW.md를 읽고 인터뷰부터 시작해주세요.
 ├── INTEGRATION-REPORT.md        # 통합 리포트
 ├── INTERVIEW-RESULT.md          # 인터뷰 결과
 │
-├── .claude/skills/              # 이 패키지가 생성하는 5개 skill
+├── .claude/skills/              # 이 패키지가 생성하는 4개 skill
 │   ├── grill-me/                # 🎹 명확화
 │   ├── sdd-conductor/           # 🎼 지휘자
-│   ├── karpathy-enforcer/       # 🎻 4원칙 강제
-│   ├── harness-builder/         # 🥁 검증 설계
-│   └── handoff-writer/          # 🎺 인계 작성
+│   ├── karpathy-guidelines/       # 🎻 4원칙 강제
+│   └── handoff/          # 🎺 인계 작성
 │                                # 🎸 Harness(에이전트 팀)는 외부 플러그인,
 │                                #    필요 시 별도 설치
 │
@@ -180,12 +179,12 @@ AI-INTERVIEW.md를 읽고 인터뷰부터 시작해주세요.
         Spec → Clarify → Plan → Tasks → Verify → Implement → Handoff
             + 강제 게이트 (hooks / CI)
                           │
-        ┌─────────────┬───┴───┬─────────────┬─────────────┐
-        │             │       │             │             │
-   🎻 Violin      🎹 Piano  🥁 Perc.    🎺 Brass     🎸 Guitar
-   Karpathy 4원칙  grill-me  Verification  Handoff      Harness
-   (품질)         (명확화)  (검증)        (인계)       (에이전트 팀)
-        └──────────── 지휘자가 호출하는 스킬 ──────────────┘
+        ┌─────────────┬───┴───┬─────────────┐
+        │             │       │             │
+   🎻 Violin      🎹 Piano  🎺 Brass     🎸 Guitar
+   Karpathy 4원칙  grill-me  Handoff      Harness
+   (품질)         (명확화)  (인계)       (에이전트 팀)
+        └────────── 지휘자가 호출하는 스킬 ──────────┘
 ```
 
 ---
@@ -214,18 +213,17 @@ AI-INTERVIEW.md를 읽고 인터뷰부터 시작해주세요.
 
 ## 📚 원본 자료
 
-이 패키지가 통합하는 6가지 AI 코딩론 (성숙도는 정성 표기 — 정확한 스타 수는 변동하므로 각 저장소에서 확인):
+이 패키지가 통합하는 5개 악기 — 모두 오픈소스 프로젝트 (성숙도는 정성 표기 — 정확한 스타 수는 변동하므로 각 저장소에서 확인):
 
 | 도구 | 역할 | 출처 | 성숙도 |
 |---|---|---|---|
 | **Spec Kit** (SDD) | 프레임워크 — 명세 기반 흐름 | https://github.com/github/spec-kit | 확립됨 |
 | **Karpathy Guidelines** | 코드 품질 (4원칙) | https://github.com/multica-ai/andrej-karpathy-skills | 확립됨 |
 | **grill-me Skill** | 명확화 | https://github.com/mattpocock/skills | 확립됨 |
-| **Verification Design** | 검증 기준 (5대 카테고리) | 커뮤니티 방법론 | 일반적 관행 |
 | **Handoff Skill** | 작업 인계 | https://github.com/mattpocock/skills | 확립됨 |
 | **Harness** | 에이전트 팀·스킬 설계자 | https://github.com/revfactory/harness | 널리 채택됨, 가장 신생 |
 
-> 🎸 **Harness**는 선택적 6번째 악기입니다: 외부 플러그인(여기서 생성 안 함)이며, Claude Code의 실험적 Agent Teams 기능에 의존합니다. 작업에 정말 에이전트 팀이 필요할 때만 쓰세요.
+> 🎸 **Harness**는 선택적 5번째 악기입니다: 외부 플러그인(여기서 생성 안 함)이며, Claude Code의 실험적 Agent Teams 기능에 의존합니다. 작업에 정말 에이전트 팀이 필요할 때만 쓰세요.
 
 ---
 

@@ -2,25 +2,26 @@
 
 > **SDD가 프레임워크이자 지휘자입니다.** 나머지 도구들은 동등하지 않으며, 지휘자가 필요할 때 **호출하는 스킬**입니다.
 > 어디서든 보편 적용: 신규·초기·레거시·유지보수·운영 프로젝트 (모드 없음 — SDD가 컨텍스트에 적응).
+>
+> **규칙 R (원본에 위임).** 이 패키지는 spec-kit/harness를 재설명하지 않고, 그들의 실제 명령(`/speckit.*`)을 호출하며 자신의 *delta* — 차단 게이트·오케스트레이션 순서·레거시 survey/regression·한국어 온보딩 — 만 더합니다. 한국어 보조 텍스트는 사람 이해용이며 비강제입니다. 실행의 기준은 설치된 spec-kit 명령 정의와 영문 원본입니다.
 
 ---
 
 ## 1. 위계 — 지휘자 하나, 여러 악기
 
-여기 프레임워크는 정확히 하나, **SDD(Spec-Driven Development)**입니다. 나머지는 모두 SDD가 불러내는 스킬입니다. 6개 동등한 도구의 민주주의가 아니라, 지휘자가 악기를 지휘하는 구조입니다.
+여기 프레임워크는 정확히 하나, **SDD(Spec-Driven Development)**입니다. 나머지는 모두 SDD가 불러내는 스킬입니다. 5개 동등한 도구의 민주주의가 아니라, 지휘자가 악기를 지휘하는 구조입니다.
 
 ```
             🎼 SDD — 프레임워크 (지휘자)
         Spec → Clarify → Plan → Tasks → Verify → Implement → Handoff
             + 강제 레이어 (hooks / CI 게이트)
                           │
-        ┌─────────────┬───┴───┬─────────────┬─────────────┐
-        │             │       │             │             │
-   🎻 Violin      🎹 Piano  🥁 Perc.    🎺 Brass     🎸 Guitar
-   Karpathy 4     grill-me  Verification  Handoff      Harness
-   (품질)         (명확화)  Design        (인계)       (에이전트 팀)
-                            (검증)
-        └──────────── 지휘자가 호출하는 스킬 ──────────────┘
+        ┌─────────────┬───┴───┬─────────────┐
+        │             │       │             │
+   🎻 Violin      🎹 Piano  🎺 Brass     🎸 Guitar
+   Karpathy 4     grill-me  Handoff      Harness
+   (품질)          (명확화)    (인계)        (에이전트 팀)
+        └────────── 지휘자가 호출하는 스킬 ──────────┘
 ```
 
 악기는 결코 주도하지 않습니다. SDD가 *언제* 스킬이 필요한지 결정해 호출하며, 스킬이 스스로 흐름을 끌고 가지 않습니다.
@@ -35,13 +36,12 @@
 
 | 악기 | 스킬 | 호출 시점 | 출처 |
 |---|---|---|---|
-| 🎻 1st Violin | **karpathy-enforcer** | Implement — 4원칙 강제 | [multica-ai](https://github.com/multica-ai/andrej-karpathy-skills) |
+| 🎻 1st Violin | **karpathy-guidelines** | Implement — 4원칙 강제 | [multica-ai](https://github.com/multica-ai/andrej-karpathy-skills) |
 | 🎹 Piano | **grill-me** | 모든 단계 — 필요 시 모호함 제거 | [mattpocock/skills](https://github.com/mattpocock/skills) |
-| 🥁 Percussion | **verification-design** | Verify — 검증 기준 설계 | 커뮤니티 방법론 |
-| 🎺 Brass | **handoff-writer** | Handoff — 작업 인계 | [mattpocock/skills](https://github.com/mattpocock/skills) |
+| 🎺 Brass | **handoff** | Handoff — 작업 인계 | [mattpocock/skills](https://github.com/mattpocock/skills) |
 | 🎸 Guitar | **harness** | Tasks — 큰 작업을 위한 에이전트 팀 설계 (선택·외부) | [revfactory/harness](https://github.com/revfactory/harness) |
 
-> **단계적으로 도입하세요.** SDD는 항상 돌아가고, 스킬은 필요에 따라 얹힙니다. **Tier 1**: SDD + 🎻 Karpathy + 🎹 grill-me. **Tier 2**: + 🎺 Handoff + 🥁 Verification. **Tier 3**: + 🎸 Harness (대형/팀 작업; 선택·실험적). 프레임워크는 일정하고, 호출하는 스킬 수만 달라집니다.
+> **단계적으로 도입하세요.** SDD는 항상 돌아가고, 스킬은 필요에 따라 얹힙니다. **Tier 1**: SDD + 🎻 Karpathy + 🎹 grill-me. **Tier 2**: + 🎺 Handoff (검증은 SDD 자체 흐름의 일부). **Tier 3**: + 🎸 Harness (대형/팀 작업; 선택·실험적). 프레임워크는 일정하고, 호출하는 스킬 수만 달라집니다.
 
 ---
 
@@ -87,17 +87,19 @@ SDD는 모드로 **분기하지 않습니다.** 하나의 흐름을 돌리되, �
 4. Tasks     🎼 (분할)
    ↓  └─ 선택: 🎸 Harness — 단일 에이전트로 벅찬 작업이면
    ↓           에이전트 팀을 설계해 작업을 분담
-5. Verify    🥁 (검증 설계, 05-harness.md)
+5. Verify    🎼 (SDD 소유; 검증 기준 → 05-verify.md)
    ↓  └─ 기존 코드 있으면: 회귀(regression) 검사도 추가
    ↓     (기존 동작 보존 — B1, B2, ...)
-6. Implement 🎻 (karpathy-enforcer + ⛔ 게이트: spec/plan 없이 코드 불가)
+6. Implement 🎻 (karpathy-guidelines + ⛔ 게이트: spec/plan 없이 코드 불가)
    ↓
-7. Handoff   🎺 (handoff-writer)
+7. Handoff   🎺 (handoff)
    ↓
 ⛔ 커밋/PR 게이트: 검증을 통과해야 하며, 아니면 게이트가 막음
 ```
 
 > **\*0단계(Survey)**는 이해해야 할 기존 코드가 있을 때만 나타납니다. 신규 프로젝트는 조사할 게 없으니 SDD가 건너뜁니다. 별도의 "리빌드 모드"는 없습니다 — 컨텍스트가 부르면 같은 흐름에 조사와 회귀 검사가 포함될 뿐입니다.
+
+> **출처 — 어디까지가 spec-kit이고 어디부터가 우리가 더한 것인가.** 이 7단계 흐름은 spec-kit 명령을 그대로 옮긴 것이 아니라 *우리의* 오케스트레이션입니다. spec-kit 명령에 직접 대응하는 단계: **Specify**(`/speckit.specify`), **Clarify**(`/speckit.clarify`), **Plan**(`/speckit.plan`), **Tasks**(`/speckit.tasks`), **Implement**(`/speckit.implement`). **Survey(0)·Verify(5)·Handoff(7)** 단계는 *우리가 추가한 것*으로 spec-kit 명령이 아닙니다. 반대로 spec-kit의 `/speckit.constitution`(원본의 첫 단계)과 `/speckit.analyze`는 여기서 흐름 단계가 아닙니다 — constitution 개념은 번호 단계가 아니라 `sdd/CONSTITUTION.md`로 차용했습니다. "SDD가 7단계 흐름을 소유한다"는 말은 SDD가 *이 순서*를 지휘한다는 뜻이지, spec-kit이 이 7단계를 정의한다는 뜻이 아닙니다.
 
 ## 4. 강제 레이어 — 왜 이것이 단순한 권고가 아닌가
 
@@ -200,17 +202,17 @@ AI에게 "스펙 먼저 써줘"라고 말하는 마크다운은 *부탁*입니�
 
 ---
 
-### 🥁 Movement 5: Verification Design
+### 🎼 Movement 5: Verification
 
-**주역**: Verification Design (Percussion)
+**주역**: SDD (검증은 SDD 자체 흐름의 일부이며 별도 스킬이 아님; grill-me가 보조 가능)
 
 #### 무엇을 하는가
-- 05-harness.md 작성
+- 05-verify.md 작성
 - 5대 카테고리 모두 커버
 
 #### 발동
 ```
-"grill me - F[ID] 하네스 설계"
+"grill me - F[ID] 검증 설계"
 ```
 
 #### 5대 카테고리
@@ -220,11 +222,17 @@ AI에게 "스펙 먼저 써줘"라고 말하는 마크다운은 *부탁*입니�
 4. Adversarial
 5. Performance
 
+> **출처 계보.** 이 카테고리들은 인용 가능한 외부 분류 체계가 아닙니다. 4개는 spec-kit
+> `spec-template.md` 섹션에 대응합니다 — Happy/Sad Path → Acceptance Scenarios(:34),
+> Edge Cases → Edge Cases(:71), Performance → Success Criteria(:106) — 그리고 Adversarial은
+> spec-kit Red Team 확장에 대응합니다. 마이그레이션 Phase 3에서 이를 `spec.md`로 직접 합치며,
+> 그 전까지는 `05-verify.md`가 보관합니다.
+
 ---
 
-### 🥁 Movement 5b: Regression (기존 코드를 건드릴 때)
+### 🎼 Movement 5b: Regression (기존 코드를 건드릴 때)
 
-**주역**: verification-design (0단계 조사 결과를 입력으로)
+**주역**: SDD (0단계 조사 결과를 입력으로)
 
 > 모드가 아닙니다 — 이 악장은 작업이 기존 코드를 건드릴 때만 나타납니다. 신규 작업에는 없습니다. R4가 강제: `00-survey.md`가 있으면 `05b-regression.md`가 존재하고 커밋 전에 통과해야 합니다.
 
@@ -273,7 +281,7 @@ AI에게 "스펙 먼저 써줘"라고 말하는 마크다운은 *부탁*입니�
 
 ##### Goal-Driven Execution
 ```
-- 하네스 시나리오의 어떤 H 만족?
+- 검증 시나리오의 어떤 H 만족?
 - 검증 가능한가?
 ```
 
@@ -287,7 +295,7 @@ Implement가 기존 동작을 건드리면 점진 전환 기법을 적용:
 
 ### 🎺 Movement 7: Handoff
 
-**주역**: handoff-writer (Brass)
+**주역**: handoff (Brass)
 
 #### 무엇을 하는가
 - 07-handoff.md 작성
@@ -319,7 +327,7 @@ grill-me 자동 발동
 명확화 후 Spec 갱신
 ```
 
-### Karpathy + Verification Design
+### Karpathy + Verification
 
 품질 콤보:
 ```
@@ -347,7 +355,7 @@ grill-me 발동
 ```
 0단계 Survey가 기존 동작 발굴 (B1, B2, ...)
    ↓
-verification-design가 각각을 회귀 시나리오로
+검증 단계가 각각을 회귀 시나리오로
    ↓
 점진적 안전 전환 (Strangler Fig / Feature Flag)
 ```
@@ -366,8 +374,8 @@ verification-design가 각각을 회귀 시나리오로
 AI: [sdd-conductor] F001-[이름]/ 생성
     (기존 코드 없음 → 0단계 조사 없음)
 AI: 01-spec.md → 02-clarify.md (grill-me) → 03-plan.md
-AI: 04-tasks.md → 05-harness.md (검증)
-AI: 06-implement (karpathy-enforcer) → 07-handoff.md
+AI: 04-tasks.md → 05-verify.md (검증)
+AI: 06-implement (karpathy-guidelines) → 07-handoff.md
     ⛔ 게이트: implement 전 spec+plan; 커밋 전 테스트
 ```
 
@@ -378,7 +386,7 @@ AI: 06-implement (karpathy-enforcer) → 07-handoff.md
 
 AI: 00-survey.md (현재 동작 먼저 이해)
 AI: 01-spec.md → ... → 04-tasks.md
-AI: 05-harness.md + 05b-regression.md (B1, B2, ... 보존)
+AI: 05-verify.md + 05b-regression.md (B1, B2, ... 보존)
 AI: 06-implement — 동작 교체면 Strangler Fig / Feature Flag
     ⛔ R4 게이트: 커밋 전 회귀 통과 필수
 AI: 07-handoff.md
@@ -407,7 +415,7 @@ AI: 07-handoff.md
 ### 악기가 충돌할 때
 도구들은 서로 당길 수 있습니다. 예측 가능하게 해소하세요:
 - 🎹 grill-me의 집요한 질문 vs "빠르게" 우선순위 → 사소한 작업은 Tier 1로 내려가세요. grill-me는 중요한 결정을 위한 것입니다.
-- 🥁 검증 엄격함 vs 속도 → 검증 깊이를 형식이 아니라 위험도에 맞추세요.
+- 🎼 검증 엄격함 vs 속도 → 검증 깊이를 형식이 아니라 위험도에 맞추세요.
 - 🎸 Harness(다중 에이전트) vs 단순함 → 기본은 단일 에이전트. 작업이 정말 요구할 때만 분할하세요.
 - **원칙**: 애매하면 최대 프로세스보다 낮은 단계와 사용자의 명시적 의도를 우선하세요.
 
@@ -418,13 +426,13 @@ AI: 07-handoff.md
 
 ### 불협화음
 - ❌ Spec 결정을 Implement에서 무시
-- ❌ 검증(하네스) 무시하고 PR
+- ❌ 검증 무시하고 PR
 - ❌ Handoff 거짓 정보
 
 ### 박자 무시
 - ❌ Clarify 없이 Plan
 - ❌ Plan 없이 Implement
-- ❌ 검증 설계 없이 PR
+- ❌ 검증 없이 PR
 - ❌ 0단계 조사 없이 기존 코드 건드리기
 
 ### 지휘자 무시

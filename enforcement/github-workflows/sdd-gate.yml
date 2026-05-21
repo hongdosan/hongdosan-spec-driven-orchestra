@@ -33,10 +33,10 @@ jobs:
       - name: R1 — implementation PR must reference a spec
         if: steps.impl.outputs.impl == 'true'
         run: |
-          # PR body or any changed file must reference an sdd/features/<id>/01-spec.md
-          if ! find sdd/features -name '01-spec.md' 2>/dev/null | grep -q .; then
-            echo "⛔ SDD GATE (R1): implementation changes but no sdd/features/*/01-spec.md found."
-            echo "   See sdd/CONSTITUTION.md."
+          # spec-kit produces specs/<NNN-slug>/spec.md per feature branch.
+          if ! find specs -name 'spec.md' 2>/dev/null | grep -q .; then
+            echo "⛔ SDD GATE (R1): implementation changes but no specs/*/spec.md found."
+            echo "   See .specify/memory/constitution.md."
             exit 1
           fi
 
