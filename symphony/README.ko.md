@@ -140,7 +140,7 @@ AI-INTERVIEW.md를 읽고 인터뷰부터 시작해주세요.
 ├── .claude/skills/              # 이 패키지가 생성하는 3개 skill
 │   ├── grill-me/                # 🎹 명확화
 │   ├── sdd-conductor/           # 🎼 지휘자
-│   └── handoff/          # 🎺 인계 작성
+│   └── handoff/                 # 🎺 인계 작성
 │                                # 외부 플러그인(/plugin, 별도 설치):
 │                                #   🎻 karpathy-guidelines, 🎸 Harness
 │
@@ -148,7 +148,7 @@ AI-INTERVIEW.md를 읽고 인터뷰부터 시작해주세요.
 │   ├── memory/constitution.md   # R1~R7 규칙 (게이트가 읽음) + 원칙
 │   └── templates/               # spec-kit의 spec/plan/tasks/checklist 템플릿
 │
-└── specs/<NNN-slug>/            # 기능별 작업물, git 브랜치 단위 (/speckit.*)
+└── specs/<NNN-slug>/                       # 기능별 작업물, git 브랜치 단위 (/speckit.*)
     ├── spec.md  plan.md  tasks.md          # spec-kit 산출
     └── survey.md  regression.md            # 이 패키지의 추가분
         handoff.md  implementation-notes.md
