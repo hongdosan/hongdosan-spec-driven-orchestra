@@ -161,7 +161,7 @@ AI-INTERVIEW.md를 읽고 인터뷰부터 시작해주세요.
 ```
 기존 코드 있음
   └─ survey.md      추가: 바꾸기 전에 이해
-  └─ regression.md 추가: 기존 동작 보존 (R4)
+  └─ regression.md  추가: 기존 동작 보존 (R4)
 
 운영 시그널 감지
   └─ ENFORCEMENT_LEVEL=strict — 테스트/회귀 우회 불가 (R6)
@@ -191,7 +191,7 @@ AI-INTERVIEW.md를 읽고 인터뷰부터 시작해주세요.
         │             │       │             │
    🎻 Violin      🎹 Piano  🎺 Brass     🎸 Guitar
    Karpathy 4원칙  grill-me  Handoff      Harness
-   (품질)         (명확화)  (인계)       (에이전트 팀)
+   (품질)          (명확화)    (인계)       (에이전트 팀)
         └────────── 지휘자가 호출하는 스킬 ──────────┘
 ```
 
