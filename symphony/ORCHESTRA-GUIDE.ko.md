@@ -139,7 +139,7 @@ Delegation). 지휘는 여전히 SDD가 소유 — 일반 작업에는 쓰지 �
 `tasks.md`에 있습니다. spec-kit의 테스트는 *선택*입니다 — 이 패키지의 delta는 커밋 전 테스트
 통과를 **필수로** 만드는 게이트(R3)입니다.
 
-### 🥁 Regression — 기존 코드를 건드릴 때만
+### 🎼 Regression — 기존 코드를 건드릴 때만
 레거시 작업을 위한 이 패키지의 추가분. `specs/<branch>/survey.md`가 있으면 R4가
 `regression.md`의 존재·통과를 커밋 전에 요구합니다: 보존할 동작(B1, B2, ...)을 가져오고,
 동작마다 검증을 쓰고, 점진 전환(Strangler Fig / Feature Flag / Branch by Abstraction)과

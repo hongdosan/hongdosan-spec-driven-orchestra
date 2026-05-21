@@ -140,7 +140,7 @@ Verification is not a separate file: acceptance/edge/success criteria live in sp
 `spec.md`, test tasks in `tasks.md`. spec-kit's tests are *optional* — this package's delta
 is the gate (R3) that makes a passing test run **mandatory before commit**.
 
-### 🥁 Regression — only when touching existing code
+### 🎼 Regression — only when touching existing code
 This package's addition for legacy work. If `specs/<branch>/survey.md` exists, R4 requires
 `regression.md` to exist and pass before commit: carry over behaviors to preserve
 (B1, B2, ...), write a check per behavior, and plan gradual transition (Strangler Fig /
