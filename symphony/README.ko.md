@@ -182,18 +182,7 @@ AI-INTERVIEW.md를 읽고 인터뷰부터 시작해주세요.
 
 ## 🎵 SDD와 그 스킬 한눈에
 
-```
-            🎼 SDD — 프레임워크 (지휘자)
-        Spec → Clarify → Plan → Tasks → Verify → Implement → Handoff
-            + 강제 게이트 (hooks / CI)
-                          │
-        ┌─────────────┬───┴───┬─────────────┐
-        │             │       │             │
-   🎻 Violin      🎹 Piano  🎺 Brass     🎸 Guitar
-   Karpathy 4원칙  grill-me  Handoff      Harness
-   (품질)          (명확화)    (인계)       (에이전트 팀)
-        └────────── 지휘자가 호출하는 스킬 ──────────┘
-```
+전체 악기 다이어그램은 **[ORCHESTRA-GUIDE.ko.md](./ORCHESTRA-GUIDE.ko.md)** (§1)에 있습니다. 요약하면: SDD(지휘자)가 강제 게이트 아래에서 Spec → Clarify → Plan → Tasks → Verify → Implement → Handoff를 돌리며, 🎻 Karpathy(품질) · 🎹 grill-me(명확화) · 🎺 Handoff(인계) · 🎸 Harness(에이전트 팀)를 스킬로 호출합니다.
 
 ---
 

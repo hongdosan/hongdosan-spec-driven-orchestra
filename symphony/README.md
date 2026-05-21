@@ -179,18 +179,7 @@ Plus the enforcement layer (installed from `enforcement/`):
 
 ## 🎵 SDD and Its Skills at a Glance
 
-```
-            🎼 SDD — THE FRAMEWORK (Conductor)
-        Spec → Clarify → Plan → Tasks → Verify → Implement → Handoff
-            + Enforcement gates (hooks / CI)
-                          │
-        ┌─────────────┬───┴───┬─────────────┐
-        │             │       │             │
-   🎻 Violin      🎹 Piano  🎺 Brass     🎸 Guitar
-   Karpathy 4     grill-me  Handoff      Harness
-   (quality)      (clarify) (handover)   (agent teams)
-        └────────── skills the conductor calls ────────┘
-```
+The full instrument diagram lives in **[ORCHESTRA-GUIDE.md](./ORCHESTRA-GUIDE.md)** (§1). In short: SDD (the conductor) runs Spec → Clarify → Plan → Tasks → Verify → Implement → Handoff under enforcement gates, and calls 🎻 Karpathy (quality), 🎹 grill-me (clarify), 🎺 Handoff (handover), and 🎸 Harness (agent teams) as skills.
 
 ---
 

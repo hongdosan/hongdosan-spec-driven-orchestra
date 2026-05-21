@@ -55,18 +55,18 @@
 ├── INTERVIEW-RESULT.md          # 인터뷰 결과 (이미 생성됨)
 │
 ├── .claude/skills/              # 이 패키지가 로컬 생성하는 3개 skill
-│   ├── grill-me/                #    (grill-me·handoff는 출처에서; sdd-conductor는 우리 것)
+│   ├── grill-me/                # (grill-me·handoff는 출처에서; sdd-conductor는 우리 것)
 │   ├── sdd-conductor/
 │   └── handoff/
 │                                # 외부 플러그인(여기서 생성 안 함, /plugin으로 설치):
-│                                #   karpathy-guidelines(multica-ai), harness(revfactory,
-│                                #   선택 — 작업에 에이전트 팀이 필요할 때만).
+│                                # karpathy-guidelines(multica-ai), 
+│                                # harness(revfactory, 선택 — 작업에 에이전트 팀이 필요할 때만).
 │
 ├── .specify/                    # spec-kit, `specify init`이 생성 (여기서 작성하지 않음)
-│   ├── memory/constitution.md   #   프로젝트 원칙 + 우리 R1~R7 규칙
-│   └── templates/               #   spec-kit의 spec/plan/tasks/checklist 템플릿
+│   ├── memory/constitution.md   # 프로젝트 원칙 + 우리 R1~R7 규칙
+│   └── templates/               # spec-kit의 spec/plan/tasks/checklist 템플릿
 │
-└── specs/<NNN-slug>/            # feature 브랜치별, /speckit.*가 생성
+└── specs/<NNN-slug>/                       # feature 브랜치별, /speckit.*가 생성
     ├── spec.md  plan.md  tasks.md          # spec-kit 산출
     └── survey.md  regression.md            # 이 패키지의 추가분 (레거시/인계)
         handoff.md  implementation-notes.md
