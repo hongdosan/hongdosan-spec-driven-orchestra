@@ -67,11 +67,11 @@
 
 | Tier | Instruments | Best for | Overhead |
 |---|---|---|---|
-| **Tier 1 — Core** | 🎻 Karpathy's 4 + 🎹 grill-me | Any project, solo work, first day | ~5 min |
-| **Tier 2 — Flow** | + 🎼 SDD + 🎺 Handoff | When you need repeatable structure & handoffs | Moderate |
+| **Tier 1 — Core** | 🎼 SDD + 🎻 Karpathy's 4 + 🎹 grill-me | Any project, solo work, first day | Low (SDD scales: full/mini/none) |
+| **Tier 2 — +Handoff** | + 🎺 Handoff | When you need handoffs between sessions | Moderate |
 | **Tier 3 — Full** | + 🎸 Harness | Large features, team/TF work, refactoring | High |
 
-The AI interview recommends a tier based on context. You can always override it. The two most battle-tested, widely-adopted pieces (Karpathy + grill-me/Handoff) sit in Tier 1 on purpose — you get most of the value with the least cost.
+The AI interview recommends a tier based on context. You can always override it. SDD is the framework, so it is in every tier; Karpathy + grill-me (the lightest skills) sit in Tier 1 alongside it — you get most of the value early.
 
 ---
 
@@ -362,7 +362,7 @@ A fair README states where it might *not* help:
 - **Overhead is real.** The full flow can slow down small or trivial work. This is why [Tiered Adoption](#-tiered-adoption) exists — using everything everywhere would violate the Karpathy "Simplicity First" principle the package itself preaches.
 - **Agent compliance isn't guaranteed.** Claude Code may skip steps, fill templates without substance, or drift from `CONSTITUTION.md` over long sessions. The skills nudge it, but an LLM's probabilistic nature means 100% adherence is impossible.
 - **Tool frictions exist.** The pieces can pull against each other — e.g. grill-me's relentless questioning vs a "move fast" priority. When they conflict, prefer the lower tier and the user's explicit intent.
-- **Narrow scope by design.** Production projects are intentionally blocked (see FAQ). That's safer, but it also means the package can't help with the day-to-day improvement of live services — often where help is most wanted.
+- **Production raises overhead, not a free pass.** Production projects are not blocked, but the gates become **strict** (non-bypassable tests + regression), which adds friction. The package reduces *process* risk; it cannot reduce the inherent risk of changing a live service.
 
 If any of these outweigh the benefit for you, use only Tier 1, or skip the package entirely. That's a valid outcome.
 
@@ -405,12 +405,11 @@ Start small:
 <details>
 <summary><b>Q: Can I use this for production projects?</b></summary>
 
-**No, this is blocked intentionally.** Production projects have user/data risks that require different considerations. The interview detects production signals and refuses.
+**Yes — it is not blocked.** When the interview detects production signals, it sets `ENFORCEMENT_LEVEL=strict`: tests and regression become mandatory and non-bypassable (R6). Same flow, stricter gates.
 
-Alternatives:
-- Create a feature branch and experiment there
-- Try in a fork
-- Wait for a production-friendly version
+Recommended (still your call):
+- Start on a feature branch, one feature at a time
+- Let the strict gates prove their value before widening
 </details>
 
 <details>

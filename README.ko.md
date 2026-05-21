@@ -67,11 +67,11 @@
 
 | 단계 | 악기 | 적합 상황 | 부담 |
 |---|---|---|---|
-| **Tier 1 — Core** | 🎻 Karpathy 4원칙 + 🎹 grill-me | 모든 프로젝트, 혼자 작업, 첫날 | 약 5분 |
-| **Tier 2 — Flow** | + 🎼 SDD + 🎺 Handoff | 반복 가능한 구조·인계가 필요할 때 | 중간 |
+| **Tier 1 — Core** | 🎼 SDD + 🎻 Karpathy 4원칙 + 🎹 grill-me | 모든 프로젝트, 혼자 작업, 첫날 | 낮음 (SDD는 full/mini/none으로 조절) |
+| **Tier 2 — +Handoff** | + 🎺 Handoff | 세션 간 인계가 필요할 때 | 중간 |
 | **Tier 3 — Full** | + 🎸 Harness | 대형 기능, 팀/TF 작업, 리팩토링 | 높음 |
 
-AI 인터뷰가 모드와 함께 단계도 추천합니다. 언제든 직접 바꿀 수 있습니다. 가장 검증되고 널리 채택된 둘(Karpathy, grill-me/Handoff)을 일부러 Tier 1에 둔 이유 — 가장 적은 비용으로 가장 큰 가치를 얻게 하기 위함입니다.
+AI 인터뷰가 단계를 추천합니다. 언제든 직접 바꿀 수 있습니다. SDD는 프레임워크라 모든 단계에 포함되며, 가장 가벼운 스킬(Karpathy, grill-me)이 그 옆 Tier 1에 있습니다 — 일찍 대부분의 가치를 얻습니다.
 
 ---
 
