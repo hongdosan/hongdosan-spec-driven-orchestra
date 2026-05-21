@@ -303,6 +303,11 @@ Nothing here is a mode you pick — SDD reads the context and adjusts strictness
 - Production context → gates non-bypassable (R6)
 - Docs out of sync → merge blocked (R7)
 
+> **Precondition for "non-bypassable".** Local hooks can be skipped (`git commit
+> --no-verify`). The CI gate is the real backstop — but only if you enable
+> **required-PR branch protection** on your default branch. Without that, enforcement
+> is best-effort (local hooks + honesty), not guaranteed.
+
 ### 🔍 Interview-Based Adaptation
 - 5-7 questions for context understanding
 - Auto-scan assists AI's recommendation
@@ -362,6 +367,7 @@ A fair README states where it might *not* help:
 - **Overhead is real.** The full flow can slow down small or trivial work. This is why [Tiered Adoption](#-tiered-adoption) exists — using everything everywhere would violate the Karpathy "Simplicity First" principle the package itself preaches.
 - **Agent compliance isn't guaranteed.** Claude Code may skip steps, fill templates without substance, or drift from `CONSTITUTION.md` over long sessions. The skills nudge it, but an LLM's probabilistic nature means 100% adherence is impossible.
 - **Tool frictions exist.** The pieces can pull against each other — e.g. grill-me's relentless questioning vs a "move fast" priority. When they conflict, prefer the lower tier and the user's explicit intent.
+- **spec-kit's behavior is assumed, not tested here.** This package invokes `specify init` and `/speckit.*` and relies on them producing `spec.md`/`plan.md`/`tasks.md`; it ships no test that the upstream flow actually works, and pins skill installs to upstream `main` (see the deferred fragility note). Track upstream versions yourself.
 - **Production raises overhead, not a free pass.** Production projects are not blocked, but the gates become **strict** (non-bypassable tests + regression), which adds friction. The package reduces *process* risk; it cannot reduce the inherent risk of changing a live service.
 
 If any of these outweigh the benefit for you, use only Tier 1, or skip the package entirely. That's a valid outcome.

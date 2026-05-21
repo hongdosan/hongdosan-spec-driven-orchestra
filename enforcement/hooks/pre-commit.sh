@@ -30,11 +30,13 @@ echo "$STAGED" | grep -qE '\.(py|js|ts|tsx|jsx|go|rs|java|kt|kts|swift|scala|cs|
 
 # Feature = current git branch (spec-kit convention); artifacts under specs/<branch>/.
 FEATURE_ID="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || true)"
+[ "$FEATURE_ID" = "HEAD" ] && FEATURE_ID=""   # unborn/detached HEAD → no named feature branch
 FEATURE_DIR="specs/$FEATURE_ID"
 
 # R1/R2 — no code without spec + plan. NOT bypassable (override only covers R3/R4).
+[ -n "$FEATURE_ID" ] || fail "implementation staged but not on a spec-kit feature branch (no specs/<branch>/)" "R1"
 SPEC="$FEATURE_DIR/spec.md"; PLAN="$FEATURE_DIR/plan.md"
-[ -n "$FEATURE_ID" ] && [ -f "$SPEC" ] || fail "implementation staged but $SPEC missing (run /speckit.specify on a feature branch)" "R1"
+[ -f "$SPEC" ] || fail "implementation staged but $SPEC missing (run /speckit.specify on a feature branch)" "R1"
 [ "$(wc -w < "$SPEC" 2>/dev/null || echo 0)" -ge 20 ] || fail "spec.md for '$FEATURE_ID' is effectively empty" "R1"
 [ -f "$PLAN" ] || fail "implementation staged but $PLAN missing (run /speckit.plan)" "R2"
 

@@ -9,6 +9,7 @@ set -euo pipefail
 
 # Feature = current git branch (spec-kit convention); artifacts under specs/<branch>/.
 FEATURE_ID="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || true)"
+[ "$FEATURE_ID" = "HEAD" ] && FEATURE_ID=""   # unborn/detached HEAD → no named feature branch
 FEATURE_DIR="specs/$FEATURE_ID"
 [ -n "$FEATURE_ID" ] && [ -d "$FEATURE_DIR" ] || exit 0
 

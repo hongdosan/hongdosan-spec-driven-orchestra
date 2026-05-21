@@ -15,6 +15,7 @@ set -euo pipefail
 
 # Feature id = current git branch (spec-kit's NNN-slug convention).
 FEATURE_ID="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || true)"
+[ "$FEATURE_ID" = "HEAD" ] && FEATURE_ID=""   # unborn/detached HEAD → no named feature branch
 FEATURE_DIR="specs/$FEATURE_ID"
 
 # No spec-kit feature directory for this branch → nothing to gate yet

@@ -36,12 +36,17 @@ Enforced by: `pre-implement` hook **and** `pre-commit` + CI gate (same fail-clos
 ### R3 — No commit without passing verification
 A commit touching implementation files must have a passing test/verification run.
 A no-op test command (`true`, `:`, `echo …`) is rejected. Enforced by: `pre-commit`
-hook + CI gate.
+hook + CI gate. (The no-op check is a best-effort denylist — it stops accidental/lazy
+no-ops, not a determined evader who wraps a no-op, e.g. `bash -c true`.)
 
 ### R4 — Preserve existing behavior (context-dependent)
 If the feature touches existing code, regression checks (`specs/<branch>/regression.md`,
 this package's addition) must exist and pass before commit. On greenfield code with
 nothing to preserve, this rule is satisfied trivially. Enforced by: `pre-commit` hook.
+**Scope limit:** R4 fires only when a `survey.md` exists for the feature (the interview
+turns the Step-0 survey on for existing-code projects). Without a survey, the gate cannot
+tell that existing code was touched, so R4 does not trigger — keep the survey on for
+legacy/maintenance work.
 
 ### R5 — No silent handoff gaps
 Completing a feature without `specs/<branch>/handoff.md` (this package's addition) is
