@@ -29,7 +29,7 @@
 </p>
 
 <p align="center">
-  <a href="#-빠른-시작-3단계">빠른 시작</a> •
+  <a href="#-빠른-시작">빠른 시작</a> •
   <a href="#-오케스트라-구성">오케스트라</a> •
   <a href="#-어떤-프로젝트에-적용-가능한가요">적용 범위</a> •
   <a href="#-faq">FAQ</a> •
@@ -75,7 +75,18 @@ AI 인터뷰가 모드와 함께 단계도 추천합니다. 언제든 직접 바
 
 ---
 
-## 🚀 빠른 시작 (3단계)
+## 🚀 빠른 시작
+
+### 0️⃣ 사전 준비: spec-kit 설치 (이 패키지가 활용하는 프레임워크)
+
+```bash
+# spec-kit이 `specify` CLI + /speckit.* 명령으로 SDD 코어를 제공합니다.
+uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
+```
+
+> **진입장벽이 바뀌었습니다.** 이 패키지는 spec-kit을 *재구현*하지 않고 *활용*하므로,
+> spec-kit이 실제 전제조건입니다 — 더 이상 "마크다운만 복사"가 아닙니다. `uv`가 없으면
+> [spec-kit README](https://github.com/github/spec-kit)를 참고하세요.
 
 ### 1️⃣ 클론 후 프로젝트에 복사
 ```bash
@@ -103,10 +114,10 @@ claude
 
 ```
 AI-INTERVIEW.md를 읽고 통합을 시작해주세요.
-컨텍스트를 평가하고 강제 게이트를 설치한 뒤, SDD로 진행해주세요.
+컨텍스트를 평가하고 `specify init`을 실행하고 강제 게이트를 설치한 뒤, SDD로 진행해주세요.
 ```
 
-→ AI가 5-10분간 컨텍스트를 평가하고 게이트를 설치한 뒤, SDD로 자율 통합합니다.
+→ AI가 컨텍스트를 평가하고 `specify init`(spec-kit)과 게이트를 설치한 뒤, `/speckit.*` 흐름을 진행합니다.
 
 ---
 

@@ -41,7 +41,13 @@
 
 ---
 
-## 🚀 How to Use (3 steps)
+## 🚀 How to Use
+
+### Step 0: Install spec-kit (prerequisite — this package leverages it)
+
+```bash
+uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
+```
 
 ### Step 1: Place the Files
 
@@ -71,7 +77,7 @@ Send this message:
 
 ```
 Read AI-INTERVIEW.md and start.
-Assess the context, install the enforcement gates, then proceed with SDD.
+Assess the context, run `specify init`, install the enforcement gates, then proceed with SDD.
 ```
 
 ---

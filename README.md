@@ -77,7 +77,18 @@ The AI interview recommends a tier based on context. You can always override it.
 
 ## ⚡ Quick Start
 
-### Three Steps to Symphony
+### Steps to Symphony
+
+#### 0️⃣ Prerequisite: install spec-kit (the framework this leverages)
+
+```bash
+# spec-kit provides the SDD core via the `specify` CLI + /speckit.* commands.
+uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
+```
+
+> **Entry barrier changed.** This package now *leverages* spec-kit rather than
+> re-implementing it, so spec-kit is a real prerequisite — it is no longer "just copy
+> some markdown." If you don't have `uv`, see [spec-kit's README](https://github.com/github/spec-kit).
 
 #### 1️⃣ Clone & Copy
 
@@ -108,10 +119,10 @@ Then tell it:
 
 ```
 Read AI-INTERVIEW.md and start the integration process.
-Assess the context, install the enforcement gates, then proceed with SDD.
+Assess the context, run `specify init`, install the enforcement gates, then proceed with SDD.
 ```
 
-That's it. Claude Code assesses your project for 5-10 minutes, installs the gates, then integrates SDD over 10-30 minutes.
+That's it. Claude Code assesses your project, runs `specify init` (spec-kit) and installs the gates, then drives the `/speckit.*` flow.
 
 ---
 

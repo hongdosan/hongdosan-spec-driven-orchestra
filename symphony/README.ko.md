@@ -20,8 +20,9 @@
 | 3 | **AI-EXECUTION.ko.md** | 실행 지시 (평가 후) |
 | 4 | **ORCHESTRA-GUIDE.ko.md** | SDD와 그 스킬 가이드 |
 | 5 | **INTEGRATION-CHECKLIST.ko.md** | 검증 체크리스트 |
+| 6 | **spec-kit-요약.ko.md** | spec-kit 한국어 다리 (비강제 요약, 영문 원본 우선) |
 
-> 각 파일은 영문 기본판이 있습니다: 접미사 없는 `*.md`.
+> 각 파일은 영문 기본판이 있습니다: 접미사 없는 `*.md` — 단 `spec-kit-요약.ko.md`는 한국어 전용이며, 그 영문 짝은 spec-kit 자체 README입니다.
 > 강제 템플릿(hooks, CI 게이트, CONSTITUTION)은 레포의 `enforcement/` 폴더에, 핵심 사실은 `SPEC.yml`에 있습니다.
 
 ---
@@ -41,7 +42,13 @@
 
 ---
 
-## 🚀 사용 방법 (3단계)
+## 🚀 사용 방법
+
+### Step 0: spec-kit 설치 (전제조건 — 이 패키지가 활용)
+
+```bash
+uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
+```
 
 ### Step 1: 파일 배치
 
@@ -73,7 +80,7 @@ claude
 
 ```
 AI-INTERVIEW.md를 읽고 인터뷰부터 시작해주세요.
-컨텍스트를 평가하고 강제 게이트를 설치한 뒤, SDD로 진행해주세요.
+컨텍스트를 평가하고 `specify init`을 실행하고 강제 게이트를 설치한 뒤, SDD로 진행해주세요.
 ```
 
 ---
