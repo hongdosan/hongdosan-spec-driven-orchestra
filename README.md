@@ -160,7 +160,7 @@ That's it. Claude Code assesses your project, runs `specify init` (spec-kit) and
 | 🧱 **Legacy / Maintenance** | Survey + regression checks to preserve behavior | standard |
 | 💼 **Production Services** | Same flow, but gates become **strict** — tests & regression mandatory, non-bypassable | **strict** |
 
-> 💡 **No production block.** Earlier versions refused production projects. This one doesn't — instead, detecting production signals raises the enforcement level so the existing gates become non-bypassable. Universal application, with safety scaled to risk. Legacy is supported but **not** prioritized over other contexts.
+> 💡 **Production is not blocked.** Detecting production signals raises the enforcement level so the existing gates become non-bypassable. Universal application, with safety scaled to risk. Legacy is supported but **not** prioritized over other contexts.
 
 ---
 
