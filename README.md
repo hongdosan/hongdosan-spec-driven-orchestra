@@ -77,6 +77,19 @@ The AI interview recommends a tier based on context. You can always override it.
 
 ## ⚡ Quick Start
 
+**Fastest path** — one script does the file placement (pick one language):
+
+```bash
+# run inside your project (default target = current dir)
+curl -sL https://raw.githubusercontent.com/hongdosan/hongdosan-spec-driven-orchestra/main/install.sh | bash -s -- --lang en
+# Korean docs: --lang ko    |    other target: append a path
+```
+
+It copies the methodology docs (one language), the local hooks, and a CI gate
+(R1/R2/R3; the package-internal R7 doc-sync is omitted as it is not portable). It does
+**not** install spec-kit or run `specify init` — do Step 0 below first, then Step 3.
+Prefer to do it by hand? Follow the numbered steps.
+
 ### Steps to Symphony
 
 #### 0️⃣ Prerequisite: install spec-kit (the framework this leverages)

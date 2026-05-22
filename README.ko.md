@@ -77,6 +77,18 @@ AI 인터뷰가 단계를 추천합니다. 언제든 직접 바꿀 수 있습니
 
 ## 🚀 빠른 시작
 
+**가장 빠른 길** — 스크립트 하나가 파일 배치를 해줍니다 (언어 하나 선택):
+
+```bash
+# 본인 프로젝트 안에서 실행 (기본 대상 = 현재 디렉터리)
+curl -sL https://raw.githubusercontent.com/hongdosan/hongdosan-spec-driven-orchestra/main/install.sh | bash -s -- --lang ko
+# 영어 문서: --lang en    |    다른 대상: 경로를 뒤에 붙임
+```
+
+방법론 문서(한 언어), 로컬 hooks, CI 게이트(R1/R2/R3 — 패키지 내부용 R7 문서동기화는
+이식 불가라 제외)를 복사합니다. spec-kit 설치나 `specify init`은 **하지 않습니다** —
+아래 0️⃣를 먼저 하고 3️⃣로 진행하세요. 직접 손으로 하려면 아래 번호 단계를 따르세요.
+
 ### 0️⃣ 사전 준비: spec-kit 설치 (이 패키지가 활용하는 프레임워크)
 
 ```bash
