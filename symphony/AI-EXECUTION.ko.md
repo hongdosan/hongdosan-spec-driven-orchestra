@@ -75,8 +75,7 @@
 ### 스킬 설치
 
 각 스킬은 **upstream이 문서화한 설치 방식**을 씁니다(규칙 R — 우리가 다시 작성하지 않음):
-- **플러그인 설치**(`/plugin`, upstream 문서화): `karpathy-guidelines`(multica-ai),
-  그리고 선택적 `harness`(revfactory).
+- **플러그인 설치**(`/plugin`, upstream 문서화): `karpathy-guidelines`(multica-ai), 그리고 선택적 `harness`(revfactory).
 - **출처에서 설치**(`curl`, upstream 플러그인 없음): `grill-me`·`handoff`(mattpocock/skills).
 - **여기서 작성**(이 패키지 고유 지휘자): `sdd-conductor`.
 
