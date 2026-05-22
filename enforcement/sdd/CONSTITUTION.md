@@ -76,8 +76,8 @@ ENFORCEMENT_LEVEL = strict     # auto-set when production signals are detected
 - **standard**: R1–R5 apply; R3/R4 may be bypassed once with an explicit, logged override.
 - **strict**: R1–R6 apply; R3/R4 cannot be bypassed.
 
-> This is the *only* place context changes behavior. SDD does not branch into modes —
-> it only raises or lowers the enforcement level based on context.
+> This is the *only* place context changes behavior — it raises or lowers the
+> enforcement level (standard/strict) based on context, and changes nothing else.
 
 ---
 
