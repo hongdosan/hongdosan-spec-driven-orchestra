@@ -112,9 +112,13 @@ uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
 # Clone this repo somewhere OUTSIDE your project (you don't clone it into your project).
 git clone https://github.com/hongdosan/hongdosan-spec-driven-orchestra.git
 
-# This copies the methodology .md files into your project. Keep the clone around:
+# Copy the 4 methodology docs into your project. Keep the clone around:
 # the later integration step (Step 3) also pulls gate scripts from this repo's enforcement/.
-cp hongdosan-spec-driven-orchestra/symphony/*.md /path/to/your/project/
+SRC=hongdosan-spec-driven-orchestra/symphony
+cp "$SRC"/AI-INTERVIEW.md        /path/to/your/project/
+cp "$SRC"/AI-EXECUTION.md        /path/to/your/project/
+cp "$SRC"/ORCHESTRA-GUIDE.md     /path/to/your/project/
+cp "$SRC"/INTEGRATION-CHECKLIST.md /path/to/your/project/
 cd /path/to/your/project/
 ```
 

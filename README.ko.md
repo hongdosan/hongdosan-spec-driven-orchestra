@@ -108,9 +108,14 @@ uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
 # 이 레포를 본인 프로젝트 바깥에 클론합니다 (프로젝트 안에 클론하지 않습니다).
 git clone https://github.com/hongdosan/hongdosan-spec-driven-orchestra.git
 
-# 아래는 메서드 .md 파일을 프로젝트로 복사합니다. 클론은 그대로 두세요 —
+# 메서드 문서 4개를 프로젝트로 복사 — 한글판은 기본 .md 이름으로 바꿔서
+# (Claude Code가 진입 파일명으로 인식). 클론은 그대로 두세요 —
 # 이후 통합 단계(3️⃣)가 이 레포의 enforcement/에서 게이트 스크립트도 가져옵니다.
-cp hongdosan-spec-driven-orchestra/symphony/*.md /path/to/your/project/
+SRC=hongdosan-spec-driven-orchestra/symphony
+cp "$SRC"/AI-INTERVIEW.ko.md        /path/to/your/project/AI-INTERVIEW.md
+cp "$SRC"/AI-EXECUTION.ko.md        /path/to/your/project/AI-EXECUTION.md
+cp "$SRC"/ORCHESTRA-GUIDE.ko.md     /path/to/your/project/ORCHESTRA-GUIDE.md
+cp "$SRC"/INTEGRATION-CHECKLIST.ko.md /path/to/your/project/INTEGRATION-CHECKLIST.md
 cd /path/to/your/project/
 ```
 
