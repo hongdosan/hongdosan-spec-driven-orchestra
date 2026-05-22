@@ -78,21 +78,19 @@ fi
 mkdir -p "$TARGET"
 echo "Installing Spec-Driven Orchestra (--lang $LANG_CHOICE) into: $TARGET"
 
-# --- 1. Methodology docs (chosen language only) ---
-if [ "$LANG_CHOICE" = "ko" ]; then
-  for f in "$SRC"/symphony/*.ko.md; do cp "$f" "$TARGET"/; done
-else
-  for f in "$SRC"/symphony/*.md; do
-    case "$f" in *.ko.md) continue ;; esac
-    cp "$f" "$TARGET"/
-  done
-fi
+# --- 1. Methodology docs (the 4 the docs place; chosen language) ---
+#     Per symphony/README Step 1: copy AI-INTERVIEW / AI-EXECUTION / ORCHESTRA-GUIDE /
+#     INTEGRATION-CHECKLIST only. Korean files are copied to the base .md name
+#     (AI-INTERVIEW.ko.md → AI-INTERVIEW.md) so Claude Code recognizes the entry file.
+for name in AI-INTERVIEW AI-EXECUTION ORCHESTRA-GUIDE INTEGRATION-CHECKLIST; do
+  cp "$SRC/symphony/$name$SUF.md" "$TARGET/$name.md"
+done
 
 # --- 2. Constitution reference (for the documented /speckit.constitution merge) ---
 #     R7/sync-check is package-internal (it validates THIS package's bilingual doc
 #     set against SPEC.yml), so neither sync-check.sh nor SPEC.yml is copied here.
 mkdir -p "$TARGET/enforcement/sdd"
-cp "$SRC/enforcement/sdd/CONSTITUTION${SUF}.md" "$TARGET/enforcement/sdd/"
+cp "$SRC/enforcement/sdd/CONSTITUTION${SUF}.md" "$TARGET/enforcement/sdd/CONSTITUTION.md"
 
 # --- 3. Local hooks (runtime locations) ---
 mkdir -p "$TARGET/.claude/hooks"
@@ -140,7 +138,7 @@ Next steps (NOT done by this script — see Quick Start):
    1. spec-kit prerequisite ($SPECIFY_NOTE):
         uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
    2. Launch Claude Code and hand off:
-        Read AI-INTERVIEW${SUF}.md and start the integration process.
+        Read AI-INTERVIEW.md and start the integration process.
         Assess the context, run \`specify init\`, install the enforcement gates, then proceed with SDD.
       Claude Code runs \`specify init\`, creates the skills, and wires the hooks.
    3. CI: set repo variable SDD_TEST_CMD (Settings → Actions → Variables) for R3,
