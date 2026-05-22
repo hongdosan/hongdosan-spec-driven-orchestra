@@ -81,6 +81,9 @@ AI 인터뷰가 단계를 추천합니다. 언제든 직접 바꿀 수 있습니
 
 ```bash
 # spec-kit이 `specify` CLI + /speckit.* 명령으로 SDD 코어를 제공합니다.
+# 이 명령은 `specify` CLI를 PATH에 전역 설치합니다(프로젝트별이 아닌 전역 도구) — 프로젝트
+# 파일은 만들지 않습니다. 프로젝트별 단계(`specify init` — 프로젝트 루트에 `.specify/`를
+# 생성)는 뒤의 3️⃣에서 Claude Code가 실행합니다.
 uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
 ```
 
@@ -90,10 +93,11 @@ uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
 
 ### 1️⃣ 클론 후 프로젝트에 복사
 ```bash
-# 레포 클론
+# 이 레포를 본인 프로젝트 바깥에 클론합니다 (프로젝트 안에 클론하지 않습니다).
 git clone https://github.com/hongdosan/hongdosan-spec-driven-orchestra.git
 
-# 메서드 파일을 본인 프로젝트에 복사
+# 아래는 메서드 .md 파일을 프로젝트로 복사합니다. 클론은 그대로 두세요 —
+# 이후 통합 단계(3️⃣)가 이 레포의 enforcement/에서 게이트 스크립트도 가져옵니다.
 cp hongdosan-spec-driven-orchestra/symphony/*.md /path/to/your/project/
 cd /path/to/your/project/
 ```

@@ -201,16 +201,21 @@ specify init --here --integration claude   # creates .specify/ + /speckit.* comm
 Then install **our delta** — the blocking gates spec-kit does not provide:
 
 ```bash
+# enforcement/ is NOT copied into your project — it stays in the cloned repo
+# (the dir from Quick Start "Clone & Copy"). Point ORCHESTRA at that clone so these
+# copies work regardless of your current directory.
+ORCHESTRA=/path/to/hongdosan-spec-driven-orchestra
+
 # Local hooks (point at specs/<branch>/ produced by /speckit.*)
 mkdir -p .claude/hooks
-cp enforcement/hooks/pre-implement.sh .claude/hooks/
-cp enforcement/hooks/post-task.sh    .claude/hooks/
-cp enforcement/hooks/pre-commit.sh   .git/hooks/pre-commit
+cp "$ORCHESTRA"/enforcement/hooks/pre-implement.sh .claude/hooks/
+cp "$ORCHESTRA"/enforcement/hooks/post-task.sh    .claude/hooks/
+cp "$ORCHESTRA"/enforcement/hooks/pre-commit.sh   .git/hooks/pre-commit
 chmod +x .claude/hooks/*.sh .git/hooks/pre-commit
 
 # CI gate + sync-check (R7)
 mkdir -p .github/workflows
-cp enforcement/github-workflows/sdd-gate.yml .github/workflows/
+cp "$ORCHESTRA"/enforcement/github-workflows/sdd-gate.yml .github/workflows/
 
 # Set the verification command the gates use
 export SDD_TEST_CMD="[npm test | pytest -q | go test ./... | cargo test]"

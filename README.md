@@ -83,6 +83,9 @@ The AI interview recommends a tier based on context. You can always override it.
 
 ```bash
 # spec-kit provides the SDD core via the `specify` CLI + /speckit.* commands.
+# This installs the `specify` CLI on your PATH (a global tool, not per-project) — it
+# creates no project files. The per-project step (`specify init`, which creates
+# `.specify/` in your project root) runs later in Step 3, driven by Claude Code.
 uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
 ```
 
@@ -93,10 +96,11 @@ uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
 #### 1️⃣ Clone & Copy
 
 ```bash
-# Clone this repo
+# Clone this repo somewhere OUTSIDE your project (you don't clone it into your project).
 git clone https://github.com/hongdosan/hongdosan-spec-driven-orchestra.git
 
-# Copy methodology files to your project
+# This copies the methodology .md files into your project. Keep the clone around:
+# the later integration step (Step 3) also pulls gate scripts from this repo's enforcement/.
 cp hongdosan-spec-driven-orchestra/symphony/*.md /path/to/your/project/
 cd /path/to/your/project/
 ```

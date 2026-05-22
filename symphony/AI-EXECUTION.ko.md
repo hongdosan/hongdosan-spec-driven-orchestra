@@ -202,16 +202,21 @@ specify init --here --integration claude   # .specify/ + /speckit.* 명령 생�
 그다음 **우리 delta** — spec-kit이 제공하지 않는 차단 게이트 — 를 설치합니다:
 
 ```bash
+# enforcement/는 프로젝트로 복사되지 않습니다 — 클론한 레포에 그대로 있습니다
+# (빠른 시작 "클론 후 프로젝트에 복사"의 디렉터리). 현재 작업 디렉터리와 무관하게
+# 복사되도록 ORCHESTRA를 그 클론 경로로 지정하세요.
+ORCHESTRA=/path/to/hongdosan-spec-driven-orchestra
+
 # 로컬 훅 (/speckit.*가 만드는 specs/<branch>/를 가리킴)
 mkdir -p .claude/hooks
-cp enforcement/hooks/pre-implement.sh .claude/hooks/
-cp enforcement/hooks/post-task.sh    .claude/hooks/
-cp enforcement/hooks/pre-commit.sh   .git/hooks/pre-commit
+cp "$ORCHESTRA"/enforcement/hooks/pre-implement.sh .claude/hooks/
+cp "$ORCHESTRA"/enforcement/hooks/post-task.sh    .claude/hooks/
+cp "$ORCHESTRA"/enforcement/hooks/pre-commit.sh   .git/hooks/pre-commit
 chmod +x .claude/hooks/*.sh .git/hooks/pre-commit
 
 # CI 게이트 + sync-check (R7)
 mkdir -p .github/workflows
-cp enforcement/github-workflows/sdd-gate.yml .github/workflows/
+cp "$ORCHESTRA"/enforcement/github-workflows/sdd-gate.yml .github/workflows/
 
 # 게이트가 쓸 검증 명령 설정
 export SDD_TEST_CMD="[npm test | pytest -q | go test ./... | cargo test]"
