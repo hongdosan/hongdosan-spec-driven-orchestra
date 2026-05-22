@@ -200,6 +200,11 @@ specify init --here --integration claude   # .specify/ + /speckit.* 명령 생�
 
 그다음 **우리 delta** — spec-kit이 제공하지 않는 차단 게이트 — 를 설치합니다:
 
+> **`install.sh`(빠른 시작 방법 A)로 설치했나요?** 그렇다면 hooks와 CI 게이트는 이미
+> 설치됐습니다 — `.claude/hooks/`, `.git/hooks/pre-commit`, `.github/workflows/sdd-gate.yml`
+> 존재만 확인하고 **아래 복사는 건너뛰세요**. 아래는 수동/클론 경로용입니다.
+> (`sync-check.sh`/R7은 패키지 내부 전용 — 어느 경로든 소비 프로젝트엔 설치 안 됨.)
+
 ```bash
 # enforcement/는 프로젝트로 복사되지 않습니다 — 클론한 레포에 그대로 있습니다
 # (빠른 시작 1️⃣ 방법 B의 클론 디렉터리). 현재 작업 디렉터리와 무관하게
@@ -213,7 +218,9 @@ cp "$ORCHESTRA"/enforcement/hooks/post-task.sh    .claude/hooks/
 cp "$ORCHESTRA"/enforcement/hooks/pre-commit.sh   .git/hooks/pre-commit
 chmod +x .claude/hooks/*.sh .git/hooks/pre-commit
 
-# CI 게이트 + sync-check (R7)
+# CI 게이트 (R1/R2/R3). 참고: sdd-gate.yml에는 R7/sync-check 단계도 있는데 이는
+# 패키지 내부 전용 — 이 레포의 이중언어 문서를 검증하는 것이라 소비 프로젝트에선 실패합니다.
+# install.sh는 R7을 자동 제거합니다; 수동 복사 시엔 R7 단계를 삭제하세요.
 mkdir -p .github/workflows
 cp "$ORCHESTRA"/enforcement/github-workflows/sdd-gate.yml .github/workflows/
 

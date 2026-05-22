@@ -63,6 +63,10 @@ counts, sources, licenses, mode-absence, bilingual pairing, and EN/KO heading
 correspondence. Hardcoded star counts are forbidden (they drift). Enforced by:
 `sync-check.sh` + CI gate. Note: this checks *structural* sync only — semantic
 equivalence between languages still requires human review.
+**Scope:** R7 is *package-internal* — it governs this package's own bilingual doc set.
+Consumer installs omit it: `install.sh` does not copy `sync-check.sh` and strips the
+R7 step from the installed CI gate, since it would otherwise demand a `.ko.md` pair for
+every doc in your project.
 
 ---
 

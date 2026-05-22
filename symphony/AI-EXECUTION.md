@@ -200,6 +200,12 @@ specify init --here --integration claude   # creates .specify/ + /speckit.* comm
 
 Then install **our delta** — the blocking gates spec-kit does not provide:
 
+> **Already used `install.sh` (Quick Start Option A)?** The hooks and CI gate are
+> already installed — just confirm `.claude/hooks/`, `.git/hooks/pre-commit`, and
+> `.github/workflows/sdd-gate.yml` exist, and **skip the copies below**. The block
+> below is the manual/clone path. (`sync-check.sh`/R7 are package-internal — not
+> installed in consumer projects either way.)
+
 ```bash
 # enforcement/ is NOT copied into your project — it stays in the cloned repo
 # (the clone from Quick Start Step 1, Option B). Point ORCHESTRA at that clone so these
@@ -213,7 +219,9 @@ cp "$ORCHESTRA"/enforcement/hooks/post-task.sh    .claude/hooks/
 cp "$ORCHESTRA"/enforcement/hooks/pre-commit.sh   .git/hooks/pre-commit
 chmod +x .claude/hooks/*.sh .git/hooks/pre-commit
 
-# CI gate + sync-check (R7)
+# CI gate (R1/R2/R3). NOTE: sdd-gate.yml also has an R7/sync-check step that is
+# package-internal — it validates THIS repo's bilingual docs and fails in a consumer
+# project. install.sh strips R7 automatically; if you copy manually, delete the R7 step.
 mkdir -p .github/workflows
 cp "$ORCHESTRA"/enforcement/github-workflows/sdd-gate.yml .github/workflows/
 
