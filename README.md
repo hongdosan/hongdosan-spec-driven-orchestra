@@ -57,7 +57,7 @@
 | 🎺 **Brass** | **Handoff** | Handoff — smooth transitions | [mattpocock/skills](https://github.com/mattpocock/skills) |
 | 🎸 **Guitar** | **Harness** | Tasks — agent teams for large tasks (optional, external) | [revfactory/harness](https://github.com/revfactory/harness) |
 
-**The Idea**: Drop the package into your project. SDD assesses your context, runs its flow, and calls skills as needed — while enforcement gates block anything that skips a step. It applies universally (new, legacy, or production) with no modes; context only changes how strict the gates are. How much it helps still depends on your project — see [Honest Limitations](#-honest-limitations).
+**The Idea**: Drop the package into your project. SDD assesses your context, runs its flow, and calls skills as needed — while enforcement gates block anything that skips a step. It applies universally (new, legacy, or production); context only changes how strict the gates are. How much it helps still depends on your project — see [Honest Limitations](#-honest-limitations).
 
 ---
 
@@ -151,7 +151,7 @@ That's it. Claude Code assesses your project, runs `specify init` (spec-kit) and
 
 ## 🎯 Who Is This For?
 
-**Any project, at any stage.** There are no modes — SDD assesses context and adapts. The same flow applies whether you're starting fresh or fixing a deployed service; only the strictness of the enforcement gates changes.
+**Any project, at any stage.** SDD assesses context and adapts: the same flow applies whether you're starting fresh or fixing a deployed service; only the strictness of the enforcement gates changes.
 
 | Project Type | What SDD does | Gate level |
 |---|---|---|
@@ -184,7 +184,7 @@ That's it. Claude Code assesses your project, runs `specify init` (spec-kit) and
 7. Handoff    🎺  Context preservation
 ```
 
-### When Existing Code Is Present (added steps, not a mode)
+### When Existing Code Is Present (added steps)
 
 ```
 0. Survey      🎼  Analyze existing code      ← only if existing code
@@ -304,7 +304,7 @@ your-project/
 .github/workflows/sdd-gate.yml   # non-bypassable merge gate (R1,R3,R6,R7)
 ```
 
-### Context Additions (not modes)
+### Context Additions
 
 The same flow adapts to what it finds — no `MODE_*` branching:
 
@@ -312,7 +312,7 @@ The same flow adapts to what it finds — no `MODE_*` branching:
 - **Production signals detected** → `ENFORCEMENT_LEVEL=strict`; tests & regression become non-bypassable (R6).
 - **Greenfield** → same flow and gates, but nothing to preserve, so they pass easily.
 
-Nothing here is a mode you pick — SDD reads the context and adjusts strictness automatically.
+SDD reads the context and adjusts strictness automatically.
 
 ---
 
@@ -333,7 +333,7 @@ Nothing here is a mode you pick — SDD reads the context and adjusts strictness
 ### 🔍 Interview-Based Adaptation
 - 5-7 questions for context understanding
 - Auto-scan assists AI's recommendation
-- Mode determined automatically
+- Enforcement level set automatically
 
 ### 🛡️ Safety First
 - **Production → strict gates, not blocked** (non-bypassable tests)
@@ -483,7 +483,7 @@ Since `CLAUDE.md` auto-loads, team members applying Claude Code automatically ge
 ## 🛣️ Roadmap
 
 ### Recently Shipped (v2)
-- ✅ Context-based dynamic assessment (no modes)
+- ✅ Context-based dynamic assessment
 - ✅ Enforcement gates (R1–R7)
 - ✅ Universal application (new/legacy/production)
 - ✅ 4 skills under SDD

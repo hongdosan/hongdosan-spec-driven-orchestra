@@ -28,7 +28,7 @@
 
 ## 🎯 Applicable Projects
 
-**Universal — any project, any stage.** No modes. SDD assesses context and runs one flow; only the enforcement strictness changes.
+**Universal — any project, any stage.** SDD assesses context and runs one flow; only the enforcement strictness changes.
 
 | Type | What SDD does | Gate level |
 |---|---|---|
@@ -160,7 +160,7 @@ project root/
         handoff.md  implementation-notes.md
 ```
 
-### Context Additions (not modes)
+### Context Additions
 
 The same flow; SDD adds steps based on what it finds — no `MODE_*` to pick:
 
@@ -225,7 +225,7 @@ The full provenance table — all 5 instruments with sources, licenses, and matu
 ## ❓ FAQ
 
 ### Q: I don't know whether it applies as new / legacy / production.
-A: Just start. There's no mode to pick. SDD reads the context and runs one flow, auto-adjusting only the gate strictness.
+A: Just start. SDD reads the context and runs one flow, auto-adjusting only the gate strictness.
 
 ### Q: The assessment feels burdensome.
 A: It's 5-7 questions, each with an AI-recommended answer — you can just reply "yes".

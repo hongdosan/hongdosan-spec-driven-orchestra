@@ -1,7 +1,7 @@
 # 🎼 Orchestra Guide — SDD and Its Skills
 
 > **SDD is the framework — the conductor.** The other tools are not equals; they are **skills the conductor calls** when the score needs them.
-> Applies universally: new, early, legacy, maintenance, or production projects (no modes — SDD adapts to context).
+> Applies universally: new, early, legacy, maintenance, or production projects — SDD adapts to context.
 >
 > **Rule R (defer to the originals).** This package does not re-explain spec-kit/harness; it invokes their real commands (`/speckit.*`) and adds only its own *delta* — blocking gates, orchestration order, legacy survey/regression, and Korean onboarding. Any Korean helper text is for human understanding only and non-authoritative; the installed spec-kit command definitions and the English source govern execution.
 
@@ -45,9 +45,9 @@ The instruments never lead. SDD decides *when* a skill is needed and calls it; a
 
 ---
 
-## 2. Context Adaptation (no modes)
+## 2. Context Adaptation
 
-SDD does **not** branch into modes. It runs one flow and adapts to whatever it finds:
+SDD runs one flow and adapts to whatever it finds:
 
 ```
 🎼 SDD assesses context at start (code size, git history, production signals)
@@ -65,7 +65,7 @@ Context never changes *what* SDD does — only **how strict the enforcement gate
 
 ## 3. The 7-Step Flow (single, universal)
 
-There is one flow. SDD scales it to the work (full / mini / none), and adds context-driven steps when existing code is present — these are **not modes**, just the conductor responding to what it sees.
+There is one flow. SDD scales it to the work (full / mini / none), and adds context-driven steps when existing code is present — the conductor simply responds to what it sees.
 
 ```
 User request
@@ -97,7 +97,7 @@ User request
 ⛔ Commit/PR gate: verification must pass, or the gate blocks it
 ```
 
-> **\*Step 0 (Survey)** appears only when there is existing code to understand. On a greenfield project there's nothing to survey, so SDD skips it. No separate "rebuild mode" — the same flow simply includes a survey and regression checks when the context calls for them.
+> **\*Step 0 (Survey)** appears only when there is existing code to understand. On a greenfield project there's nothing to survey, so SDD skips it. The same flow simply includes a survey and regression checks when the context calls for them.
 
 > **Provenance — what is spec-kit and what we added.** This 7-step flow is *our* orchestration, not a verbatim copy of spec-kit's commands. Steps that map directly to spec-kit commands: **Specify** (`/speckit.specify`), **Clarify** (`/speckit.clarify`), **Plan** (`/speckit.plan`), **Tasks** (`/speckit.tasks`), **Implement** (`/speckit.implement`). Steps **Survey (0)**, **Verify (5)**, and **Handoff (7)** are *our additions* — they are not spec-kit commands. Conversely, spec-kit's `/speckit.constitution` (its first step) and `/speckit.analyze` are not flow steps here: we reuse the constitution via spec-kit's `.specify/memory/constitution.md` rather than as a numbered step. "SDD owns the 7-step flow" means SDD conducts *this* sequence; it does not mean spec-kit defines these seven steps.
 
@@ -207,7 +207,7 @@ Gradual, safe transition (Strangler Fig / Feature Flag)
 
 ## 7. Real-World Scenarios (one flow, adapting to context)
 
-Same SDD flow every time. What differs is only what the context adds — a survey when there's existing code, tighter gates in production. No modes.
+Same SDD flow every time. What differs is only what the context adds — a survey when there's existing code, tighter gates in production.
 
 ### Greenfield: First Feature
 
@@ -245,7 +245,7 @@ AI: survey.md → /speckit.specify → ... → regression.md → /speckit.implem
 AI: handoff.md
 ```
 
-> Notice: the steps are the same. Production didn't trigger a different "mode" —
+> Notice: the steps are the same. Production didn't trigger anything different —
 > it raised the enforcement level so the existing gates became non-bypassable.
 
 ---
@@ -306,9 +306,9 @@ The tools can pull against each other. Resolve predictably:
 
 ---
 
-## 10. As the Project Evolves (no mode switching)
+## 10. As the Project Evolves
 
-Because there are no modes, there is nothing to "switch". The same SDD flow follows the project through its whole life; only two things shift, automatically:
+The same SDD flow follows the project through its whole life; only two things shift, automatically:
 
 ```
 Project grows / gains existing code
@@ -320,7 +320,7 @@ Project gets deployed (production signals)
    → tests/regression become non-bypassable
 ```
 
-No tone changes, no mode migration, no CONSTITUTION rewrite. The framework is constant; the context dials the strictness. This is the whole point of dropping modes — there is never a "we've outgrown our mode" moment.
+No tone changes, no migration, no CONSTITUTION rewrite. The framework is constant; the context dials the strictness — the project never has to be reconfigured as it grows.
 
 ---
 

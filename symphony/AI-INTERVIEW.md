@@ -1,13 +1,13 @@
 # 🎤 AI Entry — SDD Setup & Context Assessment
 
 > **When Claude Code reads this file, it assesses context, installs the enforcement gates, then runs SDD (AI-EXECUTION.md).**
-> There are no modes. The flow is always the same; the assessment only sets the enforcement level and whether a Step 0 survey is needed.
+> The flow is always the same; the assessment only sets the enforcement level and whether a Step 0 survey is needed.
 
 ---
 
 ## 🎯 Mission
 
-The purpose is to **assess the project's context** and configure SDD accordingly — not to pick a mode. Two things are decided:
+The purpose is to **assess the project's context** and configure SDD accordingly. Two things are decided:
 
 ```
 1. Enforcement level:
@@ -144,7 +144,7 @@ Reasoning:
 - N code files, M commits → estimated [A/B/C/D]
 ```
 
-**Handling** (sets whether Step 0 survey runs — not a mode):
+**Handling** (sets whether Step 0 survey runs):
 - A → greenfield, survey **off**
 - B/C/D → existing code present, survey **on** (adds survey, regression)
 
@@ -167,7 +167,7 @@ Reasoning:
 
 **Handling**:
 - Provides additional context on the goal
-- Informs how thorough the survey/spec should be (no mode involved)
+- Informs how thorough the survey/spec should be
 
 #### 📁 Q4: Existing Asset Handling
 
@@ -363,7 +363,7 @@ Proceeding with: enforcement level = **strict**, Step 0 survey = **on**.
 
 ## 3. Context-Based Setup Guide
 
-There are no modes to choose. Read the context signals and configure two things: the enforcement level and whether a Step 0 survey runs. The SDD flow itself is identical in every case.
+Read the context signals and configure two things: the enforcement level and whether a Step 0 survey runs. The SDD flow itself is identical in every case.
 
 ### Signal → Enforcement level
 
@@ -389,7 +389,7 @@ Regardless of context:
 
 ### Tier (independent of context)
 
-Recommend a starting tier from project size and work style, not from any mode:
+Recommend a starting tier from project size and work style:
 - **Tier 1**: SDD + Karpathy + grill-me
 - **Tier 2**: + Handoff
 - **Tier 3**: + Harness (large/team work; Harness optional & experimental)
@@ -574,6 +574,6 @@ Response:
 
 ## 🎯 One-Line Summary
 
-> **This assessment takes 5-10 minutes to read the project context, set the enforcement level (standard/strict), and install the gates. Then AI-EXECUTION.md runs one SDD flow autonomously — no modes, universal application.**
+> **This assessment takes 5-10 minutes to read the project context, set the enforcement level (standard/strict), and install the gates. Then AI-EXECUTION.md runs one SDD flow autonomously — universal application.**
 
 🎤

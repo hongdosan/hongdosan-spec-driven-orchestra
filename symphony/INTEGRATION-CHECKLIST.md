@@ -1,6 +1,6 @@
 # Integration Verification Checklist
 
-> One flow, one checklist. Existing-code projects add a few survey/regression items; production raises the gate strictness. No per-mode variants.
+> One flow, one checklist. Existing-code projects add a few survey/regression items; production raises the gate strictness.
 > Use at Day 0 (right after), Day 7 (1 week later), Day 30 (1 month later).
 
 > [!NOTE]
@@ -275,7 +275,7 @@ Reviewing recent PRs/commits:
 - Different from intent
 - → New integration plan
 
-> Note: there is no "mode transition" to make — the flow is constant. As the project
+> Note: the flow is constant. As the project
 > grows or gets deployed, the survey and strict gates appear automatically (see
 > ORCHESTRA-GUIDE "As the Project Evolves").
 

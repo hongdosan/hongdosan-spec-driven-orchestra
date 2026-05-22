@@ -183,7 +183,7 @@ curl -L https://raw.githubusercontent.com/mattpocock/skills/main/skills/producti
 
 ## 🔁 Execution Flow (single, universal)
 
-There is one flow. It does not branch by mode. Two settings from assessment shape it:
+There is one flow. Two settings from assessment shape it:
 **enforcement level** (standard/strict) and **Step 0 survey** (on/off). Everything below
 runs the same way for new, legacy, and production projects.
 
@@ -323,7 +323,7 @@ the enforcement level set, and whether the gates are active.
 
 ## 🧱 Existing-Code Skills (Survey + Migration)
 
-These are used **only when existing code is present** — they are not a mode, just the
+These are used **only when existing code is present** — just the
 skills SDD calls during Step 0 and during Implement when behavior is being replaced. On
 greenfield projects they never appear.
 
