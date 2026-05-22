@@ -49,7 +49,16 @@
 uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
 ```
 
-### Step 1: Place the Files
+### Step 1: Get the package — pick ONE
+
+**Option A — fastest (install.sh does the file placement)**
+
+```bash
+# run inside your project; also installs the local hooks + CI gate (R7 omitted as not portable)
+curl -sL https://raw.githubusercontent.com/hongdosan/hongdosan-spec-driven-orchestra/main/install.sh | bash -s -- --lang en
+```
+
+**Option B — manual**
 
 ```bash
 # Copy the methodology files into your project root

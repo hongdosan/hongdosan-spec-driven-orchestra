@@ -50,7 +50,16 @@
 uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
 ```
 
-### Step 1: 파일 배치
+### Step 1: 패키지 가져오기 — 둘 중 하나만 선택
+
+**방법 A — 가장 빠름 (install.sh가 파일 배치를 대신)**
+
+```bash
+# 프로젝트 안에서 실행; 로컬 hooks + CI 게이트(R7은 이식 불가라 제외)까지 설치
+curl -sL https://raw.githubusercontent.com/hongdosan/hongdosan-spec-driven-orchestra/main/install.sh | bash -s -- --lang ko
+```
+
+**방법 B — 수동**
 
 ```bash
 # 메서드 파일을 프로젝트 루트에 복사 (한글판 → 기본 .md 이름으로)
