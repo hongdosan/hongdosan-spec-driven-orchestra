@@ -89,9 +89,7 @@ The AI interview recommends a tier based on context. You can always override it.
 uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
 ```
 
-> **Entry barrier changed.** This package now *leverages* spec-kit rather than
-> re-implementing it, so spec-kit is a real prerequisite — it is no longer "just copy
-> some markdown." If you don't have `uv`, see [spec-kit's README](https://github.com/github/spec-kit).
+> Don't have `uv`? See [spec-kit's README](https://github.com/github/spec-kit) for install instructions.
 
 #### 1️⃣ Get the package — pick ONE
 

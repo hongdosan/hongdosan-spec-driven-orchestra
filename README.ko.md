@@ -87,9 +87,7 @@ AI 인터뷰가 단계를 추천합니다. 언제든 직접 바꿀 수 있습니
 uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
 ```
 
-> **진입장벽이 바뀌었습니다.** 이 패키지는 spec-kit을 *재구현*하지 않고 *활용*하므로,
-> spec-kit이 실제 전제조건입니다 — 더 이상 "마크다운만 복사"가 아닙니다. `uv`가 없으면
-> [spec-kit README](https://github.com/github/spec-kit)를 참고하세요.
+> `uv`가 없으면 [spec-kit README](https://github.com/github/spec-kit)의 설치 안내를 참고하세요.
 
 ### 1️⃣ 패키지 가져오기 — 아래 둘 중 **하나만** 선택
 
