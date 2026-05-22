@@ -100,11 +100,14 @@ chmod +x "$TARGET/.claude/hooks/"*.sh
 if [ -d "$TARGET/.git" ]; then
   if [ -e "$TARGET/.git/hooks/pre-commit" ]; then
     cp "$TARGET/.git/hooks/pre-commit" "$TARGET/.git/hooks/pre-commit.bak"
-    echo "  (existing pre-commit backed up to pre-commit.bak)"
+    if [ "$LANG_CHOICE" = "ko" ]; then echo "  (기존 pre-commit을 pre-commit.bak으로 백업함)"; else echo "  (existing pre-commit backed up to pre-commit.bak)"; fi
   fi
   cp "$SRC/enforcement/hooks/pre-commit.sh" "$TARGET/.git/hooks/pre-commit"
   chmod +x "$TARGET/.git/hooks/pre-commit"
-  GIT_HOOK_NOTE="installed .git/hooks/pre-commit"
+  if [ "$LANG_CHOICE" = "ko" ]; then GIT_HOOK_NOTE=".git/hooks/pre-commit 설치됨"; else GIT_HOOK_NOTE="installed .git/hooks/pre-commit"; fi
+elif [ "$LANG_CHOICE" = "ko" ]; then
+  GIT_HOOK_NOTE="pre-commit 건너뜀 (.git 없음) — 'git init' 후:
+       cp enforcement/hooks/pre-commit.sh .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit"
 else
   GIT_HOOK_NOTE="SKIPPED pre-commit (no .git here) — run 'git init', then:
        cp enforcement/hooks/pre-commit.sh .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit"
@@ -122,9 +125,38 @@ awk '
   { print }
 ' "$SRC/enforcement/github-workflows/sdd-gate.yml" > "$TARGET/.github/workflows/sdd-gate.yml"
 
-# --- next steps (honest about what is NOT done) ---
-if command -v specify >/dev/null 2>&1; then SPECIFY_NOTE="found"; else SPECIFY_NOTE="NOT found — install it"; fi
+# --- next steps (honest about what is NOT done; localized by --lang) ---
+if command -v specify >/dev/null 2>&1; then
+  if [ "$LANG_CHOICE" = "ko" ]; then SPECIFY_NOTE="설치됨"; else SPECIFY_NOTE="found"; fi
+else
+  if [ "$LANG_CHOICE" = "ko" ]; then SPECIFY_NOTE="없음 — 설치 필요"; else SPECIFY_NOTE="NOT found — install it"; fi
+fi
 
+if [ "$LANG_CHOICE" = "ko" ]; then
+cat <<EOF
+
+✅ 파일 배치 완료. 설치된 항목:
+   - 방법론 문서 (--lang ko)                       → $TARGET/
+   - enforcement/sdd/CONSTITUTION (--lang ko)
+   - 로컬 hooks (pre-implement, post-task)         → .claude/hooks/
+   - $GIT_HOOK_NOTE
+   - CI 게이트 (R1/R2/R3, R7 제외)                 → .github/workflows/sdd-gate.yml
+
+다음 단계 (이 스크립트가 하지 않음 — 빠른 시작 참고):
+   1. spec-kit 전제조건 ($SPECIFY_NOTE):
+        uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
+   2. Claude Code 실행 후 인계:
+        AI-INTERVIEW.md를 읽고 통합을 시작해주세요.
+        컨텍스트를 평가하고 \`specify init\`을 실행하고 강제 게이트를 설치한 뒤, SDD로 진행해주세요.
+      Claude Code가 \`specify init\`을 실행하고 스킬을 만들고 hooks를 연결합니다.
+   3. CI: R3용으로 저장소 변수 SDD_TEST_CMD를 설정하고(Settings → Actions → Variables),
+      게이트를 우회 불가로 만들려면 required-PR 브랜치 보호를 켜세요.
+
+참고: R7(문서 sync-check)은 패키지 내부용입니다 — 이 패키지 자신의 이중언어 문서셋을
+SPEC.yml과 대조하는 것이라 당신 프로젝트에선 의미가 없어 설치된 게이트에서 제외했습니다.
+이식 가능한 게이트는 R1/R2/R3 + 로컬 hooks입니다.
+EOF
+else
 cat <<EOF
 
 ✅ File placement done. What was installed:
@@ -148,3 +180,4 @@ Note: R7 (document sync-check) is package-internal — it validates this package
 bilingual doc set against SPEC.yml and is not meaningful in your project, so it is
 omitted from the installed gate. The portable gates are R1/R2/R3 plus the local hooks.
 EOF
+fi
