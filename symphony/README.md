@@ -207,15 +207,7 @@ This package applies to production projects, but raises enforcement to strict:
 
 ## 📚 Source Material
 
-The 5 instruments this package integrates — all open-source projects (maturity shown qualitatively — check each repo for live star counts, which change over time):
-
-| Tool | Role | Source | Maturity |
-|---|---|---|---|
-| **Spec Kit** (SDD) | Conductor — spec-driven flow | https://github.com/github/spec-kit | Established |
-| **Karpathy Guidelines** | Code quality (4 principles) | https://github.com/multica-ai/andrej-karpathy-skills | Established |
-| **grill-me Skill** | Clarification | https://github.com/mattpocock/skills | Established |
-| **Handoff Skill** | Work handover | https://github.com/mattpocock/skills | Established |
-| **Harness** | Agent-team & skill architect | https://github.com/revfactory/harness | Widely adopted, newest piece |
+The full provenance table — all 5 instruments with sources, licenses, and maturity — lives in the root **[README](../README.md#-built-on)** (📚 Built On). In short: SDD ([spec-kit](https://github.com/github/spec-kit)) plus four skills it calls — 🎻 Karpathy ([multica-ai](https://github.com/multica-ai/andrej-karpathy-skills)), 🎹 grill-me and 🎺 Handoff ([mattpocock/skills](https://github.com/mattpocock/skills)), and 🎸 Harness ([revfactory/harness](https://github.com/revfactory/harness)).
 
 > 🎸 **Harness** is the optional 5th instrument: an external plugin (not generated here) that relies on Claude Code's experimental Agent Teams feature. Use it only when a task genuinely needs an agent team.
 

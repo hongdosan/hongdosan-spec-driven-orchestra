@@ -210,15 +210,7 @@ AI-INTERVIEW.md를 읽고 인터뷰부터 시작해주세요.
 
 ## 📚 원본 자료
 
-이 패키지가 통합하는 5개 악기 — 모두 오픈소스 프로젝트 (성숙도는 정성 표기 — 정확한 스타 수는 변동하므로 각 저장소에서 확인):
-
-| 도구 | 역할 | 출처 | 성숙도 |
-|---|---|---|---|
-| **Spec Kit** (SDD) | 프레임워크 — 명세 기반 흐름 | https://github.com/github/spec-kit | 확립됨 |
-| **Karpathy Guidelines** | 코드 품질 (4원칙) | https://github.com/multica-ai/andrej-karpathy-skills | 확립됨 |
-| **grill-me Skill** | 명확화 | https://github.com/mattpocock/skills | 확립됨 |
-| **Handoff Skill** | 작업 인계 | https://github.com/mattpocock/skills | 확립됨 |
-| **Harness** | 에이전트 팀·스킬 설계자 | https://github.com/revfactory/harness | 널리 채택됨, 가장 신생 |
+전체 출처 표 — 5개 악기의 출처·라이선스·성숙도 — 는 루트 **[README](../README.ko.md#-통합되는-원본-자료)** (📚 통합되는 원본 자료)에 있습니다. 요약하면: SDD([spec-kit](https://github.com/github/spec-kit))와 그것이 호출하는 네 스킬 — 🎻 Karpathy([multica-ai](https://github.com/multica-ai/andrej-karpathy-skills)), 🎹 grill-me · 🎺 Handoff([mattpocock/skills](https://github.com/mattpocock/skills)), 🎸 Harness([revfactory/harness](https://github.com/revfactory/harness)).
 
 > 🎸 **Harness**는 선택적 5번째 악기입니다: 외부 플러그인(여기서 생성 안 함)이며, Claude Code의 실험적 Agent Teams 기능에 의존합니다. 작업에 정말 에이전트 팀이 필요할 때만 쓰세요.
 
