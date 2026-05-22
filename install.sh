@@ -145,11 +145,18 @@ cat <<EOF
 다음 단계 (이 스크립트가 하지 않음 — 빠른 시작 참고):
    1. spec-kit 전제조건 ($SPECIFY_NOTE):
         uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
-   2. Claude Code 실행 후 인계:
+   2. (선택·권장) Git 안전망 — 방금 배치한 파일을 커밋:
+        git checkout -b feat/spec-driven-orchestra
+        git add *.md && git commit -m "chore: add Spec-Driven Orchestra docs (pre-run)"
+      ⚠️ 방금 설치된 R1 훅은 스펙 없이 '구현 파일'(.sh 등)이 staged되면 커밋을 막습니다.
+         그래서 위는 문서(*.md)만 stage합니다. 훅·CI까지 함께 커밋하려면 이 부트스트랩
+         커밋만 훅을 건너뛰세요(기능 구현이 아니므로): git commit --no-verify -m "..."
+         (R1은 SDD_OVERRIDE로 우회 불가 — 로컬 훅은 --no-verify, 강제력은 CI가 받칩니다.)
+   3. Claude Code 실행 후 인계:
         AI-INTERVIEW.md를 읽고 통합을 시작해주세요.
         컨텍스트를 평가하고 \`specify init\`을 실행하고 강제 게이트를 설치한 뒤, SDD로 진행해주세요.
       Claude Code가 \`specify init\`을 실행하고 스킬을 만들고 hooks를 연결합니다.
-   3. CI: R3용으로 저장소 변수 SDD_TEST_CMD를 설정하고(Settings → Actions → Variables),
+   4. CI: R3용으로 저장소 변수 SDD_TEST_CMD를 설정하고(Settings → Actions → Variables),
       게이트를 우회 불가로 만들려면 required-PR 브랜치 보호를 켜세요.
 
 참고: R7(문서 sync-check)은 패키지 내부용입니다 — 이 패키지 자신의 이중언어 문서셋을
@@ -169,11 +176,19 @@ cat <<EOF
 Next steps (NOT done by this script — see Quick Start):
    1. spec-kit prerequisite ($SPECIFY_NOTE):
         uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
-   2. Launch Claude Code and hand off:
+   2. (optional, recommended) Git safety net — commit the placed files:
+        git checkout -b feat/spec-driven-orchestra
+        git add *.md && git commit -m "chore: add Spec-Driven Orchestra docs (pre-run)"
+      ⚠️ The R1 hook just installed blocks commits that stage 'implementation'
+         files (.sh, etc.) without a spec — so the line above stages docs (*.md)
+         only. To commit the hooks/CI too, skip the hook for this one bootstrap
+         commit (it is setup, not a feature): git commit --no-verify -m "..."
+         (R1 is NOT bypassable via SDD_OVERRIDE — local hooks take --no-verify; CI is the backstop.)
+   3. Launch Claude Code and hand off:
         Read AI-INTERVIEW.md and start the integration process.
         Assess the context, run \`specify init\`, install the enforcement gates, then proceed with SDD.
       Claude Code runs \`specify init\`, creates the skills, and wires the hooks.
-   3. CI: set repo variable SDD_TEST_CMD (Settings → Actions → Variables) for R3,
+   4. CI: set repo variable SDD_TEST_CMD (Settings → Actions → Variables) for R3,
       and enable required-PR branch protection to make the gate non-bypassable.
 
 Note: R7 (document sync-check) is package-internal — it validates this package's own
