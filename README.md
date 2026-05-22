@@ -77,22 +77,9 @@ The AI interview recommends a tier based on context. You can always override it.
 
 ## ⚡ Quick Start
 
-**Fastest path** — one script does the file placement (pick one language):
-
-```bash
-# run inside your project (default target = current dir)
-curl -sL https://raw.githubusercontent.com/hongdosan/hongdosan-spec-driven-orchestra/main/install.sh | bash -s -- --lang en
-# Korean docs: --lang ko    |    other target: append a path
-```
-
-It copies the methodology docs (one language), the local hooks, and a CI gate
-(R1/R2/R3; the package-internal R7 doc-sync is omitted as it is not portable). It does
-**not** install spec-kit or run `specify init` — do Step 0 below first, then Step 3.
-Prefer to do it by hand? Follow the numbered steps.
-
 ### Steps to Symphony
 
-#### 0️⃣ Prerequisite: install spec-kit (the framework this leverages)
+#### 0️⃣ Prerequisite: install spec-kit (needed by BOTH paths below)
 
 ```bash
 # spec-kit provides the SDD core via the `specify` CLI + /speckit.* commands.
@@ -106,14 +93,28 @@ uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
 > re-implementing it, so spec-kit is a real prerequisite — it is no longer "just copy
 > some markdown." If you don't have `uv`, see [spec-kit's README](https://github.com/github/spec-kit).
 
-#### 1️⃣ Clone & Copy
+#### 1️⃣ Get the package — pick ONE
+
+**Option A — fastest (install.sh does the file placement)**
+
+```bash
+# run inside your project (default target = current dir). Be in a git repo first so the
+# pre-commit hook installs; otherwise the script prints how to add it and skips.
+curl -sL https://raw.githubusercontent.com/hongdosan/hongdosan-spec-driven-orchestra/main/install.sh | bash -s -- --lang en
+# Korean docs: --lang ko    |    other target: append a path
+```
+
+Beyond the 4 methodology docs (one language), this also places the **local hooks and CI
+gate (R1/R2/R3; the package-internal R7 doc-sync is omitted as it is not portable)**. It
+does **not** install spec-kit or run `specify init` (see Step 0 and Step 3).
+
+**Option B — manual (clone & copy)**
 
 ```bash
 # Clone this repo somewhere OUTSIDE your project (you don't clone it into your project).
 git clone https://github.com/hongdosan/hongdosan-spec-driven-orchestra.git
 
-# Copy the 4 methodology docs into your project. Keep the clone around:
-# the later integration step (Step 3) also pulls gate scripts from this repo's enforcement/.
+# Copy the 4 methodology docs into your project.
 SRC=hongdosan-spec-driven-orchestra/symphony
 cp "$SRC"/AI-INTERVIEW.md        /path/to/your/project/
 cp "$SRC"/AI-EXECUTION.md        /path/to/your/project/
@@ -121,6 +122,9 @@ cp "$SRC"/ORCHESTRA-GUIDE.md     /path/to/your/project/
 cp "$SRC"/INTEGRATION-CHECKLIST.md /path/to/your/project/
 cd /path/to/your/project/
 ```
+
+> Option B copies docs only. The gates (hooks + CI) are installed by Claude Code in
+> Step 3 from this repo's `enforcement/` — so keep the clone around.
 
 #### 2️⃣ Git Safety Net (Recommended)
 

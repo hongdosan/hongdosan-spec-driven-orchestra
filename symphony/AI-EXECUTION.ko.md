@@ -202,7 +202,7 @@ specify init --here --integration claude   # .specify/ + /speckit.* 명령 생�
 
 ```bash
 # enforcement/는 프로젝트로 복사되지 않습니다 — 클론한 레포에 그대로 있습니다
-# (빠른 시작 "클론 후 프로젝트에 복사"의 디렉터리). 현재 작업 디렉터리와 무관하게
+# (빠른 시작 1️⃣ 방법 B의 클론 디렉터리). 현재 작업 디렉터리와 무관하게
 # 복사되도록 ORCHESTRA를 그 클론 경로로 지정하세요.
 ORCHESTRA=/path/to/hongdosan-spec-driven-orchestra
 

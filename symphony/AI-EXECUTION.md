@@ -202,7 +202,7 @@ Then install **our delta** — the blocking gates spec-kit does not provide:
 
 ```bash
 # enforcement/ is NOT copied into your project — it stays in the cloned repo
-# (the dir from Quick Start "Clone & Copy"). Point ORCHESTRA at that clone so these
+# (the clone from Quick Start Step 1, Option B). Point ORCHESTRA at that clone so these
 # copies work regardless of your current directory.
 ORCHESTRA=/path/to/hongdosan-spec-driven-orchestra
 

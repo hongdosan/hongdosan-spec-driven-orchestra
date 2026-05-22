@@ -77,19 +77,7 @@ AI 인터뷰가 단계를 추천합니다. 언제든 직접 바꿀 수 있습니
 
 ## 🚀 빠른 시작
 
-**가장 빠른 길** — 스크립트 하나가 파일 배치를 해줍니다 (언어 하나 선택):
-
-```bash
-# 본인 프로젝트 안에서 실행 (기본 대상 = 현재 디렉터리)
-curl -sL https://raw.githubusercontent.com/hongdosan/hongdosan-spec-driven-orchestra/main/install.sh | bash -s -- --lang ko
-# 영어 문서: --lang en    |    다른 대상: 경로를 뒤에 붙임
-```
-
-방법론 문서(한 언어), 로컬 hooks, CI 게이트(R1/R2/R3 — 패키지 내부용 R7 문서동기화는
-이식 불가라 제외)를 복사합니다. spec-kit 설치나 `specify init`은 **하지 않습니다** —
-아래 0️⃣를 먼저 하고 3️⃣로 진행하세요. 직접 손으로 하려면 아래 번호 단계를 따르세요.
-
-### 0️⃣ 사전 준비: spec-kit 설치 (이 패키지가 활용하는 프레임워크)
+### 0️⃣ 사전 준비: spec-kit 설치 (전제조건 — 아래 두 방법 모두 필요)
 
 ```bash
 # spec-kit이 `specify` CLI + /speckit.* 명령으로 SDD 코어를 제공합니다.
@@ -103,14 +91,28 @@ uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
 > spec-kit이 실제 전제조건입니다 — 더 이상 "마크다운만 복사"가 아닙니다. `uv`가 없으면
 > [spec-kit README](https://github.com/github/spec-kit)를 참고하세요.
 
-### 1️⃣ 클론 후 프로젝트에 복사
+### 1️⃣ 패키지 가져오기 — 아래 둘 중 **하나만** 선택
+
+**방법 A — 가장 빠름 (install.sh가 파일 배치를 대신)**
+
+```bash
+# 본인 프로젝트 안에서 실행 (기본 대상 = 현재 디렉터리). pre-commit 훅 설치를 위해
+# 먼저 git 저장소여야 합니다(아니면 스크립트가 안내 후 건너뜀).
+curl -sL https://raw.githubusercontent.com/hongdosan/hongdosan-spec-driven-orchestra/main/install.sh | bash -s -- --lang ko
+# 영어 문서: --lang en    |    다른 대상: 경로를 뒤에 붙임
+```
+
+방법론 문서 4개(한 언어)에 더해 **로컬 hooks와 CI 게이트(R1/R2/R3 — 패키지 내부용 R7은
+이식 불가라 제외)까지** 배치합니다. spec-kit 설치·`specify init`은 하지 않습니다(0️⃣·3️⃣ 참고).
+
+**방법 B — 수동 (클론 후 복사)**
+
 ```bash
 # 이 레포를 본인 프로젝트 바깥에 클론합니다 (프로젝트 안에 클론하지 않습니다).
 git clone https://github.com/hongdosan/hongdosan-spec-driven-orchestra.git
 
 # 메서드 문서 4개를 프로젝트로 복사 — 한글판은 기본 .md 이름으로 바꿔서
-# (Claude Code가 진입 파일명으로 인식). 클론은 그대로 두세요 —
-# 이후 통합 단계(3️⃣)가 이 레포의 enforcement/에서 게이트 스크립트도 가져옵니다.
+# (Claude Code가 진입 파일명으로 인식).
 SRC=hongdosan-spec-driven-orchestra/symphony
 cp "$SRC"/AI-INTERVIEW.ko.md        /path/to/your/project/AI-INTERVIEW.md
 cp "$SRC"/AI-EXECUTION.ko.md        /path/to/your/project/AI-EXECUTION.md
@@ -118,6 +120,9 @@ cp "$SRC"/ORCHESTRA-GUIDE.ko.md     /path/to/your/project/ORCHESTRA-GUIDE.md
 cp "$SRC"/INTEGRATION-CHECKLIST.ko.md /path/to/your/project/INTEGRATION-CHECKLIST.md
 cd /path/to/your/project/
 ```
+
+> 방법 B는 문서만 복사합니다. 게이트(hooks·CI)는 3️⃣에서 Claude Code가 이 레포의
+> `enforcement/`에서 설치하므로 클론을 그대로 두세요.
 
 ### 2️⃣ Git 안전망 (권장)
 ```bash
